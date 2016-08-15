@@ -22,6 +22,7 @@ sap.ui.controller("amfc.LogIn", {
 			},
 			success : function(data) {
 				if (data.isValid) {
+					USER_ID = username;
 					sap.ui.getCore().byId("shell").removeAllWorksetItems();
 					sap.ui.getCore().byId("shell").setContent(
 							sap.ui.getCore().byId("idAdmin"));

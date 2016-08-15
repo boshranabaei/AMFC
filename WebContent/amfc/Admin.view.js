@@ -72,9 +72,9 @@ sap.ui.jsview("amfc.Admin", {
 				})
 			}),
 			press : function() {
-				console.log("AddApplicantTile")
+				console.log("SettingsTile")
 				oPanel.removeAllContent();
-				oPanel.addContent(sap.ui.getCore().byId("idAApp"));
+				oPanel.addContent(sap.ui.getCore().byId("idSettings"));
 			}
 		});
 		

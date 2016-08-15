@@ -40,6 +40,11 @@
 		viewName : "amfc.AApp",
 		type : sap.ui.core.mvc.ViewType.JS
 	});
+	var SettingsPage = sap.ui.view({
+		id : "idSettings",
+		viewName : "amfc.Settings",
+		type : sap.ui.core.mvc.ViewType.JS
+	});
 	var oShell = new sap.ui.ux3.Shell({
 		id : "shell",
 		appTitle: "Az-Zahraa Marriage Facilitation Commitee",
@@ -48,6 +53,8 @@
 		showTools: false,
 		showPane: false
 	});
+	
+	var USER_ID = '';
 	
 	oShell.addContent(sap.ui.getCore().byId("idLogIn"));
 	oShell.placeAt("content");
