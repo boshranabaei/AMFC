@@ -1,0 +1,13 @@
+
+.sapUiUx3ShellHeader>.sapUiUx3ShellHeaderTitleLeft>img{
+	max-height:50px !important;
+	margin-top: -15px !important;
+}
+
+.sapUiUx3ShellHeader>.sapUiUx3ShellHeaderTitleLeft>span{
+	font-size: 20px !important;
+}
+
+.sapUiUx3ShellHeader>.sapUiUx3ShellHeaderTitleLeft{
+	padding-top: 25px !important;
+}
