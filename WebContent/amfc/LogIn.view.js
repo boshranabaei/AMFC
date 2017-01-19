@@ -52,7 +52,11 @@ sap.ui.jsview("amfc.LogIn", {
 			text : "LogIn",
 			width : "10em",
 			press : function() {
-				oController.onLogIn(userIDInput.getValue(),passwordInput.getValue());
+//				USER_ID = username;
+				sap.ui.getCore().byId("shell").removeAllWorksetItems();
+				sap.ui.getCore().byId("shell").setContent(
+						sap.ui.getCore().byId("idAdmin"));
+//				oController.onLogIn(userIDInput.getValue(),passwordInput.getValue());
 			}
 		});
 
