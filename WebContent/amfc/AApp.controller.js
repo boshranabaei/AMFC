@@ -8,6 +8,31 @@ sap.ui.controller("amfc.AApp", {
 //	onInit: function() {
 //
 //	},
+
+	addApplicant : function(applicantFormData) {
+		$.ajax({
+			type : "GET",
+			url : "/login",
+			dataType : "json",
+			data : {
+				applicant : applicantFormData
+			},
+			success : function(data) {
+				if (data.isValid) {
+					USER_ID = username;
+					sap.ui.getCore().byId("shell").removeAllWorksetItems();
+					sap.ui.getCore().byId("shell").setContent(
+							sap.ui.getCore().byId("idAdmin"));
+				}
+				else{
+					sap.m.MessageToast.show("Invalid Username or Password", {});
+				}
+			},
+			error : function() {
+				sap.m.MessageToast.show("Server Error", {});
+			}
+		});
+	}
 	
 /**
 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered

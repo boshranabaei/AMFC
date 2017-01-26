@@ -20,11 +20,10 @@ sap.ui.jsview("amfc.LogIn", {
 	 */
 	createContent : function(oController) {
 
-		var oLoginLabel1 = new sap.ui.commons.Label(this
+		var oLoginLabel1 = new sap.m.Label(this
 				.createId('loginLabel1'))
-				.setDesign(sap.ui.commons.LabelDesign.Bold);
+				.setDesign(sap.m.LabelDesign.Bold);
 
-		var placeHolderAdmin1 = new sap.ui.commons.Label();
 
 		var userIDLabel = new sap.m.Label(this.createId("userIDLabel"), {
 			width : "6em",
@@ -52,17 +51,18 @@ sap.ui.jsview("amfc.LogIn", {
 			text : "LogIn",
 			width : "10em",
 			press : function() {
-//				USER_ID = username;
+				oController.onLogIn(userIDInput.getValue(),passwordInput.getValue());
+				USER_ID = userIDInput.getValue();
 				sap.ui.getCore().byId("shell").removeAllWorksetItems();
 				sap.ui.getCore().byId("shell").setContent(
 						sap.ui.getCore().byId("idAdmin"));
-//				oController.onLogIn(userIDInput.getValue(),passwordInput.getValue());
+				oController.onLogIn(userIDInput.getValue(),passwordInput.getValue());
 			}
 		});
 
-		return new sap.m.VBox(this.createId("pageLayout")).setAlignItems(
-				"Center").addItem(oLoginLabel1).addItem(placeHolderAdmin1)
-				.addItem(userIdRow).addItem(passwordRow).addItem(logInBtn);
+		return new sap.m.VBox(this.createId("pageLayout"))
+				.setAlignItems("Center").addItem(oLoginLabel1).addItem(userIdRow)
+				.addItem(passwordRow).addItem(logInBtn);
 	}
 
 });
