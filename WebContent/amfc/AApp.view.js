@@ -20,24 +20,28 @@ sap.ui.jsview("amfc.AApp", {
 	 */
 	createContent : function(oController) {
 
+		var required = new sap.m.Label({
+			text : "* Required Fields"
+		})
+		
 		var oSimpleForm = new sap.ui.layout.form.SimpleForm("sf1", {
 			layout : sap.ui.layout.form.SimpleFormLayout.GridLayout,
 			editable : true,
 			content : [ new sap.ui.core.Title({
 				text : "Personal Data"
 			}), new sap.m.Label({
-				text : "First Name"
+				text : "* First Name"
 			}), new sap.m.Input({}), // 2
 			new sap.m.Label({
-				text : "Last Name"
+				text : "* Last Name"
 			}), new sap.m.Input({}), // 4
 			new sap.m.Label({
-				text : "Date of birth"
+				text : "* Date of birth"
 			}), new sap.m.DatePicker({
 				yyyymmdd : "19900101"
 			}), // 6
 			new sap.m.Label({
-				text : "Gender"
+				text : "* Gender"
 			}), new sap.m.RadioButtonGroup({// 8
 				columns : 2,
 				buttons : [ new sap.m.RadioButton({
@@ -46,7 +50,7 @@ sap.ui.jsview("amfc.AApp", {
 					text : "female"
 				}) ]
 			}), new sap.m.Label({
-				text : "Marital Status"
+				text : "* Marital Status"
 			}), new sap.m.ComboBox("maritalStatus", {// 10
 				items : [ new sap.ui.core.ListItem({
 					id : "single",
@@ -61,41 +65,58 @@ sap.ui.jsview("amfc.AApp", {
 					id : "separated",
 					text : "separated"
 				}) ],
-				change : function() {
-					var x = this.getSelectedItemId();
-				}
 			}), new sap.m.Label({
-				text : "Number of children if not single"
+				text : "* Number of children if not single"
 			}), new sap.m.Input({
-				id : "children",
+				id : "children", // 12
 				value : 0
 			}), new sap.m.Label({
-				text : "Ethnicity"
-			}), new sap.m.Input({}), new sap.m.Label({
+				text : "* Ethnicity"
+			}), new sap.m.Input({}), // 14
+				new sap.m.Label({
 				text : "Citizenship"
-			}), new sap.m.Input({}), new sap.m.Label({
+			}), new sap.m.Input({}), // 16
+				new sap.m.Label({
 				text : "Willing to Relocate"
-			}), new sap.m.RadioButtonGroup({
+			}), new sap.m.RadioButtonGroup({ // 18
 				columns : 2,
-				buttons : [ new sap.m.RadioButton({
+				buttons : [
+				    new sap.m.RadioButton({
+				    text : "Not willing to Share"
+				}), new sap.m.RadioButton({
 					text : "Yes"
 				}), new sap.m.RadioButton({
 					text : "No"
 				}) ]
 			}), new sap.m.Label({
-				text : "Has/Wants Hijab"
-			}), new sap.m.Input({}), new sap.m.Label({
+				text : "* Has/Wants Hijab"
+			}),new sap.m.ComboBox("hijab", {// 20
+				items : [ new sap.ui.core.ListItem({
+					id : "Yes",
+					text : "Yes"
+				}), new sap.ui.core.ListItem({
+					id : "Opentoboth",
+					text : "Open to both"
+				}), new sap.ui.core.ListItem({
+					id : "No",
+					text : "No"
+				}), ],
+			}), 
+				new sap.m.Label({
 				text : "Smoke"
-			}), new sap.m.RadioButtonGroup({
+			}), new sap.m.RadioButtonGroup({ //22
 				columns : 2,
-				buttons : [ new sap.m.RadioButton({
+				buttons : [ 
+				    new sap.m.RadioButton({
+				    text : "Not willing to Share"
+				}), new sap.m.RadioButton({
 					text : "Yes"
 				}), new sap.m.RadioButton({
 					text : "No"
 				}) ]
 			}), new sap.m.Label({
-				text : "Highest Level of Education"
-			}), new sap.m.ComboBox("education", {
+				text : "Highest Level of Education" 
+			}), new sap.m.ComboBox("education", {//24
 				items : [ new sap.ui.core.ListItem({
 					id : "PrimarySchool",
 					text : "Primary School"
@@ -115,32 +136,38 @@ sap.ui.jsview("amfc.AApp", {
 					id : "PhD",
 					text : "PhD"
 				}) ],
-				change : function() {
-					var x = this.getSelectedItemId();
-				}
 			}), new sap.m.Label({
 				text : "Occupation"
-			}), new sap.m.Input({}), new sap.m.Label({
+			}), new sap.m.Input({}),//26 
+			new sap.m.Label({
 				text : "More information about occupation"
-			}), new sap.m.TextArea({}), new sap.ui.core.Title({
+			}), new sap.m.TextArea({}),//28 
+			new sap.ui.core.Title({
 				text : "Contact Info"
 			}), new sap.m.Label({
-				text : "Email:"
-			}), new sap.m.Input({}), new sap.m.Label({
-				text : "Phone Number (mobile)"
-			}), new sap.m.Input({}), new sap.m.Label({
+				text : "* Email"
+			}), new sap.m.Input({//31
+			}), new sap.m.Label({
+				text : "* Phone Number (mobile)"
+			}), new sap.m.Input({//33
+			}), new sap.m.Label({
 				text : "Phone Number (home)"
-			}), new sap.m.Input({}), new sap.m.Label({
-				text : "City"
-			}), new sap.m.Input({}), new sap.m.Label({
-				text : "Province"
-			}), new sap.m.Input({}), new sap.m.Label({
-				text : "Country"
-			}), new sap.m.Input({}), new sap.ui.core.Title({
+			}), new sap.m.Input({//35
+			}), new sap.m.Label({
+				text : "* City"
+			}), new sap.m.Input({//37
+			}), new sap.m.Label({
+				text : "* Province"
+			}), new sap.m.Input({//39
+			}), new sap.m.Label({
+				text : "* Country"
+			})
+			, new sap.m.Input({//41
+			}), new sap.ui.core.Title({
 				text : "Preferred Match"
 			}), new sap.m.Label({
-				text : "Preferred Marital Status"
-			}), new sap.m.ComboBox("prefMaritalStatus", {
+				text : "* Preferred Marital Status"
+			}), new sap.m.ComboBox("prefMaritalStatus", {//44
 				items : [ new sap.ui.core.ListItem({
 					id : "neverMarried",
 					text : "Never Married"
@@ -148,16 +175,15 @@ sap.ui.jsview("amfc.AApp", {
 					id : "DoesNotMatter",
 					text : "Does Not Matter"
 				}), ],
-				change : function() {
-					var x = this.getSelectedItemId();
-				}
 			}), new sap.m.Label({
 				text : "Preferred Ethnicity"
-			}), new sap.m.Input({}), new sap.m.Label({
+			}), new sap.m.Input({//46
+			}), new sap.m.Label({
 				text : "Preferred Citizenship"
-			}), new sap.m.Input({}), new sap.m.Label({
+			}), new sap.m.Input({//48
+			}), new sap.m.Label({
 				text : "Minimum Level of Education"
-			}), new sap.m.ComboBox("prefEducation", {
+			}), new sap.m.ComboBox("prefEducation", {//50
 				items : [ new sap.ui.core.ListItem({
 					id : "prefPrimarySchool",
 					text : "Primary School"
@@ -176,71 +202,95 @@ sap.ui.jsview("amfc.AApp", {
 				}), new sap.ui.core.ListItem({
 					id : "prefPhD",
 					text : "PhD"
-				}) ],
-				change : function() {
-					var x = this.getSelectedItemId();
-				}
+				}) ]
 			}), new sap.m.Label({
 				text : "Preferred Age, from"
-			}), new sap.m.Input({}), new sap.m.Label({
+			}), new sap.m.Input({//52
+			}), new sap.m.Label({
 				text : "to"
-			}), new sap.m.Input({}), new sap.ui.core.Title({
+			}), new sap.m.Input({//54
+			}), new sap.ui.core.Title({
 				text : "Other Information"
 			}), new sap.m.Label({
 				text : "AMFC point of contact"
-			}), new sap.m.Input({}), new sap.m.Label({
+			}), new sap.m.Input({//57
+			}), new sap.m.Label({
 				text : "Addtional Comments"
-			}), new sap.m.TextArea({}) ]
+			}), new sap.m.TextArea({//59
+			}) ]
 		});
 
 		var submitBtn = new sap.m.Button(this.createId("submitBtn"), {
 			text : "Submit",
 			press : function() {
+				var content = oSimpleForm.getContent();
+				
+				if(content[2].getValue()=="" ||
+				   content[4].getValue()=="" ||
+				   content[6].getValue()=="" ||
+				   content[10].getValue()==""){
+					sap.m.MessageBox.warning("Please fill in the required fields.",{
+						title: "Incomplete data",
+						actions : [sap.m.MessageBox.Action.OK]
+					});
+				}
+				else{
 				sap.m.MessageBox.confirm(
 						"Are your sure that you want to add this applicant?", {
 							title : "Confirmation",
 							actions : [ sap.m.MessageBox.Action.NO,
 									sap.m.MessageBox.Action.YES ],
 							onClose : function(oAction) {
-								var content = oSimpleForm.getContent();
-								var json = "[";
-								for (var i = 0; i < formIndexes.length; i++) {
-									json += "\"" + formLabels[i] + "\":";
-									switch(formIndexes[i]){
-									case 8:
-										json += "\"" + content[formIndexes[i]]
-										.getSelectedIndex() + "\",";break;
-									case 16:
-										json += "\"" + content[formIndexes[i]]
-										.getSelectedKey() + "\",";break;
-									default:
-									json +=	 "\"" + content[formIndexes[i]]
-									.getValue() + "\",";
+								if(oAction === sap.m.MessageBox.Action.YES){
+									var json = "{";
+									for (var i = 0; i < formIndexes.length; i++) {
+											json += "\'" + formLabels[i] + "\':";
+											switch (formIndexes[i]) {
+	
+											// integer
+											case 12:
+											case 52:
+											case 54:
+												json += content[formIndexes[i]].getValue(); break;
+											// radio button
+											case 8:
+											case 18:
+											case 22:
+												json += content[formIndexes[i]].getSelectedIndex();break;
+	
+											default:
+												json += "\'"+ content[formIndexes[i]].getValue() + "\'";break;
+											}
+											if(i!=formIndexes.length-1){
+												json += ",";
+											}
 									}
+									json += "}";
+//									sap.m.MessageToast.show(json, {});
+									oController.addApplicant(json);
+										
 								}
-								json +="]";
-								sap.m.MessageToast.show(json, {});
-
-								// if(oAction === sap.m.MessageBox.Action.YES)
-								// sap.m.MessageToast.show("Applicant is added
-								// successfully", {});
 							}
 						})
-			}
+			}}
 		});
 
-		var formIndexes = [ 2, 4, 6, 8, 10 ];
-		var formLabels = [ "firstName", "lastName", "dateOfBirth","gender",
-		        "maritalStatus","hasORwantsHijab", "city", "province", "country", "ethnicity",
-				"citizenship", "children", "occupation",
-				"occupationComments", "education", "smoke", "relocate",
-				"prefMaritalStatus", "prefEducation", "prefCitizenship",
-				"prefCountry", "prefEthnicity", "prefAgeMin", "prefAgeMax",
-				"homePhoneNumber", "mobilePhoneNumber", "email",
-				"pointOfContact", "comments", "approvalStatus", "status" ];
+		var formIndexes = [ 2, 4, 6, 8, 10,
+		                    12, 14, 16, 18, 
+		                    20, 22, 24, 26,
+		                    28, 31, 33, 35,
+		                    37, 39, 41, 44,
+		                    46, 48, 50, 52, 54,57,59];
+		var formLabels = [ "firstName", "lastName", "dateOfBirth", "gender", "maritalStatus", 
+		                   "children", "ethnicity", "citizenship",	"relocate", 
+		                   "hasORwantsHijab", "smoke", "education", "occupation",
+		                   "occupationComments","email","mobilePhoneNumber","homePhoneNumber",  
+		                   "city", "province", "country","prefMaritalStatus", 
+		                   "prefEthnicity","prefCitizenship","prefEducation","prefAgeMin","prefAgeMax",  
+		                   "pointOfContact", "comments"];
 
-		return new sap.m.VBox(this.createId("formVBox")).addItem(oSimpleForm)
-				.addItem(submitBtn);
+		return new sap.m.VBox(this.createId("formVBox")).addItem(submitBtn).addItem(required).addItem(oSimpleForm);
+				
 
 	}
 

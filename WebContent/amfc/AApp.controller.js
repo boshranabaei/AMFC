@@ -12,24 +12,24 @@ sap.ui.controller("amfc.AApp", {
 	addApplicant : function(applicantFormData) {
 		$.ajax({
 			type : "GET",
-			url : "/login",
+			url : "/applicant",
 			dataType : "json",
 			data : {
-				applicant : applicantFormData
+				"applicant" : applicantFormData,
+				"task" : "newApplicant"
 			},
 			success : function(data) {
-				if (data.isValid) {
-					USER_ID = username;
-					sap.ui.getCore().byId("shell").removeAllWorksetItems();
-					sap.ui.getCore().byId("shell").setContent(
-							sap.ui.getCore().byId("idAdmin"));
+				if (data.mission=="accomplished") {
+					sap.m.MessageToast.show("The new applicant is added successfully", {});
+					return true;
 				}
 				else{
-					sap.m.MessageToast.show("Invalid Username or Password", {});
+					return false;
 				}
 			},
 			error : function() {
 				sap.m.MessageToast.show("Server Error", {});
+				return false;
 			}
 		});
 	}
