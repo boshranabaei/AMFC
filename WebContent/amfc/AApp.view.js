@@ -212,7 +212,7 @@ sap.ui.jsview("amfc.AApp", {
 			}), new sap.ui.core.Title({
 				text : "Other Information"
 			}), new sap.m.Label({
-				text : "AMFC point of contact"
+				text : "* AMFC point of contact"
 			}), new sap.m.Input({//57
 			}), new sap.m.Label({
 				text : "Addtional Comments"
@@ -222,13 +222,16 @@ sap.ui.jsview("amfc.AApp", {
 
 		var submitBtn = new sap.m.Button(this.createId("submitBtn"), {
 			text : "Submit",
+			width : "20em",
 			press : function() {
 				var content = oSimpleForm.getContent();
 				
-				if(content[2].getValue()=="" ||
-				   content[4].getValue()=="" ||
-				   content[6].getValue()=="" ||
-				   content[10].getValue()==""){
+				if(content[2].getValue()==""  || content[4].getValue()=="" ||
+				   content[6].getValue()==""  || content[10].getValue()=="" ||
+				   content[14].getValue()=="" || content[20].getValue()=="" ||
+				   content[31].getValue()=="" || content[33].getValue()=="" ||
+				   content[37].getValue()=="" || content[39].getValue()=="" ||
+				   content[44].getValue()=="" || content[57].getValue()==""){
 					sap.m.MessageBox.warning("Please fill in the required fields.",{
 						title: "Incomplete data",
 						actions : [sap.m.MessageBox.Action.OK]
@@ -251,7 +254,12 @@ sap.ui.jsview("amfc.AApp", {
 											case 12:
 											case 52:
 											case 54:
-												json += content[formIndexes[i]].getValue(); break;
+												if(content[formIndexes[i]].getValue()==""){
+													json += 0; break;
+												}
+												else{
+													json += content[formIndexes[i]].getValue(); break;
+												}
 											// radio button
 											case 8:
 											case 18:
