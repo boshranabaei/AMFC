@@ -237,6 +237,12 @@ sap.ui.jsview("amfc.AApp", {
 						actions : [sap.m.MessageBox.Action.OK]
 					});
 				}
+				else if(content[52].getValue()!="" && content[54].getValue()!="" && content[52].getValue()>content[54].getValue()){
+						sap.m.MessageBox.warning("Wrong age range for the prefered match.",{
+							title: "Wrong data",
+							actions : [sap.m.MessageBox.Action.OK]
+						});
+				}
 				else{
 				sap.m.MessageBox.confirm(
 						"Are your sure that you want to add this applicant?", {

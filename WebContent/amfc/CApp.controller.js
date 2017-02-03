@@ -6,8 +6,9 @@ sap.ui.controller("amfc.CApp", {
 * @memberOf amfc.CApp
 */
 //	onInit: function() {
-//
+//		
 //	},
+	
 	
 /**
 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered

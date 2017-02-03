@@ -6,8 +6,9 @@ sap.ui.controller("amfc.Admin", {
 * @memberOf amfc.Admin
 */
 //	onInit: function() {
-//
+//		requestApplicants();
 //	},
+
 	
 /**
 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered

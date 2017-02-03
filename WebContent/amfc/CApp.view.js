@@ -130,8 +130,10 @@ sap.ui.jsview("amfc.CApp", {
 			width : "40px"
 		});
 
+		var oModel = sap.ui.getCore().getModel();
+		
 		var filterLabel = new sap.m.Label(this.createId("filterLabel"), {
-			text : "Free applicants",
+			text : oModel.mission,
 			design : sap.m.LabelDesign.Bold
 		});
 

@@ -23,20 +23,46 @@ sap.ui.controller("amfc.LogIn", {
 			success : function(data) {
 				if (data.isValid) {
 					USER_ID = username;
-					sap.ui.getCore().byId("shell").removeAllWorksetItems();
+					sap.ui.getCore().byId("shell")
+							.removeAllWorksetItems();
 					sap.ui.getCore().byId("shell").setContent(
 							sap.ui.getCore().byId("idAdmin"));
-				}
-				else{
-					sap.m.MessageToast.show("Invalid Username or Password", {});
+				} else {
+					sap.m.MessageToast.show(
+							"Invalid Username or Password", {});
 				}
 			},
 			error : function() {
 				sap.m.MessageToast.show("Server Error", {});
 			}
 		});
-	}
+	},
 
+	requestApplicants : function() {
+		$.ajax({
+			type : "GET",
+			url : "/applicant",
+			dataType : "json",
+			data : {
+				"task" : "requestApplicants"
+			},
+			success : function(data) {
+				if (data.mission == "accomplished") {
+					sap.m.MessageToast.show(
+							"The new applicant is added successfully", {});
+					var oModel = new sap.ui.model.json.JSONModel(data.mission);
+					sap.ui.getCore().setModel(oModel);
+					return true;
+				} else {
+					return false;
+				}
+			},
+			error : function() {
+				sap.m.MessageToast.show("Server Error", {});
+				return false;
+			}
+		});
+	}
 /**
  * Similar to onAfterRendering, but this hook is invoked before the controller's
  * View is re-rendered (NOT before the first rendering! onInit() is used for
