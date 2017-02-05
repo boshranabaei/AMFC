@@ -8,7 +8,7 @@ sap.ui.jsview("amfc.CApp", {
 	 * @memberOf amfc.CApp
 	 */
 	getControllerName : function() {
-		return "amfc.NApp";
+		return "amfc.CApp";
 	},
 
 	/**
@@ -20,7 +20,9 @@ sap.ui.jsview("amfc.CApp", {
 	 */
 	createContent : function(oController) {
 
-		var CAppData = [ {
+		this.CAppData = APPLICANTS;
+			
+			/*[ {
 			firstName : "Hamed",
 			lastName : "Soltani",
 			birthDate : "1980-05-03",
@@ -41,16 +43,16 @@ sap.ui.jsview("amfc.CApp", {
 			nationality : "Lebenies",
 			status:"free",
 			candidates : "(1) Edit"
-		} ];
+		} ];*/
 
-		var CAppTable = new sap.ui.table.Table({
+		this.CAppTable = new sap.ui.table.Table(this.createId("tablle"), {
 			visibleRowCount : 4,
 			fixedColumnCount : 5,
 			setSelectionBehavior : sap.ui.table.SelectionBehavior.RowOnly,
 			width : "800px",
 		});
 
-		CAppTable.addColumn(new sap.ui.table.Column({
+		this.CAppTable.addColumn(new sap.ui.table.Column({
 			label : new sap.ui.commons.Label({
 				text : "First Name"
 			}),
@@ -61,7 +63,7 @@ sap.ui.jsview("amfc.CApp", {
 			width : "120px"
 		}));
 
-		CAppTable.addColumn(new sap.ui.table.Column({
+		this.CAppTable.addColumn(new sap.ui.table.Column({
 			label : new sap.ui.commons.Label({
 				text : "Last Name"
 			}),
@@ -72,7 +74,7 @@ sap.ui.jsview("amfc.CApp", {
 			width : "120px"
 		}));
 
-		CAppTable.addColumn(new sap.ui.table.Column({
+		this.CAppTable.addColumn(new sap.ui.table.Column({
 			label : new sap.ui.commons.Label({
 				text : "Birth Date"
 			}),
@@ -83,19 +85,19 @@ sap.ui.jsview("amfc.CApp", {
 			width : "120px"
 		}));
 
-		CAppTable.addColumn(new sap.ui.table.Column({
+		this.CAppTable.addColumn(new sap.ui.table.Column({
 			label : new sap.ui.commons.Label({
-				text : "Nationality"
+				text : "Ethnicity"
 			}),
 			template : new sap.ui.commons.TextView().bindProperty("text",
-					"nationality"),
-			sortProperty : "nationality",
-			filterProperty : "nationality",
+					"ethnicity"),
+			sortProperty : "ethnicity",
+			filterProperty : "ethnicity",
 			width : "120px"
 		}));
 
 
-		CAppTable.addColumn(new sap.ui.table.Column({
+		this.CAppTable.addColumn(new sap.ui.table.Column({
 			label : new sap.ui.commons.Label({
 				text : "Status"
 			}),
@@ -106,34 +108,32 @@ sap.ui.jsview("amfc.CApp", {
 			width : "120px"
 		}));
 		
-		CAppTable.addColumn(new sap.ui.table.Column({
-			label : new sap.ui.commons.Label({
-				text : "Candidates"
-			}),
-			template : new sap.m.Button(this.createId("list"), {
-				text : "Edit",
-				press : function() {
-				}
-			}).bindProperty("text", "candidates"),
-			width : "120px"
-		}));
+//		this.CAppTable.addColumn(new sap.ui.table.Column({
+//			label : new sap.ui.commons.Label({
+//				text : "Candidates"
+//			}),
+//			template : new sap.m.Button(this.createId("list"), {
+//				text : "Edit",
+//				press : function() {
+//				}
+//			}).bindProperty("text", "candidates"),
+//			width : "120px"
+//		}));
 
-		var CAppModel = new sap.ui.model.json.JSONModel();
-		CAppModel.setData({
-			modelData : CAppData
+		this.CAppModel = new sap.ui.model.json.JSONModel();
+		this.CAppModel.setData({
+			modelData : this.CAppData
 		});
-		CAppTable.setModel(CAppModel);
-		CAppTable.bindRows("/modelData");
+		this.CAppTable.setModel(this.CAppModel);
+		this.CAppTable.bindRows("/modelData");
 
 		var placeHolderCApp1 = new sap.ui.commons.Label(this
 				.createId("placeHolderCApp1"), {
 			width : "40px"
 		});
-
-		var oModel = sap.ui.getCore().getModel();
 		
 		var filterLabel = new sap.m.Label(this.createId("filterLabel"), {
-			text : oModel.mission,
+			text : "Heelo",
 			design : sap.m.LabelDesign.Bold
 		});
 
@@ -142,7 +142,7 @@ sap.ui.jsview("amfc.CApp", {
 		filterVBox.addItem(filterLabel);
 
 		return new sap.m.HBox().addItem(filterVBox).addItem(placeHolderCApp1)
-				.addItem(CAppTable);
+				.addItem(this.CAppTable);
 
 	}
 

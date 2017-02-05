@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv='Content-Type' content='text/html;charset=UTF-8' />
+
+<link rel="stylesheet" type="text/css" href="css/amfcStyles.css">
+
+<script
+	src="https://sapui5.netweaver.ondemand.com/resources/sap-ui-core.js"
+	id="sap-ui-bootstrap" data-sap-ui-libs="sap.m, sap.ui.commons, sap.ui.ux3, sap.ui.table,  sap.ui.layout"
+	data-sap-ui-theme="sap_bluecrystal">
+</script>
+
+<script>
+	sap.ui.localResources("amfc");
+	
+	var LogInPage = sap.ui.view({
+		id : "idLogIn",
+		viewName : "amfc.LogIn",
+		type : sap.ui.core.mvc.ViewType.JS
+	});
+	var AdminPage = sap.ui.view({
+		id : "idAdmin",
+		viewName : "amfc.Admin",
+		type : sap.ui.core.mvc.ViewType.JS
+	});
+	var NAppPage = sap.ui.view({
+		id : "idNApp",
+		viewName : "amfc.NApp",
+		type : sap.ui.core.mvc.ViewType.JS
+	});
+	var CAppPage = sap.ui.view({
+		id : "idCApp",
+		viewName : "amfc.CApp",
+		type : sap.ui.core.mvc.ViewType.JS
+	});
+	var AAppPage = sap.ui.view({
+		id : "idAApp",
+		viewName : "amfc.AApp",
+		type : sap.ui.core.mvc.ViewType.JS
+	});
+	var SettingsPage = sap.ui.view({
+		id : "idSettings",
+		viewName : "amfc.Settings",
+		type : sap.ui.core.mvc.ViewType.JS
+	});
+	var oShell = new sap.ui.ux3.Shell({
+		id : "shell",
+		appTitle: "Az-Zahraa Marriage Facilitation Commitee",
+		appIcon: "images/logo.gif",
+		showLogoutButton: false,
+		showTools: false,
+		showPane: false
+	});
+	
+	var USER_ID = '';
+	var APPLICANTS='';
+	
+	oShell.addContent(sap.ui.getCore().byId("idLogIn"));
+	oShell.placeAt("content");
+</script>
+
+</head>
+<body class="sapUiBody" role="application">
+	<div id="content"></div>
+</body>
+</html>

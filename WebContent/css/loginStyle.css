@@ -1,0 +1,37 @@
+body {
+	background: #d3ebdc;
+	text-align: center;
+}
+
+.header {
+	margin: 2em;
+}
+
+.header h1 {
+	display: inline;
+}
+
+.header img {
+	display: inline;
+	margin-bottom: -1em;
+}
+
+form {
+	font-size: 16pt;
+	margin-top: 2em;
+}
+
+input {
+	font-size: 13pt;
+}
+
+#submit {
+	margin-top: 2em;
+	border-radius: 6px;
+	background-color: #e8f0e6;
+	-moz-border-radisus: 5px;
+	-webkit-border-radius: 5px;
+	width: 5em;
+	height: 2em;
+	font-weight: bold;
+}

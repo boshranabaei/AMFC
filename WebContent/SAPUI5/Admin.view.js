@@ -47,6 +47,7 @@ sap.ui.jsview("amfc.Admin", {
 						console.log("CurrrentApplicantsTile")
 						oPanel.removeAllContent();
 						oPanel.addContent(sap.ui.getCore().byId("idCApp"));
+						sap.ui.getCore().byId("tablle").getModel().refresh(true);
 					}
 				});
 

@@ -11,6 +11,24 @@ sap.ui.controller("amfc.LogIn", {
 	// onInit: function() {
 	//
 	// },
+	requestApplicants : function() {
+		$.ajax({
+			type : "GET",
+			url : "/applicant",
+			dataType : "json",
+			data : {
+				"task" : "requestApplicants"
+			},
+			success : function(data) {
+				APPLICANTS = data.applicants;
+				return true;
+			},
+			error : function() {
+				sap.m.MessageToast.show("Server Error", {});
+				return false;
+			}
+		});
+	},
 	onLogIn : function(username, password) {
 		$.ajax({
 			type : "GET",
@@ -34,32 +52,6 @@ sap.ui.controller("amfc.LogIn", {
 			},
 			error : function() {
 				sap.m.MessageToast.show("Server Error", {});
-			}
-		});
-	},
-
-	requestApplicants : function() {
-		$.ajax({
-			type : "GET",
-			url : "/applicant",
-			dataType : "json",
-			data : {
-				"task" : "requestApplicants"
-			},
-			success : function(data) {
-				if (data.mission == "accomplished") {
-					sap.m.MessageToast.show(
-							"The new applicant is added successfully", {});
-					var oModel = new sap.ui.model.json.JSONModel(data.mission);
-					sap.ui.getCore().setModel(oModel);
-					return true;
-				} else {
-					return false;
-				}
-			},
-			error : function() {
-				sap.m.MessageToast.show("Server Error", {});
-				return false;
 			}
 		});
 	}
