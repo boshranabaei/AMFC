@@ -17,25 +17,23 @@ function requestApplicants() {
 	});
 };
 
-function onLogIn(username, password) {
+function onLogIn() {
 	$.ajax({
 		type : "GET",
 		url : "/login",
 		dataType : "json",
 		data : {
-			userIDInput :  document.getElementById("loginForm").value[0],
-			passwordInput : document.getElementById("loginForm").value[1]
+			userIDInput : document.forms[0].elements[0].value,
+			passwordInput : document.forms[0].elements[1].value
 		},
 		success : function(data) {
-			if (data.isValid) {
-				
-
-			} else {
-				sap.m.MessageToast.show("Invalid Username or Password", {});
-			}
+				if(data.isValid == true)
+					window.open("napp.html","_self");
+				else
+					alert("Invalid username or password.");
 		},
 		error : function() {
-			sap.m.MessageToast.show("Server Error", {});
+			alert("Server Error");
 		}
 	});
 };
