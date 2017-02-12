@@ -1,25 +1,6 @@
-function requestApplicants() {
-	$.ajax({
-		type : "GET",
-		url : "/applicant",
-		dataType : "json",
-		data : {
-			"task" : "requestApplicants"
-		},
-		success : function(data) {
-			APPLICANTS = data.applicants;
-			return true;
-		},
-		error : function() {
-			sap.m.MessageToast.show("Server Error", {});
-			return false;
-		}
-	});
-};
-
 function onLogIn() {
 	$.ajax({
-		type : "GET",
+		type : "POST",
 		url : "/login",
 		dataType : "json",
 		data : {
@@ -27,13 +8,22 @@ function onLogIn() {
 			passwordInput : document.forms[0].elements[1].value
 		},
 		success : function(data) {
-				if(data.isValid == true)
+				if(data.isValid == true){
 					window.open("napp.html","_self");
-				else
-					alert("Invalid username or password.");
+				}
+				else{
+					var message = document.createElement("div");
+					message.textContent = "Invalid username or password. Please try again.";
+					message.style.color="red";
+					message.style.padding="2em";
+					message.style.fontSize="1.3em";
+					document.body.appendChild(message);  
+				}
+					
 		},
 		error : function() {
 			alert("Server Error");
 		}
 	});
+	event.preventDefault();
 };

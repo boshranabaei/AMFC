@@ -7,7 +7,7 @@
 
 <link rel="stylesheet" type="text/css" href="css/loginStyle.css">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="js/logInScripts.js"></script>
+<script src="js/loginScripts.js"></script>
 <title>Az-Zahraa Marriage Facilitation Center</title>
 </head>
 <body>
@@ -19,19 +19,19 @@
 		<h1>Az-Zahraa Marriage Facilitation Center</h1>
 	</div>
 
-	<form id="loginForm">
+	<form id="loginForm" method="POST" onsubmit="return onLogIn()">
         <table align="center">
             <tr>
-                <td>Username :</td><td><input type="text" name="username" value="bnabaei">
+                <td>Username :</td><td><input type="text" name="userIDInput" value="bnabaei">
                 </td>
             </tr>
             <tr>
-                <td>Password :</td><td><input type="password" name="password" value="rouhiFedak14">
+                <td>Password :</td><td><input type="password" name="passwordInput" value="rouhiFedak14">
                 </td>
             </tr>
             <tr>
                 <td>
-                    <input type="submit" value="Log in"  id="submit" onclick="onLogIn()" >
+                    <input type="submit" value="Log in"  id="submit">
                 </td>
             </tr>
         </table>
