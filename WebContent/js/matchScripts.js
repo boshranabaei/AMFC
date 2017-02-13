@@ -81,7 +81,42 @@ function drawTable() {
 	    profilelogo.style.boxShadow= "2px 2px #999";
 	    profilelogo.style.boxShadow= "2px 2px #999";
 	    
+	    // Get the modal
 	    //http://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal
+	    var modal = document.getElementById('myModal');
+	    var span = document.getElementsByClassName("close")[0];
+	    
+	    var modalTitle = document.getElementById('modalTitle');
+	    var applicantName = document.createTextNode(APPLICANTS[i].firstName+" "+APPLICANTS[i].lastName);
+	    
+	    modalTitle.innerHTML = "";
+	    modalTitle.appendChild(applicantName);
+	    
+	    var modalContent = document.getElementById('modalContent');
+	    var applicantAge = document.createTextNode(APPLICANTS[i].age+" years old");
+	    var linebreak1 = document.createElement('br');
+	    var applicantCountry = document.createTextNode(APPLICANTS[i].ethnicity);
+	    if(APPLICANTS[i].hasOwnProperty('citizenship')){
+	    	applicantCountry = document.createTextNode(APPLICANTS[i].ethnicity+" with "+APPLICANTS[i].citizenship+" citizenship");
+	    }
+	    var linebreak2 = document.createElement('br');
+	    modalContent.innerHTML = "";
+	    modalContent.appendChild(applicantAge);
+	    modalContent.appendChild(linebreak1);
+	    modalContent.appendChild(applicantCountry);
+	    modalContent.appendChild(linebreak2);
+	    
+	    profilelogo.onclick = function() {
+	    	modal.style.display = "block";
+	    }
+	    span.onclick = function() {
+	    	modal.style.display = "none";
+	    }
+	    window.onclick = function(event) {
+	    	if (event.target == modal) {
+	    		modal.style.display = "none";
+	    	}
+	    }
 	    
 	    if(i%2==0)
 	    	tr.style.background="white";
@@ -92,3 +127,4 @@ function drawTable() {
 	}
 	document.body.appendChild(table);
 }
+//http://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_js_dropdown
