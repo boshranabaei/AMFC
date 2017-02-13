@@ -35,3 +35,11 @@ input {
 	height: 2em;
 	font-weight: bold;
 }
+
+table{
+	background-color: #8ecca6 ;
+	-moz-border-radisus: 5px;
+	-webkit-border-radius: 5px;
+	padding: 1.5em;
+	box-shadow: 10px 10px 5px #b8d1c4;
+}
