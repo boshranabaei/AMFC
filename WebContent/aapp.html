@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>AMFC</title>
+<link href="css/layout.css" rel="stylesheet" type="text/css" />
+<link href="css/menu.css" rel="stylesheet" type="text/css" />
+<link href="css/aappStyle.css" rel="stylesheet" type="text/css" />
+<link href='http://fonts.googleapis.com/css?family=Bitter'
+	rel='stylesheet' type='text/css'>
+</head>
+<body>
+	<header>
+		<h2>Az-Zahraa Marriage Facilitation Center</h2>
+	</header>
+
+	<ul id="nav">
+		<li><a href="napp.html">New</a></li>
+		<li><a href="match.html">Match!</a></li>
+		<li><a href="aapp.html"><div class="selected">Add</div></a></li>
+		<li><a href="#">Settings</a></li>
+		<li><a onclick="logOut()" href="javascript:void(0);">Log out</a></li>
+	</ul>
+
+
+	<form
+		action="http://cdn3.tympanus.net/codrops/wp-content/uploads/2009/09/registration/"
+		class="register">
+		<h1>New Applicant/Candidate</h1>
+		<fieldset class="row1">
+			<legend>Personal Details </legend>
+			<table>
+				<tr>
+					<td><label>First Name * </label> <input type="text"></td>
+					<td><label>Last Name * </label> <input type="text"></td>
+					<td><label>Birthdate * </label> <input type="date"></td>
+				</tr>
+				<tr>
+					<td><label>Gender *</label> <input type="radio" name="gender"
+						value="radio"> <label class="gender">Male</label> <input
+						type="radio" name="gender" value="radio"> <label
+						class="gender">Female</label>
+					<td><label>Ethnicity * </label> <input type="text"></td>
+					<td><label>Citizenship </label> <input type="text"></td>
+				</tr>
+				<tr>
+					<td><label>Marital Status * </label> <select>
+							<option value="single">Single</option>
+							<option value="divorced">Divorced</option>
+							<option value="widowed">Widowed</option>
+							<option value="separated">Separated</option>
+					</select></td>
+					<td><label>Children * </label> <input type="checkbox" value="">
+						<input type="text" class="children" disabled></td>
+					<td><label>Smoke</label> <input type="radio" name="smoke"
+						value="radio"> <label class="gender">Yes</label> <input
+						type="radio" name="smoke" value="radio"> <label
+						class="gender">No</label></td>
+				</tr>
+			<tr>
+				<td><label>Has/wants Hijab *</label> <select>
+					<option value="yes">Yes</option>
+					<option value="no">No</option>
+					<option value="noDifference">No Difference</option></td>
+				<td></select> <label>Education </label> <select>
+					<option value="unknown">Unknown</option>
+					<option value="someSchooling">Some Schooling</option>
+					<option value="highSchool">HighSchool</option>
+					<option value="collegeDiploma">College Diploma</option>
+					<option value="bachelors">Bachelors</option>
+					<option value="masters">Masters</option>
+					<option value="doctoral">Doctoral</option>
+				</select></td>
+			</tr>
+			<tr>
+				<td><label>Occupation</label> <input type="text"></td> 
+				<td><label class="comments">Occupation Comments </label>
+				<textarea name="Text1" cols="40" rows="5"></textarea></td>
+			</tr>
+			</table>
+		</fieldset>
+		<fieldset class="row2">
+			<legend>Contact Information </legend>
+			<p>
+				<label>Name * </label> <input type="text">
+			</p>
+			<p>
+				<label>Phone * </label> <input type="text" maxlength="10">
+			</p>
+			<p>
+				<label class="optional">Street </label> <input type="text">
+			</p>
+			<p>
+				<label>City * </label> <input type="text" class="long">
+			</p>
+			<p>
+				<label>Country * </label> <select>
+					<option></option>
+					<option value="1">United States</option>
+				</select>
+			</p>
+			<p>
+				<label class="optional">Website </label> <input class="long"
+					type="text" value="http://">
+
+			</p>
+		</fieldset>
+		<fieldset class="row3">
+			<legend>Further Information </legend>
+
+			<div class="infobox">
+				<h4>Helpful Information</h4>
+				<p>Here comes some explaining text, sed ut perspiciatis unde
+					omnis iste natus error sit voluptatem accusantium doloremque
+					laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore
+					veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+			</div>
+		</fieldset>
+
+		<div>
+			<button class="button">Register »</button>
+		</div>
+	</form>
+
+
+	<script src="js/script.js"></script>
+</body>
+</html>

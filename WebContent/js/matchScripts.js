@@ -68,7 +68,7 @@ function drawTable() {
 	    list.appendChild( document.createTextNode(0));
 	    list.appendChild( editBtn );
 	    tr.appendChild(list);
-	    list.style.width="5em";
+	    list.style.width="9em";
 	    
 	    var profile = document.createElement('td');
 	    var profilelogo = document.createElement("img");
