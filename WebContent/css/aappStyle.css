@@ -32,7 +32,7 @@ a:hover{
 h1 {
     font-weight:200;
     color: #888888;
-    font-size:2em;
+    font-size:1.7em;
     background: transparent url(../img/h1.png) no-repeat center left;
     padding-left:33px;
     margin:7px 5px 8px 8px;
@@ -48,7 +48,7 @@ h4 {
 form.register{
     width:75%;
     margin: 20px auto 0px auto;
-    height:530px;
+    height:700px;
     background-color:#fff;
     padding:5px;
     -moz-border-radius:20px;
@@ -73,7 +73,6 @@ form.register fieldset.row1
     padding:15px;
     padding-bottom:25px;
     border-top:1px solid #F5F5F5;
-    
 }
 
 form.register fieldset.row1 td{
@@ -96,9 +95,9 @@ form.register fieldset.row2
     height:220px;
     padding:5px;
     float:left;
-    margin-25t: 400px;
+    margin-left: 3%;
     margin-top:5px;
-    width:30%;
+    width:40%;
 }
 form.register fieldset.row3
 {
@@ -106,7 +105,9 @@ form.register fieldset.row3
     padding:5px;
     float:left;
     margin-bottom:15px;
-    width:30%;
+    margin-left: 1%;
+    margin-right: 2%;
+    width:50%;
 }
 form.register fieldset.row4
 {
