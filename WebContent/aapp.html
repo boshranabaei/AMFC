@@ -8,6 +8,7 @@
 <link href="css/aappStyle.css" rel="stylesheet" type="text/css" />
 <link href='http://fonts.googleapis.com/css?family=Bitter'
 	rel='stylesheet' type='text/css'>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 </head>
 <body>
 	<header>
@@ -23,7 +24,7 @@
 	</ul>
 
 
-	<form class="register">
+	<form class="register" method="POST" onsubmit="return submitApplicant()">
 		<h1>New Applicant/Candidate</h1>
 		<fieldset class="row1">
 			<legend>Personal Details </legend>
@@ -48,7 +49,7 @@
 							<option value="widowed">Widowed</option>
 							<option value="separated">Separated</option>
 					</select></td>
-					<td><label>Children * </label> <input type="checkbox" value="">
+					<td><label>Children * </label> <input type="checkbox" value="" onclick="toggleChildren()">
 						<input type="text" class="children" value="0" disabled></td>
 					<td><label>Smoke</label> <input type="radio" name="smoke"
 						value="radio"> <label class="gender">Yes</label> <input
@@ -60,7 +61,7 @@
 					<option value="yes">Yes</option>
 					<option value="no">No</option>
 					<option value="noDifference">No Difference</option></td>
-					<td><label>Relocate </label> <input type="checkbox" value="">
+					<td><label>Relocate </label> <input type="checkbox" value=""  onclick="toggleRelocate()">
 						<input type="text" class="relocate" value="where?" disabled></td>
 			</tr>
 			<tr>
@@ -142,8 +143,8 @@
 		</fieldset>
 
 		<div class="infobox">
-			<td><label>AMFC point of contact </label> <input type="text"></td>
-			<button class="button" onclick="submitApplicant">Register »</button>
+			<td><label>AMFC point of contact *</label> <input type="text"></td>
+			<button class="button" type="submit">Register »</button>
 		</div>
 	</form>
 

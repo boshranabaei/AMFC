@@ -8,7 +8,6 @@ function onLogIn() {
 			passwordInput : document.forms[0].elements[1].value
 		},
 		success : function(data) {
-				alert("FDF");
 				if(data.isValid == true){
 					window.open("napp.html","_self");
 				}
@@ -26,5 +25,5 @@ function onLogIn() {
 			alert("Server Error");
 		}
 	});
-	event.preventDefault();
+	return false;
 };

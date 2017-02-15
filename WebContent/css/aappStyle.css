@@ -193,7 +193,7 @@ form.register fieldset.row1 label.gender{
     margin-bottom: 4px;
 }
 form.register fieldset.row2 div.prefAge{
-    margin-right:-15px;
+    margin-right:-6px;
     float:left;
     text-align:left;
     line-height:19px;
