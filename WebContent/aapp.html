@@ -23,9 +23,7 @@
 	</ul>
 
 
-	<form
-		action="http://cdn3.tympanus.net/codrops/wp-content/uploads/2009/09/registration/"
-		class="register">
+	<form class="register">
 		<h1>New Applicant/Candidate</h1>
 		<fieldset class="row1">
 			<legend>Personal Details </legend>
@@ -51,7 +49,7 @@
 							<option value="separated">Separated</option>
 					</select></td>
 					<td><label>Children * </label> <input type="checkbox" value="">
-						<input type="text" class="children" disabled></td>
+						<input type="text" class="children" value="0" disabled></td>
 					<td><label>Smoke</label> <input type="radio" name="smoke"
 						value="radio"> <label class="gender">Yes</label> <input
 						type="radio" name="smoke" value="radio"> <label
@@ -62,6 +60,69 @@
 					<option value="yes">Yes</option>
 					<option value="no">No</option>
 					<option value="noDifference">No Difference</option></td>
+					<td><label>Relocate </label> <input type="checkbox" value="">
+						<input type="text" class="relocate" value="where?" disabled></td>
+			</tr>
+			<tr>
+				<td></select> <label>Education </label> <select>
+					<option value="unknown">Unknown</option>
+					<option value="someSchooling">Some Schooling</option>
+					<option value="highSchool">HighSchool</option>
+					<option value="collegeDiploma">College Diploma</option>
+					<option value="bachelors">Bachelors</option>
+					<option value="masters">Masters</option>
+					<option value="doctoral">Doctoral</option>
+				</select></td>
+				<td><label>Occupation</label> <input type="text"></td> 
+				<td><label class="comments">Occupation Comments </label>
+				<textarea name="Text1" cols="40" rows="5"></textarea></td>
+			</tr>
+			</table>
+		</fieldset>
+		<fieldset class="row2">
+			<legend>Contact Information </legend>
+			<table>
+			<tr>
+				<td><label>Email </label> <input type="text"></td>
+			</tr>
+			<tr>
+				<td><label>Phone (Mobile) </label> <input type="text"></td>
+			</tr>
+			<tr>
+				<td><label>Phone (Home) </label> <input type="text"></td>
+			</tr>
+			<tr>
+				<td><label>Point of Contact</label> <input type="text"></td>
+			</tr>
+			<tr>
+				<td><label>City *</label> <input type="text"></td>
+			</tr>
+			<tr>
+				<td><label>Province</label> <input type="text"></td>
+			</tr>
+			<tr>
+				<td><label>Country *</label> <input type="text"></td>
+			</tr>
+			</table>
+		</fieldset>
+		<fieldset class="row2">
+			<legend>Prefered Match </legend>
+			<table>
+			<tr>
+				<td><label>Marital Status </label> <select>
+							<option value="single">Only Single</option>
+							<option value="divorced">Divorced</option>
+							<option value="widowed">Widowed</option>
+							<option value="separated">Does not Matter</option>
+				</select></td>
+			</tr>
+			<tr>
+				<td><label>Age </label> <div class="prefAge">from</div> <input type="text" class="prefAge"><div class="prefAge">&nbsp; &nbsp;to</div><input type="text" class="prefAge"></td>
+			</tr>
+			<tr>
+				<td><label>Ethnicity </label> <input type="text"></td>
+			</tr>
+			<tr>
 				<td></select> <label>Education </label> <select>
 					<option value="unknown">Unknown</option>
 					<option value="someSchooling">Some Schooling</option>
@@ -73,49 +134,21 @@
 				</select></td>
 			</tr>
 			<tr>
-				<td><label>Occupation</label> <input type="text"></td> 
-				<td><label class="comments">Occupation Comments </label>
-				<textarea name="Text1" cols="40" rows="5"></textarea></td>
+				<td><label>Country </label> <input type="text"></td>
 			</tr>
+			<td><label class="comments">Comments </label>
+				<textarea name="Text1" cols="40" rows="5"></textarea></td>
 			</table>
 		</fieldset>
-		<fieldset class="row2">
-			<legend>Contact Information </legend>
-			<p>
-				<label>Name * </label> <input type="text">
-			</p>
-			<p>
-				<label>Phone * </label> <input type="text" maxlength="10">
-			</p>
-			<p>
-				<label class="optional">Street </label> <input type="text">
-			</p>
-			<p>
-				<label>City * </label> <input type="text" class="long">
-			</p>
-			<p>
-				<label>Country * </label> <select>
-					<option></option>
-					<option value="1">United States</option>
-				</select>
-			</p>
-			<p>
-				<label class="optional">Website </label> <input class="long"
-					type="text" value="http://">
 
-			</p>
-		</fieldset>
-		<fieldset class="row3">
-			<legend>Prefered Match </legend>
-
-		</fieldset>
-
-		<div>
-			<button class="button">Register »</button>
+		<div class="infobox">
+			<td><label>AMFC point of contact </label> <input type="text"></td>
+			<button class="button" onclick="submitApplicant">Register »</button>
 		</div>
 	</form>
 
 
 	<script src="js/script.js"></script>
+	<script src="js/aappScripts.js"></script>
 </body>
 </html>

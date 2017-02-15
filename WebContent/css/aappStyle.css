@@ -47,8 +47,8 @@ h4 {
 
 form.register{
     width:75%;
-    margin: 20px auto 0px auto;
-    height:700px;
+    margin: 20px auto 50px auto;
+    height:780px;
     background-color:#fff;
     padding:5px;
     -moz-border-radius:20px;
@@ -75,7 +75,7 @@ form.register fieldset.row1
     border-top:1px solid #F5F5F5;
 }
 
-form.register fieldset.row1 td{
+form.register fieldset td{
 	width: 30%;
 }
 
@@ -92,41 +92,33 @@ form.register fieldset.row2
 {
     border-top:1px solid #F1F1F1;
     border-right:1px solid #F1F1F1;
-    height:220px;
+    height:auto;
     padding:5px;
     float:left;
-    margin-left: 3%;
+    margin-left: 6%;
     margin-top:5px;
-    width:40%;
+    width:25%;
 }
-form.register fieldset.row3
-{
-    border-top:1px solid #F1F1F1;
-    padding:5px;
-    float:left;
-    margin-bottom:15px;
-    margin-left: 1%;
-    margin-right: 2%;
-    width:50%;
-}
-form.register fieldset.row4
-{
-    border-top:1px solid #F1F1F1;
-    border-right:1px solid #F1F1F1;
-    padding:5px;
-    float:left;
-    clear:both;
-    width:500px;
+form.register fieldset.row2 label{
+    width:35%;
+    float: left;
+    text-align: left;
+    margin-left: 25px;
+    margin-top:5px;
+    padding-top: 4px;
+  	padding-bottom: 4px;
 }
 form.register .infobox{
-    float:right;
-    margin-top:20px;
-    border: 1px solid #F1F1F1;
-    padding:5px;
-    width:380px;
-    height:98px;
-    font-size:11px;
-    background: #FDFEFA url(../img/bg_infobox.gif) repeat-x top left;
+    margin-top:35px;
+	margin-left: 6%;
+	float: left;
+    text-align: left;
+    border: 1px solid #7B8473;
+    padding:15px;
+    width:20%;
+    height:auto;
+    font-size:12px;
+    background: #f0f5df;
 }
 form.register legend
 {
@@ -200,6 +192,16 @@ form.register fieldset.row1 label.gender{
     margin-top: 4px;
     margin-bottom: 4px;
 }
+form.register fieldset.row2 div.prefAge{
+    margin-right:-15px;
+    float:left;
+    text-align:left;
+    line-height:19px;
+    width: 25%;
+    margin-top: 7px;
+    margin-bottom: 4px;
+	color: #505050
+}
 form.register input[type=text]
 {
     border: 1px solid #E1E1E1;
@@ -233,8 +235,30 @@ form.register input[type=text].children
     height: 18px;
     width:10%;
     font-size:11pt;
-    margin-top:5px;
+	color:grey;
+    margin-top:8px;
     margin-bottom:5px;
+}
+form.register input[type=text].relocate
+{
+    border: 1px solid #E1E1E1;
+    height: 18px;
+    width:38%;
+	color:grey;
+    font-size:11pt;
+    margin-top:8px;
+    margin-bottom:5px;
+}
+form.register input[type=text].prefAge
+{
+    border: 1px solid #E1E1E1;
+    height: 18px;
+    width:8%;
+    font-size:11pt;
+	color:grey;
+    margin-top:7px;
+    margin-bottom:5px;
+	margin-left:-33px;
 }
 form.register input[type=checkbox] {
     width:27px;
