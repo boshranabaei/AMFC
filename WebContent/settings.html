@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>AMFC</title>
+<link href="css/layout.css" rel="stylesheet" type="text/css" />
+<link href="css/menu.css" rel="stylesheet" type="text/css" />
+<link href="css/settingsStyle.css" rel="stylesheet" type="text/css" />
+<script
+	src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<link rel="stylesheet" href="css/msc-style.css">
+<script src="js/msc-script.js"></script>
+</head>
+<body>
+	<header>
+		<h2>Az-Zahraa Marriage Facilitation Center</h2>
+	</header>
+
+	<ul id="nav">
+		<li><a href="napp.html">New</a></li>
+		<li><a href="match.html">Match!</a></li>
+		<li><a href="aapp.html">Add</a></li>
+		<li><a href="settings.html"><div class="selected">Settings</div></a></li>
+		<li><a onclick="logOut()" href="javascript:void(0);">Log out</a></li>
+	</ul>
+
+	<form id="changePassForm" method="POST"
+		onsubmit="return changePassword()">
+		<table align="center">
+			<tr>
+				<td>Username :</td>
+				<td><input type="text" name="userIDInput"></td>
+			</tr>
+			<tr>
+				<td>Old password :</td>
+				<td><input type="password" name="oldPasswordInput""></td>
+			</tr>
+			<tr>
+				<td>New password :</td>
+				<td><input type="password" name="passwordInput"></td>
+			</tr>
+			<tr>
+				<td>Confirm new password :</td>
+				<td><input type="password" name="confPasswordInput"></td>
+			</tr>
+			<tr>
+				<td><input type="submit" value="Change Password" id="submit" />
+				</td>
+			</tr>
+		</table>
+	</form>
+
+	<div id="snackbar">Some text some message..</div>
+
+	<script src="js/script.js"></script>
+	<script src="js/settingsScripts.js"></script>
+</body>
+</html>
