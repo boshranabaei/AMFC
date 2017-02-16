@@ -1,7 +1,7 @@
 var fieldLabels = [ "firstName", "lastName", "dateOfBirth", "gender", "gender",
 		"ethnicity", "citizenship", "maritalStatus", "children", "children",
 		"smoke", "smoke", "hasORwantsHijab", "relocate", "relocateWhere",
-		"education", "occupation", "occupationComments", "email", "email",
+		"education", "occupation", "comments", "email", "email",
 		"mobilePhoneNumber", "homePhoneNumber", "pointOfContact", "city",
 		"province", "country", "prefMaritalStatus", "prefAgeMin", "prefAgeMax",
 		"prefEthnicity", "prefEducation", "prefCountry", "prefComments",

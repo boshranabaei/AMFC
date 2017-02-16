@@ -1,7 +1,7 @@
 var APPLICANTS;
 function requestApplicants() {
 	$.ajax({
-		type : "GET",
+		type : "Post",
 		url : "/applicant",
 		dataType : "json",
 		data : {
