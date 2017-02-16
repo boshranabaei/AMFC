@@ -8,6 +8,8 @@
 <link href="css/aappStyle.css" rel="stylesheet" type="text/css" />
 <link href='http://fonts.googleapis.com/css?family=Bitter'
 	rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="css/msc-style.css">
+<script src="js/msc-script.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 </head>
 <body>
@@ -32,11 +34,11 @@
 				<tr>
 					<td><label>First Name * </label> <input type="text"></td>
 					<td><label>Last Name * </label> <input type="text"></td>
-					<td><label>Birthdate * </label> <input type="date"></td>
+					<td><label>Birthdate * </label> <input type="date" value="1900-01-01"></td>
 				</tr>
 				<tr>
 					<td><label>Gender *</label> <input type="radio" name="gender"
-						value="radio"> <label class="gender">Male</label> <input
+						value="radio" checked="true"> <label class="gender">Male</label> <input
 						type="radio" name="gender" value="radio"> <label
 						class="gender">Female</label>
 					<td><label>Ethnicity * </label> <input type="text"></td>
@@ -143,13 +145,15 @@
 		</fieldset>
 
 		<div class="infobox">
-			<td><label>AMFC point of contact *</label> <input type="text"></td>
+			<label>AMFC point of contact *</label> <input type="text">
 			<button class="button" type="submit">Register »</button>
 		</div>
 	</form>
 
-
+	<div id="snackbar">Some text some message..</div>
+	
 	<script src="js/script.js"></script>
 	<script src="js/aappScripts.js"></script>
+
 </body>
 </html>

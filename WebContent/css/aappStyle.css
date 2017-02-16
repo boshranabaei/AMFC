@@ -119,7 +119,12 @@ form.register .infobox{
     height:auto;
     font-size:12px;
     background: #f0f5df;
+    text-align: center;
 }
+form.register .infobox label{
+	margin: 0 auto;
+}
+
 form.register legend
 {
     color: #58a789;
@@ -207,15 +212,9 @@ form.register input[type=text]
     border: 1px solid #E1E1E1;
     height: 18px;
 }
-form.register input[type=password]
-{
-    border: 1px solid #E1E1E1;
-    height: 18px;
-    font-size:13pt;
-}
 .button
 {
-    background: #abda0f url(../img/overlay.png) repeat-x;
+    background: #abda0f;
     padding: 8px 10px 8px;
     color: #fff;
     text-decoration: none;
@@ -225,9 +224,17 @@ form.register input[type=password]
     -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
     text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
     cursor: pointer;
-    float:left;
     font-size:20px;
     margin:10px;
+}
+form.register input[type=date]
+{
+    border: 1px solid #E1E1E1;
+    height: 18px;
+    font-size:9pt;
+	color: #505050;
+    margin-top:8px;
+    margin-bottom:5px;
 }
 form.register input[type=text].children
 {
@@ -275,23 +282,48 @@ form.register select
     margin-right:3px;
     margin-top:5px;
 }
-form.register select.date
-{
-    width: 40px;
-}
 input:focus, select:focus, textarea:focus{
     background-color: #efffe0;
 }
-p.info{
-    font-size:12pt;
-    color: gray;
-}
-p.agreement{
-    margin-left:15px;
-}
-p.agreement label{
-    width:390px;
-    text-align:left;
-    margin-top:3px;
+
+#snackbar {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+    font-size: 17px;
 }
 
+#snackbar.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;} 
+    to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;} 
+    to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
