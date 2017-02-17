@@ -144,7 +144,7 @@ function submitApplicant() {
 					switch (i) { // integer case
 					// gender
 					case 4:
-						if (content[i].checked == "true")
+						if (content[i].checked == true)
 							json += 0;
 						else
 							json += 1;
@@ -157,7 +157,7 @@ function submitApplicant() {
 						break;
 					// smoke
 					case 11:
-						if (content[i].value == "true")
+						if (content[i].checked == true)
 							json += 1;
 						else
 							json += 0;
