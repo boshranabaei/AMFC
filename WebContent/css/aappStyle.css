@@ -227,15 +227,6 @@ form.register input[type=text]
     font-size:20px;
     margin:10px;
 }
-form.register input[type=date]
-{
-    border: 1px solid #E1E1E1;
-    height: 18px;
-    font-size:9pt;
-	color: #505050;
-    margin-top:8px;
-    margin-bottom:5px;
-}
 form.register input[type=text].children
 {
     border: 1px solid #E1E1E1;

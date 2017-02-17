@@ -1,9 +1,11 @@
-var fieldLabels = [ "firstName", "lastName", "dateOfBirth", "gender", "gender",
+var content;
+
+var fieldLabels = [ "firstName", "lastName", "birthYear", "gender", "gender",
 		"ethnicity", "citizenship", "maritalStatus", "children", "children",
 		"smoke", "smoke", "hasORwantsHijab", "relocate", "relocateWhere",
 		"education", "occupation", "comments", "email", "email",
 		"mobilePhoneNumber", "homePhoneNumber", "pointOfContact", "city",
-		"province", "country", "prefMaritalStatus", "prefAgeMin", "prefAgeMax",
+		"province", "country", "prefMaritalStatus", "prefMaritalStatus", "prefAgeMin", "prefAgeMax",
 		"prefEthnicity", "prefEducation", "prefCountry", "prefComments",
 		"amfcPointOfContact" ];
 
@@ -18,6 +20,24 @@ function toggleRelocate() {
 		document.forms[0].elements[15].disabled = true;
 	else
 		document.forms[0].elements[15].disabled = false;
+}
+
+function replaceQuotes(str){
+	str= String(str);
+	return str.replace("\"", " ").replace("\'", " "); 
+}
+
+function greyBorders(){
+	content[1].style.border = "1px solid #E1E1E1";
+	content[2].style.border = "1px solid #E1E1E1";
+	content[3].style.border = "1px solid #E1E1E1";
+	content[6].style.border = "1px solid #E1E1E1";
+	content[10].style.border = "1px solid #E1E1E1";
+	content[24].style.border = "1px solid #E1E1E1";
+	content[26].style.border = "1px solid #E1E1E1";
+	content[35].style.border = "1px solid #E1E1E1";
+	content[29].style.border = "1px solid #E1E1E1";
+	content[30].style.border = "1px solid #E1E1E1";
 }
 
 function toast(message) {
@@ -54,7 +74,7 @@ function addApplicant(applicantFormData) {
 
 function submitApplicant() {
 
-	var content = document.forms[0].elements;
+	content = document.forms[0].elements;
 
 	// Validation
 
@@ -62,58 +82,54 @@ function submitApplicant() {
 			|| content[3].value == "" || content[6].value == ""
 			|| content[24].value == "" || content[26].value == ""
 			|| content[35].value == "") {
-
+		greyBorders();
+		
 		if (content[1].value == "") {
 			content[1].style.border = "1px solid red";
-		} else {
-			content[1].style.border = "1px solid #E1E1E1";
-		}
+		} 
 		if (content[2].value == "") {
 			content[2].style.border = "1px solid red";
-		} else {
-			content[2].style.border = "1px solid #E1E1E1";
-		}
+		} 
 		if (content[3].value == "") {
 			content[3].style.border = "1px solid red";
-		} else {
-			content[3].style.border = "1px solid #E1E1E1";
-		}
+		} 
 		if (content[6].value == "") {
 			content[6].style.border = "1px solid red";
-		} else {
-			content[6].style.border = "1px solid #E1E1E1";
-		}
+		} 
 		if (content[24].value == "") {
 			content[24].style.border = "1px solid red";
-		} else {
-			content[24].style.border = "1px solid #E1E1E1";
-		}
+		} 
 		if (content[26].value == "") {
 			content[26].style.border = "1px solid red";
-		} else {
-			content[36].style.border = "1px solid #E1E1E1";
-		}
+		} 
 		if (content[35].value == "") {
 			content[35].style.border = "1px solid red";
-		} else {
-			content[35].style.border = "1px solid #E1E1E1";
-		}
-		mscAlert("Please fill in the required fields.");
+		} 
+		toast("Please fill in the required fields.");
 
 	} else if (content[29].value != "" && content[30].value != ""
 			&& parseInt(content[29].value) > parseInt(content[30].value)) {
-		content[1].style.border = "1px solid #E1E1E1";
-		content[2].style.border = "1px solid #E1E1E1";
-		content[3].style.border = "1px solid #E1E1E1";
-		content[6].style.border = "1px solid #E1E1E1";
-		content[24].style.border = "1px solid #E1E1E1";
-		content[26].style.border = "1px solid #E1E1E1";
-		content[35].style.border = "1px solid #E1E1E1";
-
+		greyBorders();
 		content[29].style.border = "1px solid red";
 		content[30].style.border = "1px solid red";
-		mscAlert("Wrong age range for the prefered match.");
-	} else {
+		toast("Wrong age range for the prefered match.");
+		
+	} else if (isNaN(content[10].value)) {
+		greyBorders();
+		content[10].style.border = "1px solid red";
+		toast("Wrong value for some of the inputs.");
+		
+	} else if (isNaN(content[29].value)) {
+		greyBorders();
+		content[29].style.border = "1px solid red";
+		toast("Wrong value for some of the inputs.");
+		
+	} else if (isNaN(content[30].value)) {
+		greyBorders();
+		content[30].style.border = "1px solid red";
+		toast("Wrong value for some of the inputs.");
+		
+	}else {
 		mscConfirm({
 			title : 'Confirmation',
 			subtitle : 'Are your sure that you want to add this applicant?',
@@ -122,7 +138,7 @@ function submitApplicant() {
 			onOk : function(val) {
 				var json = "{";
 				for (var i = 1; i <= fieldLabels.length; i++) {
-					if (i == 19)
+					if (i == 19 || i==27)
 						continue;
 					json += "\'" + fieldLabels[i - 1] + "\':";
 					switch (i) { // integer case
@@ -136,7 +152,7 @@ function submitApplicant() {
 						break;
 					// children
 					case 9:
-						json += content[i + 1].value;
+						json += replaceQuotes(content[i + 1].value);
 						i++;
 						break;
 					// smoke
@@ -155,15 +171,15 @@ function submitApplicant() {
 							json += 0;
 						break;
 					// pref Age
-					case 28:
 					case 29:
-						if (content[i].value == " ")
-							json += content[i].value;
+					case 30:
+						if (content[i].value != "")
+							json += replaceQuotes(content[i].value);
 						else
 							json += 0;
 						break;
 					default:
-						json += "\'" + content[i].value + "\'";
+						json += "\'" + replaceQuotes(content[i].value) + "\'";
 						break;
 					}
 					if (i != fieldLabels.length) {
@@ -172,7 +188,7 @@ function submitApplicant() {
 				}
 				json += "}";
 				addApplicant(json);
-			},
+			}
 
 		// onCancel: function() {
 		// mscAlert(":( You cancelled the.");
