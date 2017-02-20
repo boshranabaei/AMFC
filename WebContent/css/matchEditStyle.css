@@ -1,0 +1,40 @@
+#backNavigation {
+	font-size: 1.6em;
+	font-family: "Arial Black", Gadget, sans-serif;
+	text-shadow: 1px 1px 4px grey;
+	color: #217f1e;
+	text-decoration: none;
+	margin-left: -40%;
+	margin-top: 1.5em;
+	
+}
+
+#backNavigation a {
+	text-decoration: none;
+	color: #217f1e;
+	margin-button:3em;
+}
+
+#backNavigation a:HOVER {
+	color: #3aba35;
+}
+
+#backNavigation a .ion-ios-arrow-back {
+	display: inline-block;
+	font-size: 1.6em;
+	content: "\f2ca";
+	text-shadow: 1px 1px 4px grey;
+	font-family: "Ionicons";
+	margin-right: 0.04em;
+	font-weight: bold;
+	color: #217f1e;
+	padding-left: 10px;
+	padding-right: 10px;
+	transform: translateY(6px);
+}
+
+#backNavigation a .ion-ios-arrow-back:ACTIVE {
+	transform: translateY(-5px);
+	color: grey;
+	font-size: 3em;
+}

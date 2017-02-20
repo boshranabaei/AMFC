@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>AMFC</title>
+<link href="css/layout.css" rel="stylesheet" type="text/css" />
+<link href="css/menu.css" rel="stylesheet" type="text/css" />
+<link href="css/aappStyle.css" rel="stylesheet" type="text/css" />
+<link href='http://fonts.googleapis.com/css?family=Bitter'
+	rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="css/msc-style.css">
+<link rel="stylesheet" href="css/matchEditStyle.css">
+<link href="css/ionicons.css" rel="stylesheet" type="text/css" />
+<script src="js/msc-script.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+</head>
+<body>
+	<header>
+		<h2>Az-Zahraa Marriage Facilitation Center</h2>
+	</header>
+
+	<ul id="nav">
+		<li><a href="napp.html">New</a></li>
+		<li><a href="match.html"><div class="selected">Match</div></a></li>
+		<li><a href="aapp.html">Add</a></li>
+		<li><a href="settings.html">Settings</a></li>
+		<li><a onclick="logOut()" href="javascript:void(0);">Log out</a></li>
+	</ul>
+
+	<div>
+		<div id="backNavigation"></div>
+	</div>
+	<form class="register" method="POST" onsubmit="return submitApplicant()">
+		<h1>Edit Applicant/Candidate Info</h1>
+		<fieldset class="row1">
+			<legend>Personal Details </legend>
+			<table>
+				<tr>
+					<td><label>First Name * </label> <input type="text"></td>
+					<td><label>Last Name * </label> <input type="text"></td>
+					<td><label>Birth year * </label> <input type="text" value="1900" class="children"></td>
+				</tr>
+				<tr>
+					<td><label>Gender *</label> <input type="radio" name="gender"
+						value="radio" checked="true"> <label class="gender">Male</label> <input
+						type="radio" name="gender" value="radio"> <label
+						class="gender">Female</label>
+					<td><label>Ethnicity * </label> <input type="text"></td>
+					<td><label>Citizenship </label> <input type="text"></td>
+				</tr>
+				<tr>
+					<td><label>Marital Status * </label> <select>
+							<option value="single">Single</option>
+							<option value="divorced">Divorced</option>
+							<option value="widowed">Widowed</option>
+							<option value="separated">Separated</option>
+					</select></td>
+					<td><label>Children * </label> <input type="checkbox" value="" onclick="toggleChildren()">
+						<input type="text" class="children" value="0" disabled></td>
+					<td><label>Smoke</label> <input type="radio" name="smoke"
+						value="radio"> <label class="gender">Yes</label> <input
+						type="radio" name="smoke" value="radio"> <label
+						class="gender">No</label></td>
+				</tr>
+			<tr>
+				<td><label>Has/wants Hijab *</label> <select>
+					<option value="yes">Yes</option>
+					<option value="no">No</option>
+					<option value="noDifference">No Difference</option></td>
+					<td><label>Relocate </label> <input type="checkbox" value=""  onclick="toggleRelocate()">
+						<input type="text" class="relocate" value="where?" disabled></td>
+			</tr>
+			<tr>
+				<td></select> <label>Education </label> <select>
+					<option value="unknown">Unknown</option>
+					<option value="someSchooling">Some Schooling</option>
+					<option value="highSchool">HighSchool</option>
+					<option value="collegeDiploma">College Diploma</option>
+					<option value="bachelors">Bachelors</option>
+					<option value="masters">Masters</option>
+					<option value="doctoral">Doctoral</option>
+				</select></td>
+				<td><label>Occupation</label> <input type="text"></td> 
+				<td><label class="comments">Comments</label>
+				<textarea name="Text1" cols="40" rows="3"></textarea></td>
+			</tr>
+			</table>
+		</fieldset>
+		<fieldset class="row2">
+			<legend>Contact Information </legend>
+			<table>
+			<tr>
+				<td><label>Email </label> <input type="text"></td>
+			</tr>
+			<tr>
+				<td><label>Phone (Mobile) </label> <input type="text"></td>
+			</tr>
+			<tr>
+				<td><label>Phone (Home) </label> <input type="text"></td>
+			</tr>
+			<tr>
+				<td><label>Point of Contact</label> <input type="text"></td>
+			</tr>
+			<tr>
+				<td><label>City *</label> <input type="text"></td>
+			</tr>
+			<tr>
+				<td><label>Province</label> <input type="text"></td>
+			</tr>
+			<tr>
+				<td><label>Country *</label> <input type="text"></td>
+			</tr>
+			</table>
+		</fieldset>
+		<fieldset class="row2">
+			<legend>Prefered Match </legend>
+			<table>
+			<tr>
+				<td><label>Marital Status </label> <select>
+							<option value="unknown">Unknown</option>
+							<option value="single">Only Single</option>
+							<option value="divorced">Divorced</option>
+							<option value="widowed">Widowed</option>
+							<option value="separated">Does not Matter</option>
+				</select></td>
+			</tr>
+			<tr>
+				<td><label>Age </label> <div class="prefAge">from</div> <input type="text" class="prefAge"><div class="prefAge">&nbsp; &nbsp;to</div><input type="text" class="prefAge"></td>
+			</tr>
+			<tr>
+				<td><label>Ethnicity </label> <input type="text"></td>
+			</tr>
+			<tr>
+				<td></select> <label>Education </label> <select>
+					<option value="unknown">Unknown</option>
+					<option value="someSchooling">Some Schooling</option>
+					<option value="highSchool">HighSchool</option>
+					<option value="collegeDiploma">College Diploma</option>
+					<option value="bachelors">Bachelors</option>
+					<option value="masters">Masters</option>
+					<option value="doctoral">Doctoral</option>
+				</select></td>
+			</tr>
+			<tr>
+				<td><label>Country </label> <input type="text"></td>
+			</tr>
+			<td><label class="comments">Comments </label>
+				<textarea name="Text1" cols="40" rows="3"></textarea></td>
+			</table>
+		</fieldset>
+
+		<div class="infobox">
+		
+			<label>AMFC point of contact *</label> <input type="text">
+			<p>"self" if the candidate approached AMFC, otherwise the admin who is introducing</p>
+			<button class="button" type="submit">Update</button>
+		</div>
+	</form>
+
+	<div id="snackbar">Some text some message..</div>
+	
+	<script src="js/script.js"></script>
+	<script src="js/matchEditScripts.js"></script>
+
+</body>
+</html>

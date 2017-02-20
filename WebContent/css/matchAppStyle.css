@@ -23,10 +23,18 @@
 	transform: translateY(6px);
 }
 
+#backNavigation a:HOVER {
+	color: #3aba35;
+}
+
 #backNavigation a .ion-ios-arrow-back:ACTIVE {
 	transform: translateY(-5px);
 	color: grey;
 	font-size: 3em;
+}
+
+#backNavigation a .ion-ios-arrow-back:HOVER {
+	color: #3aba35;
 }
 
 .box {
@@ -76,14 +84,14 @@
 	left: auto;
 }
 
-.box p{
-	margin-top:1em;
-	font-size:0.75em;
-	font-family:sans-serif;
+.box p {
+	margin-top: 1em;
+	font-size: 0.75em;
+	font-family: sans-serif;
 	text-align: left;
-	
 }
-.box button{
-	font-size:0.75em;
+
+.box button {
+	font-size: 0.75em;
 	float: right;
 }

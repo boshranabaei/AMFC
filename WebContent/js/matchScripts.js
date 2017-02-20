@@ -9,6 +9,7 @@ function requestApplicants() {
 		},
 		success : function(data) {
 			APPLICANTS = data.applicants;
+			APPLICANTS.sort(compareName);
 			drawHeaders();
 			drawRows();
 			return true;
@@ -142,7 +143,7 @@ function drawRows() {
 		profile.style.width = "3em";
 		if (APPLICANTS[i].gender == "0")
 			profilelogo.src = "/../img/maleLogo.png";
-		else if (APPLICANTS[i].hasORwantsHijab == "0")
+		else if (APPLICANTS[i].hasORwantsHijab == "no")
 			profilelogo.src = "/../img/femaleLogo.png";
 		else
 			profilelogo.src = "/../img/femaleHLogo.png";
@@ -194,7 +195,7 @@ function drawRows() {
 				url : "/applicant",
 				dataType : "json",
 				data : {
-					"task" : "matchApplicantPage",
+					"task" : "selectApplicant",
 					"userId": userId
 				},
 				success : function(data) {
