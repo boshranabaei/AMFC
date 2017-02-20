@@ -24,7 +24,7 @@ function toggleRelocate() {
 
 function replaceQuotes(str){
 	str= String(str);
-	return str.replace("\"", " ").replace("\'", " "); 
+	return str.replace("\"", "").replace("\'", ""); 
 }
 
 function greyBorders(){

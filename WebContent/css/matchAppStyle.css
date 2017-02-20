@@ -1,0 +1,89 @@
+#backNavigation a {
+	font-size: 1.6em;
+	font-family: "Arial Black", Gadget, sans-serif;
+	text-shadow: 1px 1px 4px grey;
+	color: #217f1e;
+	text-decoration: none;
+	float: left;
+	margin-left: 23%;
+	margin-top: -2.5em;
+}
+
+#backNavigation a .ion-ios-arrow-back {
+	display: inline-block;
+	font-size: 1.6em;
+	content: "\f2ca";
+	text-shadow: 1px 1px 4px grey;
+	font-family: "Ionicons";
+	margin-right: 0.04em;
+	font-weight: bold;
+	color: #217f1e;
+	padding-left: 10px;
+	padding-right: 10px;
+	transform: translateY(6px);
+}
+
+#backNavigation a .ion-ios-arrow-back:ACTIVE {
+	transform: translateY(-5px);
+	color: grey;
+	font-size: 3em;
+}
+
+.box {
+	width: 40%;
+	height: 100px;
+	background: #FFF;
+	margin: 40px auto;
+}
+
+.effect2 {
+	position: relative;
+	font-size: 1.6em;
+	font-family: "Arial Black", Gadget, sans-serif;
+	color: black;
+	text-shadow: 2px 2px 8px white;
+	height: 4em;
+	padding: 1em;
+}
+
+.effect2:before, .effect2:after {
+	z-index: -1;
+	position: absolute;
+	content: "";
+	bottom: 15px;
+	left: 10px;
+	width: 50%;
+	top: 80%;
+	max-width: 300px;
+	background: #777;
+	-webkit-box-shadow: 0 15px 10px #777;
+	-moz-box-shadow: 0 15px 10px #777;
+	box-shadow: 0 15px 10px #777;
+	-webkit-transform: rotate(-3deg);
+	-moz-transform: rotate(-3deg);
+	-o-transform: rotate(-3deg);
+	-ms-transform: rotate(-3deg);
+	transform: rotate(-3deg);
+}
+
+.effect2:after {
+	-webkit-transform: rotate(3deg);
+	-moz-transform: rotate(3deg);
+	-o-transform: rotate(3deg);
+	-ms-transform: rotate(3deg);
+	transform: rotate(3deg);
+	right: 10px;
+	left: auto;
+}
+
+.box p{
+	margin-top:1em;
+	font-size:0.75em;
+	font-family:sans-serif;
+	text-align: left;
+	
+}
+.box button{
+	font-size:0.75em;
+	float: right;
+}

@@ -1,16 +1,16 @@
-var APPLICANTS;
-function requestApplicants() {
+var APPLICANT;
+
+function requestApplicant() {
 	$.ajax({
 		type : "Post",
 		url : "/applicant",
 		dataType : "json",
 		data : {
-			"task" : "requestApplicants"
+			"task" : "matchApplicant"
 		},
 		success : function(data) {
-			APPLICANTS = data.applicants;
-			drawHeaders();
-			drawRows();
+			APPLICANT = data.applicant;
+			setup();
 			return true;
 		},
 		error : function() {
@@ -19,8 +19,6 @@ function requestApplicants() {
 	});
 };
 
-requestApplicants();
-
 function getApplicantIndex(userId) {
 	var index = 0;
 	while (APPLICANTS[index].userId != userId)
@@ -28,24 +26,26 @@ function getApplicantIndex(userId) {
 	return index;
 }
 
-// Get the modal
-// http://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal
-var modal = document.getElementById('myModal');
 
+var modal = document.getElementById('myModal');
 var span = document.getElementsByClassName("close")[0];
 span.onclick = function() {
 	modal.style.display = "none";
 }
 
-
-$('body').on('click','img',	function() {
+function showModal() {
 			modal.style.display = "block";
+			var personOnModal;
+			if(this.textContent=="More Info"){
+				personOnModal = APPLICANT;
+			}
+			else{
+				var index = getApplicantIndex(this.id);
+			}
 			
-			var index = getApplicantIndex(this.id);
-
 			var modalTitle = document.getElementById('modalTitle');
 			modalTitle.innerHTML = "";
-			modalTitle.appendChild(document.createTextNode(APPLICANTS[index].firstName + " "+ APPLICANTS[index].lastName));
+			modalTitle.appendChild(document.createTextNode(personOnModal.firstName + " "+ personOnModal.lastName));
 			
 			var modalContent = document.getElementById('modalContent');
 			modalContent.innerHTML = "";
@@ -53,51 +53,51 @@ $('body').on('click','img',	function() {
 			modalContent.style.padding = "5%";
 			modalContent.style.overflow="auto";
 			var applicantdDetails = document.createElement('p');
-			applicantdDetails.innerHTML = APPLICANTS[index].age	+ " years old </br> " + APPLICANTS[index].ethnicity;
-			if (APPLICANTS[index].citizenship != "")
-				applicantdDetails.innerHTML += " / "+ APPLICANTS[index].citizenship+" citizenship";
-			applicantdDetails.innerHTML += "<br/> "+ APPLICANTS[index].maritalStatus;
-			if (APPLICANTS[index].children != 0)
-				applicantdDetails.innerHTML += " with "+ APPLICANTS[index].citizenship+" children";
-			applicantdDetails.innerHTML += "<br/> Lives in "+ APPLICANTS[index].city;
-			if (APPLICANTS[index].province != "")
-				applicantdDetails.innerHTML += ", "+ APPLICANTS[index].province;
-			applicantdDetails.innerHTML += ", "+ APPLICANTS[index].country;
-			if(APPLICANTS[index].amfcPointOfContact!="self")
-				applicantdDetails.innerHTML += "</br>Introduced by " + APPLICANTS[index].amfcPointOfContact;
+			applicantdDetails.innerHTML = personOnModal.age	+ " years old </br> " + personOnModal.ethnicity;
+			if (personOnModal.citizenship != "")
+				applicantdDetails.innerHTML += " / "+ personOnModal.citizenship+" citizenship";
+			applicantdDetails.innerHTML += "<br/> "+ personOnModal.maritalStatus;
+			if (personOnModal.children != 0)
+				applicantdDetails.innerHTML += " with "+ personOnModal.citizenship+" children";
+			applicantdDetails.innerHTML += "<br/> Lives in "+ personOnModal.city;
+			if (personOnModal.province != "")
+				applicantdDetails.innerHTML += ", "+ personOnModal.province;
+			applicantdDetails.innerHTML += ", "+ personOnModal.country;
+			if(personOnModal.amfcPointOfContact!="self")
+				applicantdDetails.innerHTML += "</br>Introduced by " + personOnModal.amfcPointOfContact;
 			else
 				applicantdDetails.innerHTML += "</br>Applicant approached AMFC";
-			if(APPLICANTS[index].degree != "unknown")
-				applicantdDetails.innerHTML += "</br>"+ APPLICANTS[index].education;
-			if(APPLICANTS[index].occupation != "")
-				applicantdDetails.innerHTML += "</br>Currently is "+ APPLICANTS[index].occupation;
-			if(APPLICANTS[index].comments != "")
+			if(personOnModal.degree != "unknown")
+				applicantdDetails.innerHTML += "</br>"+ personOnModal.education;
+			if(personOnModal.occupation != "")
+				applicantdDetails.innerHTML += "</br>Currently is "+ personOnModal.occupation;
+			if(personOnModal.comments != "")
 				applicantdDetails.innerHTML += "</br></br><b>More info:</b><br/> ";
 			
 			var applicantdMoreInfo = document.createElement('p');
-			applicantdMoreInfo.innerHTML = APPLICANTS[index].comments;
+			applicantdMoreInfo.innerHTML = personOnModal.comments;
 			applicantdMoreInfo.style.textAlign="justify";
 			applicantdMoreInfo.style.fontSize="0.9em";
 			
 			var applicantdPref = document.createElement('p');
 			applicantdPref.innerHTML = "<br/><b>Looking for:</b>";
-			if(APPLICANTS[index].prefMaritalStatus != "unknown")
-				applicantdPref.innerHTML += APPLICANTS[index].prefMaritalStatus;
-			if(APPLICANTS[index].prefAgeMin != 0)
-				applicantdPref.innerHTML += "<br/>>= "+ (APPLICANTS[index].age+ APPLICANTS[index].prefAgeMin) +" years old";
-			if(APPLICANTS[index].prefAgeMax != 0)
-				applicantdPref.innerHTML += "<br/><= "+ (APPLICANTS[index].age+ APPLICANTS[index].prefAgeMax) +" years old";
-			if(APPLICANTS[index].prefEthnicity != "")
-				applicantdPref.innerHTML += "<br/>"+APPLICANTS[index].prefEthnicity;
-			if(APPLICANTS[index].prefCountry != "")
-				applicantdPref.innerHTML += "<br/>residence of "+APPLICANTS[index].prefCountry;
-			if(APPLICANTS[index].prefEducation != "")
-				applicantdPref.innerHTML += "<br/>education of at least "+APPLICANTS[index].prefEducation;
-			if(APPLICANTS[index].prefComments != "")
+			if(personOnModal.prefMaritalStatus != "unknown")
+				applicantdPref.innerHTML += personOnModal.prefMaritalStatus;
+			if(personOnModal.prefAgeMin != 0)
+				applicantdPref.innerHTML += "<br/>>= "+ (personOnModal.age+ personOnModal.prefAgeMin) +" years old";
+			if(personOnModal.prefAgeMax != 0)
+				applicantdPref.innerHTML += "<br/><= "+ (personOnModal.age+ personOnModal.prefAgeMax) +" years old";
+			if(personOnModal.prefEthnicity != "")
+				applicantdPref.innerHTML += "<br/>"+personOnModal.prefEthnicity;
+			if(personOnModal.prefCountry != "")
+				applicantdPref.innerHTML += "<br/>residence of "+personOnModal.prefCountry;
+			if(personOnModal.prefEducation != "")
+				applicantdPref.innerHTML += "<br/>education of at least "+personOnModal.prefEducation;
+			if(personOnModal.prefComments != "")
 				applicantdPref.innerHTML += "</br></br><b>More info:</b><br/> ";
 			
 			var prefMoreInfo = document.createElement('p');
-			prefMoreInfo.innerHTML = APPLICANTS[index].prefComments;
+			prefMoreInfo.innerHTML = personOnModal.prefComments;
 			prefMoreInfo.style.textAlign="justify";
 			prefMoreInfo.style.fontSize="0.9em";
 			
@@ -107,11 +107,10 @@ $('body').on('click','img',	function() {
 			modalContent.appendChild(applicantdPref);
 			modalContent.appendChild(prefMoreInfo);
 			
-		})
+		};
 
 var table = document.createElement('table');
 table.id = "applicantsTable";
-
 function drawHeaders() {
 
 	var headers = [ "Profile", "Name", "Age", "Ethnicity", "Status",
@@ -187,27 +186,6 @@ function drawRows() {
 		var editBtn = document.createElement("BUTTON");
 		var editText = document.createTextNode("MATCH");
 		editBtn.appendChild(editText);
-		editBtn.onclick=function() { 
-			var userId=this.parentElement.parentElement.firstChild.firstChild.id;
-			$.ajax({
-				type : "Post",
-				url : "/applicant",
-				dataType : "json",
-				data : {
-					"task" : "matchApplicantPage",
-					"userId": userId
-				},
-				success : function(data) {
-					window.open("matchapplicant.html","_self");
-					return true;
-				},
-				error : function() {
-					return false;
-				}
-			});
-			return true;
-		
-		};
 		list.appendChild(document.createTextNode(0));
 		list.appendChild(editBtn);
 		tr.appendChild(list);
@@ -301,3 +279,24 @@ window.onclick = function(event) {
   }
 }
 
+
+function drawBox(){
+	var box = document.getElementsByClassName("box effect2")[0];
+	box.innerHTML = APPLICANT.firstName+" "+APPLICANT.lastName;
+	box.innerHTML += "<p>"+ APPLICANT.age +" years old, "+APPLICANT.ethnicity +", lives in "+ APPLICANT.city+", "+APPLICANT.country+"</p>";
+	var moreInfo = document.createElement("BUTTON");
+	var moreInfoText = document.createTextNode("More Info");
+	moreInfo.appendChild(moreInfoText);
+	box.appendChild(moreInfo);
+	
+}
+
+function setup(){
+	document.getElementById("backNavigation").innerHTML = "<a href=\"match.html\"><div class=\"ion-ios-arrow-back\"></div>Applicants</a>";
+	drawBox();
+	$("button,img").click(showModal); 
+//	drawHeaders();
+//	drawRows();
+}
+
+requestApplicant();
