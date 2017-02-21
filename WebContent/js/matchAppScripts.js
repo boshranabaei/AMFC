@@ -405,6 +405,7 @@ $(document).on('click', ".ion-android-funnel", function() {
 		table.deleteRow(1);
 	}
 	drawRows();
+	delegate();
 });
 
 function dropDownFunction() {

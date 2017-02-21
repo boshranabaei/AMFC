@@ -178,6 +178,8 @@ function submitApplicant() {
 			cancelText : 'Cancel', // default: Cancel,
 			onOk : function(val) {
 				var json = "{\"userId\":"+APPLICANT.userId+",";
+				json +="\"dateAdded\":\""+APPLICANT.dateAdded+"\",";
+				json +="\"status\":\""+APPLICANT.status+"\",";
 				for (var i = 1; i <= fieldLabels.length; i++) {
 					if (i == 19 || i==27)
 						continue;
