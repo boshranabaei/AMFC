@@ -116,7 +116,7 @@ table.id = "applicantsTable";
 function drawHeaders() {
 
 	var headers = [ "Profile", "Name", "Age", "Ethnicity", "Status",
-			"Date Applied", "List" ];
+			"Date Added", "" ];
 	var header = table.createTHead();
 	var row = header.insertRow(0);
 	for (var i = 0; i < headers.length; i++) {
@@ -178,11 +178,11 @@ function drawRows() {
 			status.style.color = "red";
 		status.style.width = "5em";
 
-		var dateApplied = document.createElement('td');
-		dateApplied.appendChild(document
+		var dateAdded = document.createElement('td');
+		dateAdded.appendChild(document
 				.createTextNode(APPLICANTS[i].dateAdded));
-		tr.appendChild(dateApplied);
-		dateApplied.style.width = "10em";
+		tr.appendChild(dateAdded);
+		dateAdded.style.width = "10em";
 
 		var list = document.createElement('td');
 		var editBtn = document.createElement("BUTTON");
@@ -209,10 +209,9 @@ function drawRows() {
 			return true;
 		
 		};
-		list.appendChild(document.createTextNode(0));
 		list.appendChild(editBtn);
 		tr.appendChild(list);
-		list.style.width = "9em";
+		list.style.width = "8em";
 
 		if (i % 2 == 0)
 			tr.style.background = "white";
@@ -246,9 +245,9 @@ function compareEthnicity(a,b) {
 	  return 0;
 }
 function compareDate(a,b) {
-	  if (a.dateApplied < b.dateApplied)
+	  if (a.dateAdded < b.dateAdded)
 	    return -1;
-	  if (a.dateApplied > b.dateApplied)
+	  if (a.dateAdded > b.dateAdded)
 	    return 1;
 	  return 0;
 }
@@ -264,7 +263,7 @@ $(document).on('click', ".ion-android-funnel", function() {
 		APPLICANTS.sort(compareEthnicity);
 	if(this.previousSibling.nodeValue=="Age")
 		APPLICANTS.sort(compareAge);
-	if(this.previousSibling.nodeValue=="Date Applied")
+	if(this.previousSibling.nodeValue=="Date Added")
 		APPLICANTS.sort(compareDate);
 	if(this.style.transform!="rotateX(180deg)"){
 		this.style.transform= "rotateX(180deg)";
@@ -274,7 +273,7 @@ $(document).on('click', ".ion-android-funnel", function() {
 	}
 	while(table.rows.length > 1) {
 		  table.deleteRow(1);
-		}
+	}
 	drawRows();
 });
 

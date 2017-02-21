@@ -1,4 +1,10 @@
-var APPLICANT;
+var APPLICANT, PAIRINGS, CANDIDATES;
+var pairingTable = document.createElement('table');
+pairingTable.id = "pairingsTable";
+var table = document.createElement('table');
+table.id = "applicantsTable";
+var modal = document.getElementById('myModal');
+var span = document.getElementsByClassName("close")[0];
 
 function requestApplicant() {
 	$.ajax({
@@ -10,7 +16,7 @@ function requestApplicant() {
 		},
 		success : function(data) {
 			APPLICANT = data.applicant;
-			setup();
+			setupApplicantInfo();
 			return true;
 		},
 		error : function() {
@@ -19,15 +25,89 @@ function requestApplicant() {
 	});
 };
 
-function getApplicantIndex(userId) {
+function requestCandidates() {
+	$.ajax({
+		type : "Post",
+		url : "/applicant",
+		dataType : "json",
+		data : {
+			"gender" : APPLICANT.gender,
+			"task" : "getCandidates"
+		},
+		success : function(data) {
+			CANDIDATES = data.candidates;
+			CANDIDATES.sort(compareName);
+			setupPairings();
+			return true;
+		},
+		error : function() {
+			return false;
+		}
+	});
+};
+
+function requestPairings() {
+	$.ajax({
+		type : "Post",
+		url : "/applicant",
+		dataType : "json",
+		data : {
+			"userId" : APPLICANT.userId,
+			"gender" : APPLICANT.gender,
+			"task" : "getPairings"
+		},
+		success : function(data) {
+			PAIRINGS = data.pairings;
+			requestCandidates();
+			return true;
+		},
+		error : function() {
+			return false;
+		}
+	});
+};
+
+function editApplicant() {
+	$.ajax({
+		type : "Post",
+		url : "/applicant",
+		dataType : "json",
+		data : {
+			"task" : "selectApplicant",
+			"userId" : APPLICANT.userId
+		},
+		success : function(data) {
+			window.open("matchedit.html", "_self");
+			return true;
+		},
+		error : function() {
+			return false;
+		}
+	});
+}
+
+function getCandidateIndex(userId) {
 	var index = 0;
-	while (APPLICANTS[index].userId != userId)
+	while (CANDIDATES[index].userId != userId)
 		index++;
 	return index;
 }
 
-var modal = document.getElementById('myModal');
-var span = document.getElementsByClassName("close")[0];
+function candidateIsPaired(userId, gender) {
+	var index = 0;
+	if (gender == 0) {
+		while (index < PAIRINGS.length && PAIRINGS[index].FUserId != userId)
+			index++;
+	} else {
+		while (index < PAIRINGS.length && PAIRINGS[index].MUserId != userId)
+			index++;
+	}
+	if (index < PAIRINGS.length)
+		return true;
+	else
+		return false;
+}
+
 span.onclick = function() {
 	modal.style.display = "none";
 }
@@ -38,7 +118,7 @@ function showModal() {
 	if (this.textContent == "More Info") {
 		personOnModal = APPLICANT;
 	} else {
-		var index = getApplicantIndex(this.id);
+		personOnModal = CANDIDATES[getCandidateIndex(this.id)];
 	}
 
 	var modalTitle = document.getElementById('modalTitle');
@@ -116,29 +196,28 @@ function showModal() {
 
 };
 
-var table = document.createElement('table');
-table.id = "applicantsTable";
 function drawHeaders() {
 
-	var headers = [ "Profile", "Name", "Age", "Ethnicity", "Status",
-			"Date Applied", "List" ];
+	var headers = [ "Profile", "Name", "Age", "Ethnicity", "City", " " ];
 	var header = table.createTHead();
 	var row = header.insertRow(0);
 	for (var i = 0; i < headers.length; i++) {
 		var cell = row.insertCell(i);
 		cell.innerHTML = headers[i];
-		if (i != 0 && i != 4 && i != 6)
+		if (i != 0 && i != 5)
 			cell.innerHTML += "<div class=\"ion-android-funnel\"></div>";
 		cell.style.background = "#5a8c6d";
 		cell.style.color = "white";
 		cell.style.fontSize = "1.15em";
 		cell.style.padding = "0.3em";
 	}
-
 }
 function drawRows() {
 
-	for (var i = 0; i < APPLICANTS.length; i++) {
+	for (var i = 0; i < CANDIDATES.length; i++) {
+		if (candidateIsPaired(CANDIDATES[i].userId, APPLICANT.gender))
+			continue;
+
 		var tr = document.createElement('tr');
 
 		var profile = document.createElement('td');
@@ -146,9 +225,9 @@ function drawRows() {
 		profile.appendChild(profilelogo);
 		tr.appendChild(profile);
 		profile.style.width = "3em";
-		if (APPLICANTS[i].gender == "0")
+		if (CANDIDATES[i].gender == "0")
 			profilelogo.src = "/../img/maleLogo.png";
-		else if (APPLICANTS[i].hasORwantsHijab == "0")
+		else if (CANDIDATES[i].hasORwantsHijab == "no")
 			profilelogo.src = "/../img/femaleLogo.png";
 		else
 			profilelogo.src = "/../img/femaleHLogo.png";
@@ -156,47 +235,35 @@ function drawRows() {
 		profilelogo.style.marginTop = "0.2em";
 		profilelogo.style.boxShadow = "2px 2px #999";
 		profilelogo.style.boxShadow = "2px 2px #999";
-		profilelogo.id = APPLICANTS[i].userId;
+		profilelogo.id = CANDIDATES[i].userId;
 
 		var name = document.createElement('td');
-		name.appendChild(document.createTextNode(APPLICANTS[i].firstName + " "
-				+ APPLICANTS[i].lastName));
+		name.appendChild(document.createTextNode(CANDIDATES[i].firstName + " "
+				+ CANDIDATES[i].lastName));
 		tr.appendChild(name);
 		name.style.fontWeight = "bold";
 		name.style.width = "12em";
 
 		var age = document.createElement('td');
-		age.appendChild(document.createTextNode(APPLICANTS[i].age));
+		age.appendChild(document.createTextNode(CANDIDATES[i].age));
 		tr.appendChild(age);
 
 		var ethnicity = document.createElement('td');
-		ethnicity.appendChild(document.createTextNode(APPLICANTS[i].ethnicity));
+		ethnicity.appendChild(document.createTextNode(CANDIDATES[i].ethnicity));
 		tr.appendChild(ethnicity);
 		ethnicity.style.width = "7em";
 
-		var status = document.createElement('td');
-		status.appendChild(document.createTextNode(APPLICANTS[i].status));
-		tr.appendChild(status);
-		if (APPLICANTS[i].status == "free")
-			status.style.color = "grey";
-		else if (APPLICANTS[i].status == "busy")
-			status.style.color = "red";
-		status.style.width = "5em";
+		var city = document.createElement('td');
+		city.appendChild(document.createTextNode(CANDIDATES[i].city));
+		tr.appendChild(city);
 
-		var dateApplied = document.createElement('td');
-		dateApplied.appendChild(document
-				.createTextNode(APPLICANTS[i].dateAdded));
-		tr.appendChild(dateApplied);
-		dateApplied.style.width = "10em";
-
-		var list = document.createElement('td');
-		var editBtn = document.createElement("BUTTON");
-		var editText = document.createTextNode("MATCH");
-		editBtn.appendChild(editText);
-		list.appendChild(document.createTextNode(0));
-		list.appendChild(editBtn);
-		tr.appendChild(list);
-		list.style.width = "9em";
+		var add = document.createElement('td');
+		add.innerHTML = "<div class=\"ion-plus-round\"></div>";
+		add.style.fontSize = "1.7em";
+		add.style.textShadow = "1px 1px 4px grey";
+		add.style.color = "green";
+		tr.appendChild(add);
+		add.style.width = "0.3em";
 
 		if (i % 2 == 0)
 			tr.style.background = "white";
@@ -229,10 +296,10 @@ function compareEthnicity(a, b) {
 		return 1;
 	return 0;
 }
-function compareDate(a, b) {
-	if (a.dateApplied < b.dateApplied)
+function compareCity(a, b) {
+	if (a.city < b.city)
 		return -1;
-	if (a.dateApplied > b.dateApplied)
+	if (a.city > b.city)
 		return 1;
 	return 0;
 }
@@ -243,18 +310,18 @@ $(document).on('click', ".ion-android-funnel", function() {
 	}
 	this.style.color = "#3ae045";
 	if (this.previousSibling.nodeValue == "Name")
-		APPLICANTS.sort(compareName);
+		CANDIDATES.sort(compareName);
 	if (this.previousSibling.nodeValue == "Ethnicity")
-		APPLICANTS.sort(compareEthnicity);
+		CANDIDATES.sort(compareEthnicity);
 	if (this.previousSibling.nodeValue == "Age")
-		APPLICANTS.sort(compareAge);
-	if (this.previousSibling.nodeValue == "Date Applied")
-		APPLICANTS.sort(compareDate);
+		CANDIDATES.sort(compareAge);
+	if (this.previousSibling.nodeValue == "City")
+		CANDIDATES.sort(compareCity);
 	if (this.style.transform != "rotateX(180deg)") {
 		this.style.transform = "rotateX(180deg)";
 	} else {
 		this.style.transform = "rotateX(360deg)";
-		APPLICANTS.reverse();
+		CANDIDATES.reverse();
 	}
 	while (table.rows.length > 1) {
 		table.deleteRow(1);
@@ -306,32 +373,140 @@ function drawBox() {
 	box.appendChild(moreInfo);
 
 }
-function editApplicant() {
-	$.ajax({
-		type : "Post",
-		url : "/applicant",
-		dataType : "json",
-		data : {
-			"task" : "selectApplicant",
-			"userId" : APPLICANT.userId
-		},
-		success : function(data) {
-			window.open("matchedit.html", "_self");
-			return true;
-		},
-		error : function() {
-			return false;
+
+function drawPairingHeaders() {
+	var headers = [ "Profile", "Name", "Age", "Ethnicity", "City", "Director",
+			"Status", "Decision Date", " " ];
+	var header = pairingTable.createTHead();
+	var row = header.insertRow(0);
+	for (var i = 0; i < headers.length; i++) {
+		var cell = row.insertCell(i);
+		cell.innerHTML = headers[i];
+		cell.style.background = "#efa052";
+		cell.style.textShadow = "1px 1px 1px grey";
+		cell.style.color = "white";
+		cell.style.fontSize = "1.15em";
+		cell.style.padding = "0.3em";
+	}
+}
+function drawPairingRows() {
+
+	if (PAIRINGS.length == 0) {
+		var tr = document.createElement('tr');
+		tr.innerHTML="<td colspan=\"9\">No pairings found</td>";
+		tr.style.background = "#fce9c5";
+		pairingTable.appendChild(tr);
+	} else {
+		for (var i = 0; i < PAIRINGS.length; i++) {
+			var tr = document.createElement('tr');
+
+			var index;
+
+			if (APPLICANT.gender == 0)
+				index = getCandidateIndex(PAIRINGS[i].FUserId);
+			else
+				index = getCandidateIndex(PAIRINGS[i].MUserId);
+
+			var profile = document.createElement('td');
+			var profilelogo = document.createElement("img");
+			profile.appendChild(profilelogo);
+			tr.appendChild(profile);
+			profile.style.width = "3em";
+			if (CANDIDATES[index].gender == "0")
+				profilelogo.src = "/../img/maleLogo.png";
+			else if (CANDIDATES[index].hasORwantsHijab == "no")
+				profilelogo.src = "/../img/femaleLogo.png";
+			else
+				profilelogo.src = "/../img/femaleHLogo.png";
+			profilelogo.style.height = "2.5em";
+			profilelogo.style.marginTop = "0.2em";
+			profilelogo.style.boxShadow = "2px 2px #999";
+			profilelogo.id = CANDIDATES[index].userId;
+
+			var name = document.createElement('td');
+			name.appendChild(document
+					.createTextNode(CANDIDATES[index].firstName + " "
+							+ CANDIDATES[index].lastName));
+			tr.appendChild(name);
+			name.style.fontWeight = "bold";
+			name.style.width = "12em";
+
+			var age = document.createElement('td');
+			age.appendChild(document.createTextNode(CANDIDATES[index].age));
+			tr.appendChild(age);
+
+			var ethnicity = document.createElement('td');
+			ethnicity.appendChild(document
+					.createTextNode(CANDIDATES[index].ethnicity));
+			tr.appendChild(ethnicity);
+			ethnicity.style.width = "7em";
+
+			var city = document.createElement('td');
+			city.appendChild(document.createTextNode(CANDIDATES[index].city));
+			tr.appendChild(city);
+			city.style.width = "7em";
+
+			var director = document.createElement('td');
+			director.appendChild(document.createTextNode(PAIRINGS[i].director));
+			tr.appendChild(director);
+
+			var status = document.createElement('td');
+			status.appendChild(document
+					.createTextNode(PAIRINGS[i].pairingStatus));
+			tr.appendChild(status);
+			status.style.color = "blue";
+			status.style.width = "5em";
+
+			var pairingDate = document.createElement('td');
+			pairingDate.appendChild(document
+					.createTextNode(PAIRINGS[i].pairingDate));
+			tr.appendChild(pairingDate);
+			pairingDate.style.width = "10em";
+
+			var remove = document.createElement('td');
+			remove.innerHTML = "<div class=\"ion-close\"></div>";
+			remove.style.fontSize = "1.5em";
+			remove.style.textShadow = "1px 1px 4px grey";
+			remove.style.color = "#800000";
+			tr.appendChild(remove);
+			remove.style.width = "0.3em";
+
+			if (i % 2 == 0)
+				tr.style.background = "#fce9c5";
+			else
+				tr.style.background = "white";
+
+			pairingTable.appendChild(tr);
 		}
-	});
+	}
+
 }
 
-function setup() {
+function setupApplicantInfo() {
+	requestPairings();
 	document.getElementById("backNavigation").innerHTML = "<a href=\"match.html\"><div class=\"ion-ios-arrow-back\"></div>Applicants</a>";
 	drawBox();
 	$("#moreInfoBtn").click(showModal);
+	$("img").click(showModal);
 	$("#editApplicant").click(editApplicant);
 	// drawHeaders();
 	// drawRows();
 }
 
+function setupPairings() {
+	var pairingTitle = document.createElement('div');
+	pairingTitle.id="pairingsTitle"
+	pairingTitle.innerHTML="Pairings";
+	document.body.appendChild(pairingTitle);
+	drawPairingHeaders();
+	drawPairingRows();
+	document.body.appendChild(pairingTable);
+	var candidatesTitle = document.createElement('div');
+	candidatesTitle.id="candidatesTitle"
+	candidatesTitle.innerHTML="Candidates";
+	document.body.appendChild(candidatesTitle);
+	drawHeaders();
+	drawRows();
+	$("img").click(showModal);
+}
 requestApplicant();

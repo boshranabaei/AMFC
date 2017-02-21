@@ -95,3 +95,26 @@
 	font-size: 0.75em;
 	float: right;
 }
+#pairingsTitle{
+	font-size: 1.6em;
+	font-family: "Arial Black", Gadget, sans-serif;
+	text-shadow: 1px 1px 1px grey;
+	color: #e68a00;
+}
+#candidatesTitle{
+	font-size: 1.6em;
+	font-family: "Arial Black", Gadget, sans-serif;
+	text-shadow: 1px 1px 1px grey;
+	color: #5a8c6d;
+	margin-top:1em;
+}
+.ion-plus-round:HOVER {
+	color:#00cc66;
+}
+
+.ion-close:HOVER {
+	color:red;
+}
+.ion-close:ACTIVE , .ion-plus-round:ACTIVE{
+	transform: translateY(4px);
+}
