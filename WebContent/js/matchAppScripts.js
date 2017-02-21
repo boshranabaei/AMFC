@@ -58,7 +58,7 @@ function requestPairings(operation) {
 		},
 		success : function(data) {
 			PAIRINGS = data.pairings;
-			if (operation == "add") {
+			if (operation == "addOrRemove") {
 				while (pairingTable.rows.length > 1) {
 					pairingTable.deleteRow(1);
 				}
@@ -133,7 +133,28 @@ function addPairing(MUserId, FUserId, director) {
 		},
 		success : function(data) {
 			toast("Pairing added successfully");
-			requestPairings("add");
+			requestPairings("addOrRemove");
+			return true;
+		},
+		error : function() {
+			toast("Server Error");
+			return false;
+		}
+	});
+}
+function removePairing(MUserId, FUserId) {
+	$.ajax({
+		type : "Post",
+		url : "/applicant",
+		dataType : "json",
+		data : {
+			"task" : "removePairing",
+			"MUserId" : MUserId,
+			"FUserId" : FUserId
+		},
+		success : function(data) {
+			toast("Pairing removed successfully");
+			requestPairings("addOrRemove");
 			return true;
 		},
 		error : function() {
@@ -581,31 +602,39 @@ function delegate() {
 						PAIRINGS[index].FUserId,
 						this.options[this.selectedIndex].value);
 			});
-	$(".ion-plus-round")
-			.click(
-					function() {
-						var that = this;
-						mscPrompt({
-							title : 'Add Pairing',
-							subtitle : 'Who is responsible for introducing?',
-							okText : 'Yes', // default: OK
-							placeholder:'director',
-							cancelText : 'Cancel', // default: Cancel,
-							onOk : function(val) {
-								var name = that.parentElement.parentElement.firstElementChild.nextElementSibling.innerText;
-								var i;
-								for (i = 0; i < CANDIDATES.length; i++)
-									if ((CANDIDATES[i].firstName + " " + CANDIDATES[i].lastName) == name)
-										break;
-								if (APPLICANT.gender == 1)
-									addPairing(CANDIDATES[i].userId,
-											APPLICANT.userId, val);
-								else
-									addPairing(APPLICANT.userId,
-											CANDIDATES[i].userId, val);
-							}
-						})
-					});
+	$(".ion-plus-round").click(function() {
+			var that = this;
+			mscPrompt({
+				title : 'Add Pairing',
+				subtitle : 'Who is responsible for introducing?',
+				okText : 'Yes', // default: OK
+				placeholder:'director',
+				cancelText : 'Cancel', // default: Cancel,
+				onOk : function(val) {
+					var name = that.parentElement.parentElement.firstElementChild.nextElementSibling.innerText;
+					var i;
+					for (i = 0; i < CANDIDATES.length; i++)
+						if ((CANDIDATES[i].firstName + " " + CANDIDATES[i].lastName) == name)
+							break;
+					if (APPLICANT.gender == 1)
+						addPairing(CANDIDATES[i].userId,
+								APPLICANT.userId, val);
+					else
+						addPairing(APPLICANT.userId,
+								CANDIDATES[i].userId, val);
+				}
+			})
+		});
+	$(".ion-close").click(function() {
+		var that = this;
+		var index = this.parentElement.parentElement.rowIndex - 1;
+		if (APPLICANT.gender == 1)
+			removePairing(PAIRINGS[index].MUserId,
+					APPLICANT.userId);
+		else
+			removePairing(APPLICANT.userId,
+					PAIRINGS[index].FUserId);
+	});
 }
 function setupPairings() {
 	var pairingTitle = document.createElement('div');
