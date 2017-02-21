@@ -46,7 +46,7 @@ function requestCandidates() {
 	});
 };
 
-function requestPairings() {
+function requestPairings(operation) {
 	$.ajax({
 		type : "Post",
 		url : "/applicant",
@@ -58,7 +58,19 @@ function requestPairings() {
 		},
 		success : function(data) {
 			PAIRINGS = data.pairings;
-			requestCandidates();
+			if (operation == "add") {
+				while (pairingTable.rows.length > 1) {
+					pairingTable.deleteRow(1);
+				}
+				while (table.rows.length > 1) {
+					table.deleteRow(1);
+				}
+				drawPairingRows();
+				drawRows();
+				delegate();
+			} else {
+				requestCandidates();
+			}
 			return true;
 		},
 		error : function() {
@@ -81,6 +93,51 @@ function editApplicant() {
 			return true;
 		},
 		error : function() {
+			return false;
+		}
+	});
+}
+
+function updatePairingStatus(MUserId, FUserId, pairingStatus) {
+	$.ajax({
+		type : "Post",
+		url : "/applicant",
+		dataType : "json",
+		data : {
+			"task" : "updatePairingStatus",
+			"MUserId" : MUserId,
+			"FUserId" : FUserId,
+			"pairingStatus" : pairingStatus
+		},
+		success : function(data) {
+			toast("Pairing status changes successfully");
+			return true;
+		},
+		error : function() {
+			toast("Server Error");
+			return false;
+		}
+	});
+}
+
+function addPairing(MUserId, FUserId, director) {
+	$.ajax({
+		type : "Post",
+		url : "/applicant",
+		dataType : "json",
+		data : {
+			"task" : "addPairing",
+			"MUserId" : MUserId,
+			"FUserId" : FUserId,
+			"director" : director
+		},
+		success : function(data) {
+			toast("Pairing added successfully");
+			requestPairings("add");
+			return true;
+		},
+		error : function() {
+			toast("Server Error");
 			return false;
 		}
 	});
@@ -352,7 +409,6 @@ window.onclick = function(event) {
 		}
 	}
 }
-
 function drawBox() {
 	var box = document.getElementsByClassName("box effect2")[0];
 	box.innerHTML = APPLICANT.firstName + " " + APPLICANT.lastName;
@@ -373,7 +429,6 @@ function drawBox() {
 	box.appendChild(moreInfo);
 
 }
-
 function drawPairingHeaders() {
 	var headers = [ "Profile", "Name", "Age", "Ethnicity", "City", "Director",
 			"Status", "Decision Date", " " ];
@@ -393,7 +448,7 @@ function drawPairingRows() {
 
 	if (PAIRINGS.length == 0) {
 		var tr = document.createElement('tr');
-		tr.innerHTML="<td colspan=\"9\">No pairings found</td>";
+		tr.innerHTML = "<td colspan=\"9\">No pairings found</td>";
 		tr.style.background = "#fce9c5";
 		pairingTable.appendChild(tr);
 	} else {
@@ -451,11 +506,27 @@ function drawPairingRows() {
 			tr.appendChild(director);
 
 			var status = document.createElement('td');
-			status.appendChild(document
-					.createTextNode(PAIRINGS[i].pairingStatus));
+			var dropDown = document.createElement("select");
+			var opt1 = document.createElement("option");
+			opt1.text = 'on going';
+			opt1.value = 'on going';
+			dropDown.options.add(opt1);
+			var opt2 = document.createElement("option");
+			opt2.text = 'failed';
+			opt2.value = 'failed';
+			dropDown.options.add(opt2);
+			var opt3 = document.createElement("option");
+			opt3.text = 'successful';
+			opt3.value = 'successful';
+			dropDown.options.add(opt3);
+			if (PAIRINGS[i].pairingStatus == "on going")
+				dropDown.selectedIndex = 0;
+			else if (PAIRINGS[i].pairingStatus == "failed")
+				dropDown.selectedIndex = 1;
+			else
+				dropDown.selectedIndex = 2;
+			status.appendChild(dropDown);
 			tr.appendChild(status);
-			status.style.color = "blue";
-			status.style.width = "5em";
 
 			var pairingDate = document.createElement('td');
 			pairingDate.appendChild(document
@@ -483,7 +554,7 @@ function drawPairingRows() {
 }
 
 function setupApplicantInfo() {
-	requestPairings();
+	requestPairings("start");
 	document.getElementById("backNavigation").innerHTML = "<a href=\"match.html\"><div class=\"ion-ios-arrow-back\"></div>Applicants</a>";
 	drawBox();
 	$("#moreInfoBtn").click(showModal);
@@ -493,20 +564,63 @@ function setupApplicantInfo() {
 	// drawRows();
 }
 
+function toast(message) {
+	var x = document.getElementById("snackbar")
+	x.className = "show";
+	x.innerText = message;
+	setTimeout(function() {
+		x.className = x.className.replace("show", "");
+	}, 3000);
+}
+function delegate() {
+	$("img").click(showModal);
+	$("select").change(
+			function() {
+				var index = this.parentElement.parentElement.rowIndex - 1;
+				updatePairingStatus(PAIRINGS[index].MUserId,
+						PAIRINGS[index].FUserId,
+						this.options[this.selectedIndex].value);
+			});
+	$(".ion-plus-round")
+			.click(
+					function() {
+						var that = this;
+						mscPrompt({
+							title : 'Add Pairing',
+							subtitle : 'Who is responsible for introducing?',
+							okText : 'Yes', // default: OK
+							placeholder:'director',
+							cancelText : 'Cancel', // default: Cancel,
+							onOk : function(val) {
+								var name = that.parentElement.parentElement.firstElementChild.nextElementSibling.innerText;
+								var i;
+								for (i = 0; i < CANDIDATES.length; i++)
+									if ((CANDIDATES[i].firstName + " " + CANDIDATES[i].lastName) == name)
+										break;
+								if (APPLICANT.gender == 1)
+									addPairing(CANDIDATES[i].userId,
+											APPLICANT.userId, val);
+								else
+									addPairing(APPLICANT.userId,
+											CANDIDATES[i].userId, val);
+							}
+						})
+					});
+}
 function setupPairings() {
 	var pairingTitle = document.createElement('div');
-	pairingTitle.id="pairingsTitle"
-	pairingTitle.innerHTML="Pairings";
+	pairingTitle.id = "pairingsTitle"
+	pairingTitle.innerHTML = "Pairings";
 	document.body.appendChild(pairingTitle);
 	drawPairingHeaders();
 	drawPairingRows();
 	document.body.appendChild(pairingTable);
 	var candidatesTitle = document.createElement('div');
-	candidatesTitle.id="candidatesTitle"
-	candidatesTitle.innerHTML="Candidates";
+	candidatesTitle.id = "candidatesTitle"
+	candidatesTitle.innerHTML = "Candidates";
 	document.body.appendChild(candidatesTitle);
 	drawHeaders();
 	drawRows();
-	$("img").click(showModal);
+	delegate();
 }
 requestApplicant();
