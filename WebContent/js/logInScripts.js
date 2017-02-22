@@ -9,7 +9,7 @@ function onLogIn() {
 		},
 		success : function(data) {
 				if(data.isValid == true){
-					window.open("napp.html","_self");
+					window.open("match.html","_self");
 				}
 				else{
 					var message = document.createElement("div");

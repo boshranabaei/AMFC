@@ -64,14 +64,14 @@ $('body').on('click','img',	function() {
 			if (APPLICANTS[index].province != "")
 				applicantdDetails.innerHTML += ", "+ APPLICANTS[index].province;
 			applicantdDetails.innerHTML += ", "+ APPLICANTS[index].country;
-			if(APPLICANTS[index].amfcPointOfContact!="self")
-				applicantdDetails.innerHTML += "</br>Introduced by " + APPLICANTS[index].amfcPointOfContact;
-			else
-				applicantdDetails.innerHTML += "</br>Applicant approached AMFC";
-			if(APPLICANTS[index].degree != "unknown")
-				applicantdDetails.innerHTML += "</br>"+ APPLICANTS[index].education;
+			if(APPLICANTS[index].education != "unknown")
+				applicantdDetails.innerHTML += "</br>Education level is \""+ APPLICANTS[index].education+"\"";
 			if(APPLICANTS[index].occupation != "")
 				applicantdDetails.innerHTML += "</br>Currently is "+ APPLICANTS[index].occupation;
+			if(APPLICANTS[index].amfcPointOfContact!="self")
+				applicantdDetails.innerHTML += "</br> *Introduced by " + APPLICANTS[index].amfcPointOfContact;
+			else
+				applicantdDetails.innerHTML += "</br> *Applicant approached AMFC";
 			if(APPLICANTS[index].comments != "")
 				applicantdDetails.innerHTML += "</br></br><b>More info:</b><br/> ";
 			
@@ -81,21 +81,30 @@ $('body').on('click','img',	function() {
 			applicantdMoreInfo.style.fontSize="0.9em";
 			
 			var applicantdPref = document.createElement('p');
-			applicantdPref.innerHTML = "<br/><b>Looking for:</b>";
+			applicantdPref.innerHTML = "";
+			if(APPLICANTS[index].gender==0)
+				if(APPLICANTS[index].hasORwantsHijab=="no")
+					applicantdPref.innerHTML += "<br/>Without Hijab";
+				else if(APPLICANTS[index].hasORwantsHijab=="yes")
+					applicantdPref.innerHTML += "<br/>Wearing Hijab";
+				else
+					applicantdPref.innerHTML += "<br/>Hijab does not matter";
 			if(APPLICANTS[index].prefMaritalStatus != "unknown")
-				applicantdPref.innerHTML += APPLICANTS[index].prefMaritalStatus;
+				applicantdPref.innerHTML += "<br/>Marital status of "+APPLICANTS[index].prefMaritalStatus;
 			if(APPLICANTS[index].prefAgeMin != 0)
 				applicantdPref.innerHTML += "<br/>>= "+ (APPLICANTS[index].age+ APPLICANTS[index].prefAgeMin) +" years old";
 			if(APPLICANTS[index].prefAgeMax != 0)
 				applicantdPref.innerHTML += "<br/><= "+ (APPLICANTS[index].age+ APPLICANTS[index].prefAgeMax) +" years old";
 			if(APPLICANTS[index].prefEthnicity != "")
-				applicantdPref.innerHTML += "<br/>"+APPLICANTS[index].prefEthnicity;
+				applicantdPref.innerHTML += "<br/>Ethinicity of "+APPLICANTS[index].prefEthnicity;
 			if(APPLICANTS[index].prefCountry != "")
-				applicantdPref.innerHTML += "<br/>residence of "+APPLICANTS[index].prefCountry;
-			if(APPLICANTS[index].prefEducation != "")
-				applicantdPref.innerHTML += "<br/>education of at least "+APPLICANTS[index].prefEducation;
+				applicantdPref.innerHTML += "<br/>Residence of "+APPLICANTS[index].prefCountry;
+			if(APPLICANTS[index].prefEducation != "unknown")
+				applicantdPref.innerHTML += "<br/>Education of at least \""+APPLICANTS[index].prefEducation+"\"";
+			if(applicantdPref.innerHTML!="")
+				applicantdPref.innerHTML = "<br/><b>Looking for:</b>" + applicantdPref.innerHTML;
 			if(APPLICANTS[index].prefComments != "")
-				applicantdPref.innerHTML += "</br></br><b>More info:</b><br/> ";
+				applicantdPref.innerHTML += "</br></br><b>About the preferred match:</b><br/> ";
 			
 			var prefMoreInfo = document.createElement('p');
 			prefMoreInfo.innerHTML = APPLICANTS[index].prefComments;

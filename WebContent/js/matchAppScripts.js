@@ -68,9 +68,13 @@ function requestPairings(operation) {
 				drawPairingRows();
 				drawRows();
 				delegate();
-			} else {
+			}else if(operation == "changeStatus"){
+				return true;
+			} 
+			else {
 				requestCandidates();
 			}
+			
 			return true;
 		},
 		error : function() {
@@ -110,6 +114,7 @@ function updatePairingStatus(MUserId, FUserId, pairingStatus) {
 			"pairingStatus" : pairingStatus
 		},
 		success : function(data) {
+			requestPairings("changeStatus");
 			toast("Pairing status changes successfully");
 			return true;
 		},
@@ -208,64 +213,64 @@ function showModal() {
 	modalContent.innerHTML = "";
 	modalContent.style.maxHeight = "400px";
 	modalContent.style.padding = "5%";
-	modalContent.style.overflow = "auto";
+	modalContent.style.overflow="auto";
 	var applicantdDetails = document.createElement('p');
-	applicantdDetails.innerHTML = personOnModal.age + " years old </br> "
-			+ personOnModal.ethnicity;
+	applicantdDetails.innerHTML = personOnModal.age	+ " years old </br> " + personOnModal.ethnicity;
 	if (personOnModal.citizenship != "")
-		applicantdDetails.innerHTML += " / " + personOnModal.citizenship
-				+ " citizenship";
-	applicantdDetails.innerHTML += "<br/> " + personOnModal.maritalStatus;
+		applicantdDetails.innerHTML += " / "+ personOnModal.citizenship+" citizenship";
+	applicantdDetails.innerHTML += "<br/> "+ personOnModal.maritalStatus;
 	if (personOnModal.children != 0)
-		applicantdDetails.innerHTML += " with " + personOnModal.citizenship
-				+ " children";
-	applicantdDetails.innerHTML += "<br/> Lives in " + personOnModal.city;
+		applicantdDetails.innerHTML += " with "+ personOnModal.citizenship+" children";
+	applicantdDetails.innerHTML += "<br/> Lives in "+ personOnModal.city;
 	if (personOnModal.province != "")
-		applicantdDetails.innerHTML += ", " + personOnModal.province;
-	applicantdDetails.innerHTML += ", " + personOnModal.country;
-	if (personOnModal.amfcPointOfContact != "self")
-		applicantdDetails.innerHTML += "</br>Introduced by "
-				+ personOnModal.amfcPointOfContact;
+		applicantdDetails.innerHTML += ", "+ personOnModal.province;
+	applicantdDetails.innerHTML += ", "+ personOnModal.country;
+	if(personOnModal.education != "unknown")
+		applicantdDetails.innerHTML += "</br>Education level is \""+ personOnModal.education+"\"";
+	if(personOnModal.occupation != "")
+		applicantdDetails.innerHTML += "</br>Currently is "+ personOnModal.occupation;
+	if(personOnModal.amfcPointOfContact!="self")
+		applicantdDetails.innerHTML += "</br> *Introduced by " + personOnModal.amfcPointOfContact;
 	else
-		applicantdDetails.innerHTML += "</br>Applicant approached AMFC";
-	if (personOnModal.degree != "unknown")
-		applicantdDetails.innerHTML += "</br>" + personOnModal.education;
-	if (personOnModal.occupation != "")
-		applicantdDetails.innerHTML += "</br>Currently is "
-				+ personOnModal.occupation;
-	if (personOnModal.comments != "")
+		applicantdDetails.innerHTML += "</br> *Applicant approached AMFC";
+	if(personOnModal.comments != "")
 		applicantdDetails.innerHTML += "</br></br><b>More info:</b><br/> ";
-
+	
 	var applicantdMoreInfo = document.createElement('p');
 	applicantdMoreInfo.innerHTML = personOnModal.comments;
-	applicantdMoreInfo.style.textAlign = "justify";
-	applicantdMoreInfo.style.fontSize = "0.9em";
-
+	applicantdMoreInfo.style.textAlign="justify";
+	applicantdMoreInfo.style.fontSize="0.9em";
+	
 	var applicantdPref = document.createElement('p');
-	applicantdPref.innerHTML = "<br/><b>Looking for:</b>";
-	if (personOnModal.prefMaritalStatus != "unknown")
-		applicantdPref.innerHTML += personOnModal.prefMaritalStatus;
-	if (personOnModal.prefAgeMin != 0)
-		applicantdPref.innerHTML += "<br/>>= "
-				+ (personOnModal.age + personOnModal.prefAgeMin) + " years old";
-	if (personOnModal.prefAgeMax != 0)
-		applicantdPref.innerHTML += "<br/><= "
-				+ (personOnModal.age + personOnModal.prefAgeMax) + " years old";
-	if (personOnModal.prefEthnicity != "")
-		applicantdPref.innerHTML += "<br/>" + personOnModal.prefEthnicity;
-	if (personOnModal.prefCountry != "")
-		applicantdPref.innerHTML += "<br/>residence of "
-				+ personOnModal.prefCountry;
-	if (personOnModal.prefEducation != "")
-		applicantdPref.innerHTML += "<br/>education of at least "
-				+ personOnModal.prefEducation;
-	if (personOnModal.prefComments != "")
-		applicantdPref.innerHTML += "</br></br><b>More info:</b><br/> ";
-
+	applicantdPref.innerHTML = "";
+	if(personOnModal.gender==0)
+		if(personOnModal.hasORwantsHijab=="no")
+			applicantdPref.innerHTML += "<br/>Without Hijab";
+		else if(personOnModal.hasORwantsHijab=="yes")
+			applicantdPref.innerHTML += "<br/>Wearing Hijab";
+		else
+			applicantdPref.innerHTML += "<br/>Hijab does not matter";
+	if(personOnModal.prefMaritalStatus != "unknown")
+		applicantdPref.innerHTML += "<br/>Marital status of "+personOnModal.prefMaritalStatus;
+	if(personOnModal.prefAgeMin != 0)
+		applicantdPref.innerHTML += "<br/>>= "+ (personOnModal.age+ personOnModal.prefAgeMin) +" years old";
+	if(personOnModal.prefAgeMax != 0)
+		applicantdPref.innerHTML += "<br/><= "+ (personOnModal.age+ personOnModal.prefAgeMax) +" years old";
+	if(personOnModal.prefEthnicity != "")
+		applicantdPref.innerHTML += "<br/>Ethinicity of "+personOnModal.prefEthnicity;
+	if(personOnModal.prefCountry != "")
+		applicantdPref.innerHTML += "<br/>Residence of "+personOnModal.prefCountry;
+	if(personOnModal.prefEducation != "unknown")
+		applicantdPref.innerHTML += "<br/>Education of at least \""+personOnModal.prefEducation+"\"";
+	if(applicantdPref.innerHTML!="")
+		applicantdPref.innerHTML = "<br/><b>Looking for:</b>" + applicantdPref.innerHTML;
+	if(personOnModal.prefComments != "")
+		applicantdPref.innerHTML += "</br></br><b>About the preferred match:</b><br/> ";
+	
 	var prefMoreInfo = document.createElement('p');
 	prefMoreInfo.innerHTML = personOnModal.prefComments;
-	prefMoreInfo.style.textAlign = "justify";
-	prefMoreInfo.style.fontSize = "0.9em";
+	prefMoreInfo.style.textAlign="justify";
+	prefMoreInfo.style.fontSize="0.9em";
 
 	modalContent.appendChild(applicantdDetails);
 	modalContent.appendChild(applicantdMoreInfo);
@@ -604,28 +609,34 @@ function delegate() {
 						this.options[this.selectedIndex].value);
 			});
 	$(".ion-plus-round").click(function() {
-			var that = this;
-			mscPrompt({
-				title : 'Add Pairing',
-				subtitle : 'Who is responsible for introducing?',
-				okText : 'Yes', // default: OK
-				placeholder:'director',
-				cancelText : 'Cancel', // default: Cancel,
-				onOk : function(val) {
-					var name = that.parentElement.parentElement.firstElementChild.nextElementSibling.innerText;
-					var i;
-					for (i = 0; i < CANDIDATES.length; i++)
-						if ((CANDIDATES[i].firstName + " " + CANDIDATES[i].lastName) == name)
-							break;
-					if (APPLICANT.gender == 1)
-						addPairing(CANDIDATES[i].userId,
-								APPLICANT.userId, val);
-					else
-						addPairing(APPLICANT.userId,
-								CANDIDATES[i].userId, val);
-				}
-			})
-		});
+		for(var i=0;i<PAIRINGS.length;i++){
+			if(PAIRINGS[i].pairingStatus=="on going"){
+				mscAlert("Applicant is busy!");
+				return false;
+			}
+		}
+		var that = this;
+		mscPrompt({
+			title : 'Add Pairing',
+			subtitle : 'Who is responsible for introducing?',
+			okText : 'Yes', // default: OK
+			placeholder:'director',
+			cancelText : 'Cancel', // default: Cancel,
+			onOk : function(val) {
+				var name = that.parentElement.parentElement.firstElementChild.nextElementSibling.innerText;
+				var i;
+				for (i = 0; i < CANDIDATES.length; i++)
+					if ((CANDIDATES[i].firstName + " " + CANDIDATES[i].lastName) == name)
+						break;
+				if (APPLICANT.gender == 1)
+					addPairing(CANDIDATES[i].userId,
+							APPLICANT.userId, val);
+				else
+					addPairing(APPLICANT.userId,
+							CANDIDATES[i].userId, val);
+			}
+		})
+	});
 	$(".ion-close").click(function() {
 		var that = this;
 		var index = this.parentElement.parentElement.rowIndex - 1;
