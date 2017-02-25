@@ -42,7 +42,6 @@ body{
 
 .box {
 	width: 40%;
-	height: 100px;
 	background: #FFF;
 	margin: 40px auto;
 }
@@ -53,7 +52,7 @@ body{
 	font-family: "Arial Black", Gadget, sans-serif;
 	color: black;
 	text-shadow: 2px 2px 8px white;
-	height: 4em;
+	height: 5.6em;
 	padding: 1em;
 }
 
@@ -97,6 +96,19 @@ body{
 .box button {
 	font-size: 0.75em;
 	float: right;
+	height:2em;
+	margin-top:1.5em;
+}
+#pictureBtn, #contactBtn {
+	font-size: 0.75em;
+	float: left;
+	margin-top:1.2em;
+	margin-left:0.3em;
+	margin-right:0.3em;
+	box-shadow: 1px 1px 1px grey;
+}
+#pictureBtn:ACTIVE {
+	transform: translateY(4px);
 }
 #pairingsTitle{
 	font-size: 1.6em;
