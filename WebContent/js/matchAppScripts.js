@@ -32,6 +32,7 @@ function requestCandidates() {
 		dataType : "json",
 		data : {
 			"gender" : APPLICANT.gender,
+			"userId" : APPLICANT.userId,
 			"task" : "getCandidates"
 		},
 		success : function(data) {
@@ -193,7 +194,10 @@ function archiveApplicant() {
 					"userId": APPLICANT.userId
 				},
 				success : function(data) {
-					window.open("match.html", "_self");
+					if(data.mission=="accomplished")
+						window.open("match.html", "_self");
+					else
+						toast("Unable to archive, the applicant is involved in a matching.");
 					return true;
 				},
 				error : function() {
@@ -568,7 +572,13 @@ function drawPairingRows() {
 			profilelogo.id = CANDIDATES[index].userId;
 
 			var name = document.createElement('td');
-			name.appendChild(document
+			if(CANDIDATES[index].archived==1){
+				name.appendChild(document
+						.createTextNode("--Archived  "+CANDIDATES[index].firstName + " "
+								+ CANDIDATES[index].lastName));
+			}
+			else
+				name.appendChild(document
 					.createTextNode(CANDIDATES[index].firstName + " "
 							+ CANDIDATES[index].lastName));
 			tr.appendChild(name);
@@ -631,7 +641,11 @@ function drawPairingRows() {
 			tr.appendChild(remove);
 			remove.style.width = "0.3em";
 
-			if (i % 2 == 0)
+			if(CANDIDATES[index].archived==1){
+				tr.style.background = "#dad3d1";
+				tr.style.color = "grey";
+			}
+			else if (i % 2 == 0)
 				tr.style.background = "#fce9c5";
 			else
 				tr.style.background = "white";
