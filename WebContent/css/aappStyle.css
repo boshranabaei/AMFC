@@ -207,6 +207,17 @@ form.register fieldset.row2 div.prefAge{
     margin-bottom: 4px;
 	color: #505050
 }
+form.register fieldset.row1 div.guess{
+    margin-left:-9px;
+    float:left;
+    text-align:left;
+    line-height:19px;
+    width: 25%;
+    margin-top: 7px;
+    margin-bottom: 4px;
+	color: #505050;
+	font-size: 9pt;
+}
 form.register input[type=text]
 {
     border: 1px solid #E1E1E1;
@@ -231,7 +242,7 @@ form.register input[type=text].children
 {
     border: 1px solid #E1E1E1;
     height: 18px;
-    width:10%;
+    width:15%;
     font-size:11pt;
 	color:grey;
     margin-top:8px;
@@ -251,13 +262,14 @@ form.register input[type=text].prefAge
 {
     border: 1px solid #E1E1E1;
     height: 18px;
-    width:8%;
+    width:9%;
     font-size:11pt;
 	color:grey;
     margin-top:7px;
     margin-bottom:5px;
-	margin-left:-33px;
+	margin-left:-18px;
 }
+
 form.register input[type=checkbox] {
     width:27px;
     margin-left:-6px;

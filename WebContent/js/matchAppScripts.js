@@ -260,7 +260,10 @@ function showModal() {
 		modalContent.style.padding = "5%";
 		modalContent.style.overflow="auto";
 		var applicantdDetails = document.createElement('p');
-		applicantdDetails.innerHTML = personOnModal.age	+ " years old </br> " + personOnModal.ethnicity;
+		applicantdDetails.innerHTML = personOnModal.age	+ " years old";
+		if(personOnModal.approximateAge==1)
+			applicantdDetails.innerHTML += " (a guess) ";
+		applicantdDetails.innerHTML += "<br/>"+personOnModal.ethnicity;
 		if (personOnModal.citizenship != "")
 			applicantdDetails.innerHTML += " / "+ personOnModal.citizenship+" citizenship";
 		applicantdDetails.innerHTML += "<br/> "+ personOnModal.maritalStatus;
@@ -524,7 +527,7 @@ function drawBox() {
 }
 function drawPairingHeaders() {
 	var headers = [ "Profile", "Name", "Age", "Ethnicity", "City", "Coordinator",
-			"Status", "Decision Date", " " ];
+			"Status", "Match Date", " " ];
 	var header = pairingTable.createTHead();
 	var row = header.insertRow(0);
 	for (var i = 0; i < headers.length; i++) {
@@ -664,8 +667,6 @@ function setupApplicantInfo() {
 	$("img").click(showModal);
 	$("#editApplicant").click(editApplicant);
 	$("#archiveBtn").click(archiveApplicant);
-	// drawHeaders();
-	// drawRows();
 }
 
 function toast(message) {

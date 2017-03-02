@@ -54,7 +54,10 @@ $('body').on('click','img',	function() {
 			modalContent.style.padding = "5%";
 			modalContent.style.overflow="auto";
 			var applicantdDetails = document.createElement('p');
-			applicantdDetails.innerHTML = APPLICANTS[index].age	+ " years old </br> " + APPLICANTS[index].ethnicity;
+			applicantdDetails.innerHTML = APPLICANTS[index].age	+ " years old";
+			if(APPLICANTS[index].approximateAge==1)
+				applicantdDetails.innerHTML += " (a guess) ";
+			applicantdDetails.innerHTML += "<br/>"+APPLICANTS[index].ethnicity;
 			if (APPLICANTS[index].citizenship != "")
 				applicantdDetails.innerHTML += " / "+ APPLICANTS[index].citizenship+" citizenship";
 			applicantdDetails.innerHTML += "<br/> "+ APPLICANTS[index].maritalStatus;
