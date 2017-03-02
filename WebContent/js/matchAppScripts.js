@@ -686,12 +686,6 @@ function delegate() {
 						this.options[this.selectedIndex].value);
 			});
 	$(".ion-plus-round").click(function() {
-		for(var i=0;i<PAIRINGS.length;i++){
-			if(PAIRINGS[i].pairingStatus=="on going"){
-				mscAlert("Applicant is busy!");
-				return false;
-			}
-		}
 		var that = this;
 		mscPrompt({
 			title : 'Add Pairing',
