@@ -273,6 +273,10 @@ function showModal() {
 		if (personOnModal.province != "")
 			applicantdDetails.innerHTML += ", "+ personOnModal.province;
 		applicantdDetails.innerHTML += ", "+ personOnModal.country;
+		if (personOnModal.relocate != 0)
+			applicantdDetails.innerHTML += "</br> Willing to relocate";
+		if (personOnModal.relocateWhere != "")
+			applicantdDetails.innerHTML += " to " +personOnModal.relocateWhere ;
 		if(personOnModal.education != "unknown")
 			applicantdDetails.innerHTML += "</br>Education level is \""+ personOnModal.education+"\"";
 		if(personOnModal.occupation != "")
@@ -496,6 +500,7 @@ function drawBox() {
 	var archiveText = document.createTextNode("Archive");
 	archive.appendChild(archiveText );
 	archive.id = "archiveBtn";
+	archive.style.color="DarkRed";
 	box.appendChild(archive);
 	
 	var edit = document.createElement("BUTTON");
@@ -508,6 +513,7 @@ function drawBox() {
 	var moreInfoText = document.createTextNode("More Info");
 	moreInfo.appendChild(moreInfoText);
 	moreInfo.id = "moreInfoBtn";
+	moreInfo.style.fontWeight="bold";
 	box.appendChild(moreInfo);
 	
 	var contactLogo = document.createElement("img");
