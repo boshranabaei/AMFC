@@ -170,12 +170,10 @@ function submitApplicant() {
 		content[11].style.border = "1px solid red";
 		toast("Wrong value for some of the inputs.");
 	
-	} else if (content[10].checked) {
-			if(content[11].value==0){
+	} else if (content[10].checked && content[11].value==0){
 				greyBorders();
 				content[11].style.border = "1px solid red";
 				toast("0 children? Why did you check it?");
-			}
 	} else if (isNaN(content[30].value)) {
 		greyBorders();
 		content[30].style.border = "1px solid red";
@@ -306,7 +304,6 @@ function fillInForm(){
 		content[17].selectedIndex=5;
 	else if(APPLICANT.education=="doctoral")
 		content[17].selectedIndex=6;
-	
 	if(APPLICANT.prefEducation=="unknown")
 		content[33].selectedIndex=0;
 	else if(APPLICANT.prefEducation=="someSchooling")
@@ -320,7 +317,7 @@ function fillInForm(){
 	else if(APPLICANT.prefEducation=="masters")
 		content[33].selectedIndex=5;
 	else if(APPLICANT.prefEducation=="doctoral")
-		content[3].selectedIndex=6;
+		content[33].selectedIndex=6;
 	
 	if(APPLICANT.hasOwnProperty("occupation"))
 		content[18].value=APPLICANT.occupation;
@@ -375,7 +372,7 @@ function fillInForm(){
 	else
 		content[5].checked="true";
 	if(APPLICANT.smoke==1)
-		content[14].checked="true";
+		content[12].checked="true";
 	else
 		content[13].checked="true";
 	if(APPLICANT.approximateAge==1)

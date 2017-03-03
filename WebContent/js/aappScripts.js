@@ -130,12 +130,10 @@ function submitApplicant() {
 		greyBorders();
 		content[11].style.border = "1px solid red";
 		toast("Wrong value for some of the inputs.");
-	}else if (content[10].checked) {
-			if(content[11].value==0){
+	} else if (content[10].checked && content[11].value==0){
 				greyBorders();
 				content[11].style.border = "1px solid red";
 				toast("0 children? Why did you check it?");
-			}
 	} else if (isNaN(content[30].value)) {
 		greyBorders();
 		content[30].style.border = "1px solid red";

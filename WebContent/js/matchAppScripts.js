@@ -277,6 +277,8 @@ function showModal() {
 			applicantdDetails.innerHTML += "</br> Willing to relocate";
 		if (personOnModal.relocateWhere != "")
 			applicantdDetails.innerHTML += " to " +personOnModal.relocateWhere ;
+		if(personOnModal.smoke==1)
+			applicantdDetails.innerHTML += "</br>...Smokes";
 		if(personOnModal.education != "unknown")
 			applicantdDetails.innerHTML += "</br>Education level is \""+ personOnModal.education+"\"";
 		if(personOnModal.occupation != "")
