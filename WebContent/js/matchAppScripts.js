@@ -238,51 +238,65 @@ span.onclick = function() {
 function showModal() {
 	modal.style.display = "block";
 	var personOnModal;
-	if (this.textContent == "More Info" || this.Id=="contactBtn") {
-		personOnModal = APPLICANT;
-	} else {
-		personOnModal = CANDIDATES[getCandidateIndex(this.id)];
-	}
 
 	var modalTitle = document.getElementById('modalTitle');
 	modalTitle.innerHTML = "";
+	var modalContent = document.getElementById('modalContent');
+	modalContent.innerHTML = "";
+	modalContent.style.maxHeight = "400px";
+	modalContent.style.padding = "5%";
+	modalContent.style.overflow="auto";
 
-	if(this.Id=="contactBtn"){
-		modalTitle.innerHTML += "Email:" ;
+	if(this.id=="contactBtn"){
+		modalTitle.innerHTML += "Contact Info" ;
+		var contactInfo = document.createElement('p');
+		if(APPLICANT.hasOwnProperty("email") && APPLICANT.email!="")
+			contactInfo.innerHTML += "<b>Email:</b> "+APPLICANT.email+"<br/>";
+		if(APPLICANT.hasOwnProperty("mobilePhoneNumber") && APPLICANT.mobilePhoneNumber!="")
+			contactInfo.innerHTML += "<b>Cell Phone #:</b> "+APPLICANT.mobilePhoneNumber+"<br/>";
+		if(APPLICANT.hasOwnProperty("homePhoneNumber") && APPLICANT.homePhoneNumber!="")
+			contactInfo.innerHTML += "<b>Home Phone #:</b> "+APPLICANT.homePhoneNumber+"<br/>";
+		if(APPLICANT.hasOwnProperty("pointOfContact") && APPLICANT.pointOfContact!="")
+			contactInfo.innerHTML += "<b>Point of contact:</b> "+APPLICANT.pointOfContact+"<br/>";
+		modalContent.appendChild(contactInfo);
+	}
+	else if(this.id=="pictureBtn"){
+		modalTitle.innerHTML += ":)):" ;
 	}
 	else{
-		modalTitle.appendChild(document.createTextNode(personOnModal.firstName
+		if (this.textContent == "More Info"){
+			personOnModal = APPLICANT;
+		} else {
+			personOnModal = CANDIDATES[getCandidateIndex(this.id)];
+		}
+		
+		modalTitle.appenChild(document.createTextNode(personOnModal.firstName
 				+ " " + personOnModal.lastName));
 	
-		var modalContent = document.getElementById('modalContent');
-		modalContent.innerHTML = "";
-		modalContent.style.maxHeight = "400px";
-		modalContent.style.padding = "5%";
-		modalContent.style.overflow="auto";
-		var applicantdDetails = document.createElement('p');
-		applicantdDetails.innerHTML = personOnModal.age	+ " years old";
+		var applicantDetails = document.createElement('p');
+		applicantDetails.innerHTML = personOnModal.age	+ " years old";
 		if(personOnModal.approximateAge==1)
-			applicantdDetails.innerHTML += " (a guess) ";
-		applicantdDetails.innerHTML += "<br/>"+personOnModal.ethnicity;
+			applicantDetails.innerHTML += " (a guess) ";
+		applicantDetails.innerHTML += "<br/>"+personOnModal.ethnicity;
 		if (personOnModal.citizenship != "")
-			applicantdDetails.innerHTML += " / "+ personOnModal.citizenship+" citizenship";
-		applicantdDetails.innerHTML += "<br/> "+ personOnModal.maritalStatus;
+			applicantDetails.innerHTML += " / "+ personOnModal.citizenship+" citizenship";
+		applicantDetails.innerHTML += "<br/> "+ personOnModal.maritalStatus;
 		if (personOnModal.children != 0)
-			applicantdDetails.innerHTML += " with "+ personOnModal.citizenship+" children";
-		applicantdDetails.innerHTML += "<br/> Lives in "+ personOnModal.city;
+			applicantDetails.innerHTML += " with "+ personOnModal.citizenship+" children";
+		applicantDetails.innerHTML += "<br/> Lives in "+ personOnModal.city;
 		if (personOnModal.province != "")
-			applicantdDetails.innerHTML += ", "+ personOnModal.province;
-		applicantdDetails.innerHTML += ", "+ personOnModal.country;
+			applicantDetails.innerHTML += ", "+ personOnModal.province;
+		applicantDetails.innerHTML += ", "+ personOnModal.country;
 		if(personOnModal.education != "unknown")
-			applicantdDetails.innerHTML += "</br>Education level is \""+ personOnModal.education+"\"";
+			applicantDetails.innerHTML += "</br>Education level is \""+ personOnModal.education+"\"";
 		if(personOnModal.occupation != "")
-			applicantdDetails.innerHTML += "</br>Currently is "+ personOnModal.occupation;
+			applicantDetails.innerHTML += "</br>Currently is "+ personOnModal.occupation;
 		if(personOnModal.amfcPointOfContact!="self")
-			applicantdDetails.innerHTML += "</br> *Introduced by " + personOnModal.amfcPointOfContact;
+			applicantDetails.innerHTML += "</br> *Introduced by " + personOnModal.amfcPointOfContact;
 		else
-			applicantdDetails.innerHTML += "</br> *Applicant approached AMFC";
+			applicantDetails.innerHTML += "</br> *Applicant approached AMFC";
 		if(personOnModal.comments != "")
-			applicantdDetails.innerHTML += "</br></br><b>More info:</b><br/> ";
+			applicantDetails.innerHTML += "</br></br><b>More info:</b><br/> ";
 		
 		var applicantdMoreInfo = document.createElement('p');
 		applicantdMoreInfo.innerHTML = personOnModal.comments;
@@ -321,7 +335,7 @@ function showModal() {
 		prefMoreInfo.style.fontSize="0.9em";
 		
 		
-		modalContent.appendChild(applicantdDetails);
+		modalContent.appendChild(applicantDetails);
 		modalContent.appendChild(applicantdMoreInfo);
 		modalContent.appendChild(applicantdPref);
 		modalContent.appendChild(prefMoreInfo);
@@ -510,16 +524,13 @@ function drawBox() {
 	moreInfo.id = "moreInfoBtn";
 	box.appendChild(moreInfo);
 	
-	var contactLogo = document.createElement("img");
-	contactLogo.src = "../img/contact.png";
-	contactLogo.style.width="2.5em";
-	contactLogo.style.marginTop="1.35em";
+	var contactLogo = document.createElement("BUTTON");
+	contactLogo.innerHTML = "<div class=\"ion-email\"></div>";
 	contactLogo.id = "contactBtn";
 	box.appendChild(contactLogo);
 	
-	var pictureLogo = document.createElement("img");
-	pictureLogo.src = "../img/camera.jpg";
-	pictureLogo.style.width="3.5em";
+	var pictureLogo = document.createElement("BUTTON");
+	pictureLogo.innerHTML = "<div class=\"ion-ios-camera\"></div>";
 	pictureLogo.id = "pictureBtn";
 	box.appendChild(pictureLogo);
 
@@ -665,6 +676,8 @@ function setupApplicantInfo() {
 	drawBox();
 	$("#moreInfoBtn").click(showModal);
 	$("img").click(showModal);
+	$("#contactBtn").click(showModal);
+	$("#pictureBtn").click(showModal);
 	$("#editApplicant").click(editApplicant);
 	$("#archiveBtn").click(archiveApplicant);
 }
