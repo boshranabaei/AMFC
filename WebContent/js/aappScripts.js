@@ -190,7 +190,7 @@ function submitApplicant() {
 					}
 				}
 				json += "}";
-				var fileSelect = document.getElementById('photo');
+				/*var fileSelect = document.getElementById('photo');
 				if(fileSelect.value != ""){
 					// Get the selected files from the input.
 					var files = fileSelect.files;
@@ -203,7 +203,7 @@ function submitApplicant() {
 					}
 					// Add the file to the request.
 					formData.append('photos[]', file, file.name);
-				}
+				}*/
 				addApplicant(json);
 			}
 
@@ -217,21 +217,53 @@ function submitApplicant() {
 	return false;
 };
 
-function uploadPhoto(){
-    var file = this.files[0];
+function toggleUpload(){
+	document.getElementById("upload").style.color = "black";
+	if($(":file")[0].files.length!=0){
+		$("input#upload").attr("disabled", false);
+		$("#progress").html("");
+	}
+	else{
+		$("input#upload").attr("disabled", true);
+		$("#progress").html("");
+	}
+}
+
+function uploadOrRemovePhoto(){
+	
+	if($(":file")[0].files.length==0)
+		return;
+	
+	if($("#upload").attr("value")=="Delete"){
+		$("#upload").attr("value","Upload");
+		$("#progress").html("");
+		return;
+	}
+	
+    var file = $(":file")[0].files[0];
     name = file.name;
     size = file.size;
     type = file.type;
 
     if(file.name.length < 1) {
     }
-    else if(file.size > 10000000) {
-        alert("The file is too big");
+    else if(file.size > 2000000) {
+    	toast("The file is too big");
+    	document.getElementById("upload").style.color = "red";
+        $("#progress").html("");
+        $("input#upload").attr("border", false);        
     }
     else if(file.type != 'image/png' && file.type != 'image/jpg' && file.type != 'image/gif' && file.type != 'image/jpeg' ) {
-        alert("The file does not match png, jpg or gif");
+        toast("The file does not match png, jpg or gif");
+        document.getElementById("upload").style.color = "red";
+        $("#progress").html("");
     }
-    else { 
+    else{
+    	$("#progress").html("Uploading...");
+    	document.getElementById("upload").style.color = "black";
+    	$("#upload").attr("value","Delete");
+    }
+    /*else { 
         $(':submit').click(function(){
             var formData = new FormData($('*formId*')[0]);
             $.ajax({
@@ -249,7 +281,7 @@ function uploadPhoto(){
                     /*
                     * Workaround for Chrome browser // Delete the fake path
                     */
-                    if(navigator.userAgent.indexOf('Chrome')) {
+                  /*  if(navigator.userAgent.indexOf('Chrome')) {
                         var catchFile = $(":file").val().replace(/C:\\fakepath\\/i, '');
                     }
                     else {
@@ -270,9 +302,10 @@ function uploadPhoto(){
                 processData: false
             }, 'json');
         });
-    }
+    }*/
 };
 
 $( document ).ready(function() {
-	$(':file').change(uploadPhoto);
+	$(":file").change(toggleUpload);
+	$('#upload').click(uploadOrRemovePhoto);
 });
