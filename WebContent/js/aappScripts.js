@@ -10,17 +10,25 @@ var fieldLabels = [ "firstName", "lastName", "birthYear", "approximateAge", "gen
 		"amfcPointOfContact" ];
 
 function toggleChildren() {
-	if (document.forms[0].elements[11].disabled == false)
+	if (document.forms[0].elements[11].disabled == false){
 		document.forms[0].elements[11].disabled = true;
-	else
+		document.forms[0].elements[11].value = 0;
+	}
+	else{
 		document.forms[0].elements[11].disabled = false;
+		document.forms[0].elements[11].value = "";
+	}
 }
 function toggleRelocate() {
-	if (document.forms[0].elements[16].disabled == false)
+	if (document.forms[0].elements[16].disabled == false){
 		document.forms[0].elements[16].disabled = true;
+		document.forms[0].elements[16].value = "where?";
+	}
 	else
 		document.forms[0].elements[16].disabled = false;
+		document.forms[0].elements[16].value = "";
 }
+
 
 function replaceQuotes(str){
 	str= String(str);
@@ -82,7 +90,7 @@ function submitApplicant() {
 	if (content[1].value == "" || content[2].value == ""
 			|| content[3].value == "" || content[7].value == ""
 			|| content[25].value == "" || content[27].value == ""
-			|| content[36].value == "") {
+			|| content[36].value == ""|| content[11].value == "") {
 		greyBorders();
 		
 		if (content[1].value == "") {
@@ -96,6 +104,9 @@ function submitApplicant() {
 		} 
 		if (content[7].value == "") {
 			content[7].style.border = "1px solid red";
+		} 
+		if (content[11].value == "") {
+			content[11].style.border = "1px solid red";
 		} 
 		if (content[25].value == "") {
 			content[25].style.border = "1px solid red";
@@ -119,7 +130,10 @@ function submitApplicant() {
 		greyBorders();
 		content[11].style.border = "1px solid red";
 		toast("Wrong value for some of the inputs.");
-		
+	} else if (content[10].checked && content[11].value==0){
+				greyBorders();
+				content[11].style.border = "1px solid red";
+				toast("0 children? Why did you check it?");
 	} else if (isNaN(content[30].value)) {
 		greyBorders();
 		content[30].style.border = "1px solid red";

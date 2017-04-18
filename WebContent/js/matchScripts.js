@@ -67,6 +67,12 @@ $('body').on('click','img',	function() {
 			if (APPLICANTS[index].province != "")
 				applicantdDetails.innerHTML += ", "+ APPLICANTS[index].province;
 			applicantdDetails.innerHTML += ", "+ APPLICANTS[index].country;
+			if (APPLICANTS[index].relocate != 0)
+				applicantdDetails.innerHTML += "</br> Willing to relocate";
+			if (APPLICANTS[index].relocateWhere != "")
+				applicantdDetails.innerHTML += " to " +APPLICANTS[index].relocateWhere ;
+			if(APPLICANTS[index].smoke==1)
+				applicantdDetails.innerHTML += "</br>...Smokes";
 			if(APPLICANTS[index].education != "unknown")
 				applicantdDetails.innerHTML += "</br>Education level is \""+ APPLICANTS[index].education+"\"";
 			if(APPLICANTS[index].occupation != "")
