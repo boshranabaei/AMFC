@@ -1,4 +1,14 @@
 var APPLICANT;
+var selectedPhoto = {};
+var content;
+var fieldLabels = [ "firstName", "lastName", "birthYear","approximateAge", "gender", "gender",
+		"ethnicity", "citizenship", "maritalStatus", "children", "children",
+		"smoke", "smoke", "hasORwantsHijab", "relocate", "relocateWhere",
+		"education", "occupation", "comments", "email", "email",
+		"mobilePhoneNumber", "homePhoneNumber", "pointOfContact", "city",
+		"province", "country", "prefMaritalStatus", "prefMaritalStatus", "prefAgeMin", "prefAgeMax",
+		"prefEthnicity", "prefEducation", "prefCountry", "prefComments",
+		"amfcPointOfContact" ];
 
 function requestApplicant() {
 	$.ajax({
@@ -26,6 +36,7 @@ function updateApplicant(applicantFormData) {
 		dataType : "json",
 		data : {
 			"applicant" : applicantFormData,
+			"photo" : selectedPhoto,
 			"task" : "updateApplicant"
 		},
 		success : function(data) {
@@ -62,16 +73,6 @@ function selectApplicant(){
 	return true;
 
 };
-
-var content;
-var fieldLabels = [ "firstName", "lastName", "birthYear","approximateAge", "gender", "gender",
-		"ethnicity", "citizenship", "maritalStatus", "children", "children",
-		"smoke", "smoke", "hasORwantsHijab", "relocate", "relocateWhere",
-		"education", "occupation", "comments", "email", "email",
-		"mobilePhoneNumber", "homePhoneNumber", "pointOfContact", "city",
-		"province", "country", "prefMaritalStatus", "prefMaritalStatus", "prefAgeMin", "prefAgeMax",
-		"prefEthnicity", "prefEducation", "prefCountry", "prefComments",
-		"amfcPointOfContact" ];
 
 function toggleChildren() {
 	if (document.forms[0].elements[11].disabled == false){
@@ -121,7 +122,6 @@ function toast(message) {
 }
 
 function submitApplicant() {
-
 	content = document.forms[0].elements;
 
 	// Validation
@@ -260,6 +260,13 @@ function submitApplicant() {
 };
 
 function fillInForm(){
+	if(APPLICANT.hasOwnProperty("photo") && APPLICANT.photo != "null"){
+		selectedPhoto.base64 = APPLICANT.photo;
+		$("#attach").attr("value","Delete");
+		$("#progress").html("A photo exists");
+		$("input#attach").attr("disabled", false);
+		$('#attach').click(attachOrRemovePhoto);
+	}	
 	content = document.forms[0].elements;
 	content[1].value=APPLICANT.firstName;
 	content[2].value=APPLICANT.lastName;
@@ -354,7 +361,7 @@ function fillInForm(){
 	if(APPLICANT.hasOwnProperty("prefComments"))
 		content[35].value=APPLICANT.prefComments;
 	if(APPLICANT.hasOwnProperty("amfcPointOfContact"))
-		content[36].value=APPLICANT.amfcPointOfContact;
+		content[39].value=APPLICANT.amfcPointOfContact;
 	if(APPLICANT.relocateWhere=="where?"){
 		content[16].value="where?";
 		content[16].disabled=true;
@@ -386,6 +393,69 @@ function fillInForm(){
 	+APPLICANT.firstName+" "+APPLICANT.lastName+"<a>";
 	document.getElementById("backToMatchApp").onclick=selectApplicant;
 }
+
+function toggleattach(){
+	document.getElementById("attach").style.color = "black";
+	$("#attach").attr("value","Attach");
+	$("#progress").html("");
+
+	if($(":file")[0].files.length!=0){
+		$("input#attach").attr("disabled", false);
+	}
+	else{
+		$("input#attach").attr("disabled", true);
+	}
+}
+
+function attachOrRemovePhoto(){	
+	
+	if($("#attach").attr("value")=="Delete"){
+		$("#attach").attr("value","attach");
+		$("#progress").html("");
+		selectedPhoto={}
+		return;
+	}
+
+	if($(":file")[0].files.length==0)
+		return;
+	
+    var file = $(":file")[0].files[0];
+    name = file.name;
+    size = file.size;
+    type = file.type;
+
+    if(file.name.length < 1) {
+    }
+    else if(file.size > 2000000) {
+    	toast("The file is too big");
+    	document.getElementById("attach").style.color = "red";
+        $("#progress").html("");
+        $("input#attach").attr("border", false);        
+    }
+    else if(file.type != 'image/png' && file.type != 'image/jpg' && file.type != 'image/gif' && file.type != 'image/jpeg' ) {
+        toast("The file does not match png, jpg or gif");
+        document.getElementById("attach").style.color = "red";
+        $("#progress").html("");
+    }
+    else{
+    	$("#progress").html("attaching...");
+    	document.getElementById("attach").style.color = "black";
+    	$("#attach").attr("value","Delete");
+    	var formData = new FormData($(":file")[0]);
+   	  	var reader = new FileReader();
+   	  	reader.onload = readerOnload;
+   	  	x=reader.readAsBinaryString(file)
+    }
+};
+
+function readerOnload(e){
+    var base64 = btoa(e.target.result);
+    selectedPhoto.base64 = base64;
+    $("#progress").html("successfully attached");
+}
+
 $( document ).ready(function() {
-requestApplicant();
+	$(":file").change(toggleattach);
+	$('#attach').click(attachOrRemovePhoto);  
+	requestApplicant();
 });

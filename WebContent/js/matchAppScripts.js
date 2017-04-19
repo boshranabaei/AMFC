@@ -264,7 +264,7 @@ function showModal() {
 		modalTitle.innerHTML += "Photo";
 		var image = new Image();
 		image.src = "data:image/jpg;base64,"+ APPLICANT.photo;
-		image.style.width = "100%"
+		image.style.maxWidth = "100%"
 		modalContent.appendChild(image);
 	}
 	else{
@@ -540,13 +540,14 @@ function drawBox() {
 	contactLogo.id = "contactBtn";
 	box.appendChild(contactLogo);
 	
-	var pictureLogo = document.createElement("BUTTON");
-	pictureLogo.innerHTML = "<div class=\"ion-ios-camera\"></div>";
-	pictureLogo.id = "pictureBtn";
-	box.appendChild(pictureLogo);
-
-
+	if(APPLICANT.hasOwnProperty("photo") && APPLICANT.photo != "null"){
+		var pictureLogo = document.createElement("BUTTON");
+		pictureLogo.innerHTML = "<div class=\"ion-ios-camera\"></div>";
+		pictureLogo.id = "pictureBtn";
+		box.appendChild(pictureLogo);
+	}
 }
+
 function drawPairingHeaders() {
 	var headers = [ "Profile", "Name", "Age", "Ethnicity", "City", "Coordinator",
 			"Status", "Match Date", " " ];

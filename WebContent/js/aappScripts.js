@@ -1,6 +1,5 @@
 var content;
 var selectedPhoto = {};
-
 var fieldLabels = [ "firstName", "lastName", "birthYear", "approximateAge", "gender", "gender",
 		"ethnicity", "citizenship", "maritalStatus", "children", "children",
 		"smoke", "smoke", "hasORwantsHijab", "relocate", "relocateWhere",
@@ -8,7 +7,7 @@ var fieldLabels = [ "firstName", "lastName", "birthYear", "approximateAge", "gen
 		"mobilePhoneNumber", "homePhoneNumber", "pointOfContact", "city",
 		"province", "country", "prefMaritalStatus", "prefMaritalStatus", "prefAgeMin", "prefAgeMax",
 		"prefEthnicity", "prefEducation", "prefCountry", "prefComments",
-		"amfcPointOfContact" ];
+		"amfcPointOfContact","amfcPointOfContact","amfcPointOfContact","amfcPointOfContact" ];
 
 function toggleChildren() {
 	if (document.forms[0].elements[11].disabled == false){
@@ -146,7 +145,7 @@ function submitApplicant() {
 		content[31].style.border = "1px solid red";
 		toast("Wrong value for some of the inputs.");
 		
-	}else {
+	} else {
 		mscConfirm({
 			title : 'Confirmation',
 			subtitle : 'Are your sure that you want to add this applicant?',
@@ -155,7 +154,7 @@ function submitApplicant() {
 			onOk : function(val) {
 				var json = "{";
 				for (var i = 1; i <= fieldLabels.length; i++) {
-					if (i == 20 || i==28)
+					if (i == 20 || i==28 || i== 36 || i==37 || i== 38)
 						continue;
 					json += "\'" + fieldLabels[i - 1] + "\':";
 					switch (i) { // integer case
@@ -221,7 +220,7 @@ function submitApplicant() {
 
 function toggleattach(){
 	document.getElementById("attach").style.color = "black";
-	$("#attach").attr("value","attach");
+	$("#attach").attr("value","Attach");
 	$("#progress").html("");
 
 	if($(":file")[0].files.length!=0){
@@ -232,14 +231,14 @@ function toggleattach(){
 	}
 }
 
-function attachOrRemovePhoto(){
-	
+function attachOrRemovePhoto(){	
 	if($(":file")[0].files.length==0)
 		return;
 	
 	if($("#attach").attr("value")=="Delete"){
 		$("#attach").attr("value","attach");
 		$("#progress").html("");
+		selectedPhoto={}
 		return;
 	}
 	
