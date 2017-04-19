@@ -1,4 +1,5 @@
 var content;
+var selectedPhoto = {};
 
 var fieldLabels = [ "firstName", "lastName", "birthYear", "approximateAge", "gender", "gender",
 		"ethnicity", "citizenship", "maritalStatus", "children", "children",
@@ -65,6 +66,7 @@ function addApplicant(applicantFormData) {
 		dataType : "json",
 		data : {
 			"applicant" : applicantFormData,
+			"photo" : selectedPhoto,
 			"task" : "newApplicant"
 		},
 		success : function(data) {
@@ -204,20 +206,6 @@ function submitApplicant() {
 					}
 				}
 				json += "}";
-				/*var fileSelect = document.getElementById('photo');
-				if(fileSelect.value != ""){
-					// Get the selected files from the input.
-					var files = fileSelect.files;
-					// Create a new FormData object.
-					var formData = new FormData();
-					var file = files[0];
-					// Check the file type.
-					if (!file.type.match('image.*')) {
-						continue;
-					}
-					// Add the file to the request.
-					formData.append('photos[]', file, file.name);
-				}*/
 				addApplicant(json);
 			}
 
@@ -231,25 +219,26 @@ function submitApplicant() {
 	return false;
 };
 
-function toggleUpload(){
-	document.getElementById("upload").style.color = "black";
+function toggleattach(){
+	document.getElementById("attach").style.color = "black";
+	$("#attach").attr("value","attach");
+	$("#progress").html("");
+
 	if($(":file")[0].files.length!=0){
-		$("input#upload").attr("disabled", false);
-		$("#progress").html("");
+		$("input#attach").attr("disabled", false);
 	}
 	else{
-		$("input#upload").attr("disabled", true);
-		$("#progress").html("");
+		$("input#attach").attr("disabled", true);
 	}
 }
 
-function uploadOrRemovePhoto(){
+function attachOrRemovePhoto(){
 	
 	if($(":file")[0].files.length==0)
 		return;
 	
-	if($("#upload").attr("value")=="Delete"){
-		$("#upload").attr("value","Upload");
+	if($("#attach").attr("value")=="Delete"){
+		$("#attach").attr("value","attach");
 		$("#progress").html("");
 		return;
 	}
@@ -263,63 +252,33 @@ function uploadOrRemovePhoto(){
     }
     else if(file.size > 2000000) {
     	toast("The file is too big");
-    	document.getElementById("upload").style.color = "red";
+    	document.getElementById("attach").style.color = "red";
         $("#progress").html("");
-        $("input#upload").attr("border", false);        
+        $("input#attach").attr("border", false);        
     }
     else if(file.type != 'image/png' && file.type != 'image/jpg' && file.type != 'image/gif' && file.type != 'image/jpeg' ) {
         toast("The file does not match png, jpg or gif");
-        document.getElementById("upload").style.color = "red";
+        document.getElementById("attach").style.color = "red";
         $("#progress").html("");
     }
     else{
-    	$("#progress").html("Uploading...");
-    	document.getElementById("upload").style.color = "black";
-    	$("#upload").attr("value","Delete");
+    	$("#progress").html("attaching...");
+    	document.getElementById("attach").style.color = "black";
+    	$("#attach").attr("value","Delete");
+    	var formData = new FormData($(":file")[0]);
+   	  	var reader = new FileReader();
+   	  	reader.onload = readerOnload;
+   	  	x=reader.readAsBinaryString(file)
     }
-    /*else { 
-        $(':submit').click(function(){
-            var formData = new FormData($('*formId*')[0]);
-            $.ajax({
-                url: '/applicant',  //server script to process data
-                type: 'POST',
-                xhr: function() {  // custom xhr
-                    myXhr = $.ajaxSettings.xhr();
-                    if(myXhr.upload){ // if upload property exists
-                        myXhr.upload.addEventListener('progress', progressHandlingFunction, false); // progressbar
-                    }
-                    return myXhr;
-                },
-                // Ajax events
-                success: completeHandler = function(data) {
-                    /*
-                    * Workaround for Chrome browser // Delete the fake path
-                    */
-                  /*  if(navigator.userAgent.indexOf('Chrome')) {
-                        var catchFile = $(":file").val().replace(/C:\\fakepath\\/i, '');
-                    }
-                    else {
-                        var catchFile = $(":file").val();
-                    }
-                    var writeFile = $(":file");
-                    writeFile.html(writer(catchFile));
-                    $("*setIdOfImageInHiddenInput*").val(data.logo_id);
-                },
-                error: errorHandler = function() {
-                    alert("Something went wrong!");
-                },
-                // Form data
-                data: formData,
-                // Options to tell jQuery not to process data or worry about the content-type
-                cache: false,
-                contentType: false,
-                processData: false
-            }, 'json');
-        });
-    }*/
 };
 
+function readerOnload(e){
+    var base64 = btoa(e.target.result);
+    selectedPhoto.base64 = base64;
+    $("#progress").html("successfully attached");
+}
+
 $( document ).ready(function() {
-	$(":file").change(toggleUpload);
-	$('#upload').click(uploadOrRemovePhoto);
+	$(":file").change(toggleattach);
+	$('#attach').click(attachOrRemovePhoto);
 });

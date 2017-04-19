@@ -261,7 +261,11 @@ function showModal() {
 		modalContent.appendChild(contactInfo);
 	}
 	else if(this.id=="pictureBtn"){
-		modalTitle.innerHTML += ":)):" ;
+		modalTitle.innerHTML += "Photo";
+		var image = new Image();
+		image.src = "data:image/jpg;base64,"+ APPLICANT.photo;
+		image.style.width = "100%"
+		modalContent.appendChild(image);
 	}
 	else{
 		if (this.textContent == "More Info"){
@@ -270,8 +274,7 @@ function showModal() {
 			personOnModal = CANDIDATES[getCandidateIndex(this.id)];
 		}
 		
-		modalTitle.appenChild(document.createTextNode(personOnModal.firstName
-				+ " " + personOnModal.lastName));
+		modalTitle.innerHTML = personOnModal.firstName+ " " + personOnModal.lastName;
 	
 		var applicantDetails = document.createElement('p');
 		applicantDetails.innerHTML = personOnModal.age	+ " years old";
@@ -285,19 +288,14 @@ function showModal() {
 			applicantDetails.innerHTML += " with "+ personOnModal.citizenship+" children";
 		applicantDetails.innerHTML += "<br/> Lives in "+ personOnModal.city;
 		if (personOnModal.province != "")
-<<<<<<< HEAD
 			applicantDetails.innerHTML += ", "+ personOnModal.province;
 		applicantDetails.innerHTML += ", "+ personOnModal.country;
-=======
-			applicantdDetails.innerHTML += ", "+ personOnModal.province;
-		applicantdDetails.innerHTML += ", "+ personOnModal.country;
 		if (personOnModal.relocate != 0)
-			applicantdDetails.innerHTML += "</br> Willing to relocate";
+			applicantDetails.innerHTML += "</br> Willing to relocate";
 		if (personOnModal.relocateWhere != "")
-			applicantdDetails.innerHTML += " to " +personOnModal.relocateWhere ;
+			applicantDetails.innerHTML += " to " +personOnModal.relocateWhere ;
 		if(personOnModal.smoke==1)
-			applicantdDetails.innerHTML += "</br>...Smokes";
->>>>>>> origin/master
+			applicantDetails.innerHTML += "</br>...Smokes";
 		if(personOnModal.education != "unknown")
 			applicantDetails.innerHTML += "</br>Education level is \""+ personOnModal.education+"\"";
 		if(personOnModal.occupation != "")
