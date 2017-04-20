@@ -8,7 +8,7 @@ var fieldLabels = [ "firstName", "lastName", "birthYear","approximateAge", "gend
 		"mobilePhoneNumber", "homePhoneNumber", "pointOfContact", "city",
 		"province", "country", "prefMaritalStatus", "prefMaritalStatus", "prefAgeMin", "prefAgeMax",
 		"prefEthnicity", "prefEducation", "prefCountry", "prefComments",
-		"amfcPointOfContact" ];
+		"amfcPointOfContact", "amfcPointOfContact", "amfcPointOfContact", "amfcPointOfContact" ];
 
 function requestApplicant() {
 	$.ajax({
@@ -96,7 +96,7 @@ function toggleRelocate() {
 
 function replaceQuotes(str){
 	str= String(str);
-	return str.replace("\"", "").replace("\'", ""); 
+	return str.replace(/['"]+/g, ''); 
 }
 
 function greyBorders(){
@@ -195,7 +195,7 @@ function submitApplicant() {
 				json +="\"dateAdded\":\""+APPLICANT.dateAdded+"\",";
 				json +="\"status\":\""+APPLICANT.status+"\",";
 				for (var i = 1; i <= fieldLabels.length; i++) {
-					if (i == 20 || i==28)
+					if (i == 20 || i==28 || i == 36 || i == 37 || i == 38)
 						continue;
 					json += "\'" + fieldLabels[i - 1] + "\':";
 					switch (i) { // integer case
@@ -351,9 +351,9 @@ function fillInForm(){
 	else if(APPLICANT.prefMaritalStatus=="separated")
 		content[29].selectedIndex=4;
 	if(APPLICANT.prefAgeMin!=0)
-		content[30].value=APPLICANT.prefAgeMin + APPLICANT.age;
+		content[30].value= APPLICANT.age - APPLICANT.prefAgeMin;
 	if(APPLICANT.prefAgeMax!=0)
-		content[31].value=APPLICANT.prefAgeMax + APPLICANT.age;
+		content[31].value= APPLICANT.age - APPLICANT.prefAgeMax;
 	if(APPLICANT.hasOwnProperty("prefEthnicity"))
 		content[32].value=APPLICANT.prefEthnicity;
 	if(APPLICANT.hasOwnProperty("prefCountry"))

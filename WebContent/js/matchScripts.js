@@ -69,7 +69,7 @@ $('body').on('click','img',	function() {
 			applicantdDetails.innerHTML += ", "+ APPLICANTS[index].country;
 			if (APPLICANTS[index].relocate != 0)
 				applicantdDetails.innerHTML += "</br> Willing to relocate";
-			if (APPLICANTS[index].relocateWhere != "")
+			if (APPLICANTS[index].relocateWhere != "" && APPLICANTS[index].relocateWhere!="where?")
 				applicantdDetails.innerHTML += " to " +APPLICANTS[index].relocateWhere ;
 			if(APPLICANTS[index].smoke==1)
 				applicantdDetails.innerHTML += "</br>...Smokes";
@@ -101,9 +101,9 @@ $('body').on('click','img',	function() {
 			if(APPLICANTS[index].prefMaritalStatus != "unknown")
 				applicantdPref.innerHTML += "<br/>Marital status of "+APPLICANTS[index].prefMaritalStatus;
 			if(APPLICANTS[index].prefAgeMin != 0)
-				applicantdPref.innerHTML += "<br/>>= "+ (APPLICANTS[index].age+ APPLICANTS[index].prefAgeMin) +" years old";
+				applicantdPref.innerHTML += "<br/>>= "+ (APPLICANTS[index].age - APPLICANTS[index].prefAgeMin) +" years old";
 			if(APPLICANTS[index].prefAgeMax != 0)
-				applicantdPref.innerHTML += "<br/><= "+ (APPLICANTS[index].age+ APPLICANTS[index].prefAgeMax) +" years old";
+				applicantdPref.innerHTML += "<br/><= "+ (APPLICANTS[index].age - APPLICANTS[index].prefAgeMax) +" years old";
 			if(APPLICANTS[index].prefEthnicity != "")
 				applicantdPref.innerHTML += "<br/>Ethinicity of "+APPLICANTS[index].prefEthnicity;
 			if(APPLICANTS[index].prefCountry != "")

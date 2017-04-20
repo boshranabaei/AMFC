@@ -292,7 +292,7 @@ function showModal() {
 		applicantDetails.innerHTML += ", "+ personOnModal.country;
 		if (personOnModal.relocate != 0)
 			applicantDetails.innerHTML += "</br> Willing to relocate";
-		if (personOnModal.relocateWhere != "")
+		if (personOnModal.relocateWhere != "" && personOnModal.relocateWhere != "where?")
 			applicantDetails.innerHTML += " to " +personOnModal.relocateWhere ;
 		if(personOnModal.smoke==1)
 			applicantDetails.innerHTML += "</br>...Smokes";
@@ -324,9 +324,9 @@ function showModal() {
 		if(personOnModal.prefMaritalStatus != "unknown")
 			applicantdPref.innerHTML += "<br/>Marital status of "+personOnModal.prefMaritalStatus;
 		if(personOnModal.prefAgeMin != 0)
-			applicantdPref.innerHTML += "<br/>>= "+ (personOnModal.age+ personOnModal.prefAgeMin) +" years old";
+			applicantdPref.innerHTML += "<br/>>= "+ (personOnModal.age- personOnModal.prefAgeMin) +" years old";
 		if(personOnModal.prefAgeMax != 0)
-			applicantdPref.innerHTML += "<br/><= "+ (personOnModal.age+ personOnModal.prefAgeMax) +" years old";
+			applicantdPref.innerHTML += "<br/><= "+ (personOnModal.age- personOnModal.prefAgeMax) +" years old";
 		if(personOnModal.prefEthnicity != "")
 			applicantdPref.innerHTML += "<br/>Ethinicity of "+personOnModal.prefEthnicity;
 		if(personOnModal.prefCountry != "")
