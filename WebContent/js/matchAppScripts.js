@@ -175,7 +175,27 @@ function removePairing(MUserId, FUserId) {
 				}
 			});
 		}
-	});
+	});	
+}
+function sendComments(comment,FUserId,MUserId) {
+		$.ajax({
+			type : "Post",
+			url : "/applicant",
+			dataType : "json",
+			data : {
+				"task" : "addComment",
+				"MUserId" : MUserId,
+				"FUserId" : FUserId,
+				"comment" :comment
+			},
+			success : function(data) {
+				return true;
+			},
+			error : function() {
+				toast("Server Error");
+				return false;
+			}
+		});
 	
 }
 function archiveApplicant() {
@@ -246,8 +266,31 @@ function showModal() {
 	modalContent.style.maxHeight = "400px";
 	modalContent.style.padding = "5%";
 	modalContent.style.overflow="auto";
-
-	if(this.id=="contactBtn"){
+	modalContent.style.textAlign="left";
+	
+	if(this.className == "ion-compose"){
+		var rowIndex = this.parentElement.parentElement.rowIndex-1;
+		modalContent.style.textAlign="center";
+		modalTitle.innerHTML += "Comments" ;
+		var comments = document.createElement('textarea');
+		comments.id="comments";
+		comments.rows="4";
+		if(PAIRINGS[rowIndex].hasOwnProperty("note"))
+			comments.value = PAIRINGS[rowIndex].note; 
+		var saveComments = document.createElement('BUTTON');
+		saveComments.innerHTML="Save Comment";
+		saveComments.style.marginTop="2em";
+		saveComments.onclick = function() {
+			if(comments.value!="") 
+				sendComments(comments.value,PAIRINGS[rowIndex].FUserId,PAIRINGS[rowIndex].MUserId);
+				PAIRINGS[rowIndex].note=comments.value;
+				toast("Comments saved successfuly.");
+			};
+		
+		modalContent.appendChild(comments);
+		modalContent.appendChild(saveComments);
+	}
+	else if(this.id=="contactBtn"){
 		modalTitle.innerHTML += "Contact Info" ;
 		var contactInfo = document.createElement('p');
 		if(APPLICANT.hasOwnProperty("email") && APPLICANT.email!="")
@@ -485,29 +528,6 @@ $(document).on('click', ".ion-android-funnel", function() {
 	delegate();
 });
 
-function dropDownFunction() {
-	document.getElementById("myDropdown").classList.toggle("show");
-	document.getElementById("myDropdown").left = "300px";
-}
-
-// Close the dropdown if the user clicks outside of it
-window.onclick = function(event) {
-
-	if (event.target == modal) {
-		modal.style.display = "none";
-	}
-
-	if (!event.target.matches('.ion-android-funnel')) {
-		var dropdowns = document.getElementsByClassName("dropdown-content");
-		var i;
-		for (i = 0; i < dropdowns.length; i++) {
-			var openDropdown = dropdowns[i];
-			if (openDropdown.classList.contains('show')) {
-				openDropdown.classList.remove('show');
-			}
-		}
-	}
-}
 function drawBox() {
 	var box = document.getElementsByClassName("box effect2")[0];
 	box.innerHTML = APPLICANT.firstName + " " + APPLICANT.lastName;
@@ -560,7 +580,7 @@ function drawPairingHeaders() {
 		cell.style.textShadow = "1px 1px 1px grey";
 		cell.style.color = "white";
 		cell.style.fontSize = "1.15em";
-		cell.style.padding = "0.3em";
+		cell.style.padding = "0.2em";
 	}
 }
 function drawPairingRows() {
@@ -644,6 +664,8 @@ function drawPairingRows() {
 			opt3.text = 'successful';
 			opt3.value = 'successful';
 			dropDown.options.add(opt3);
+			var note = document.createElement("div");
+			note.className += "ion-compose";
 			if (PAIRINGS[i].pairingStatus == "on going")
 				dropDown.selectedIndex = 0;
 			else if (PAIRINGS[i].pairingStatus == "failed")
@@ -651,13 +673,17 @@ function drawPairingRows() {
 			else
 				dropDown.selectedIndex = 2;
 			status.appendChild(dropDown);
+			status.appendChild(note);
+			dropDown.style.width = "6em";
+			status.style.width = "9em";
 			tr.appendChild(status);
-
+			
+			
 			var pairingDate = document.createElement('td');
 			pairingDate.appendChild(document
 					.createTextNode(PAIRINGS[i].pairingDate));
 			tr.appendChild(pairingDate);
-			pairingDate.style.width = "10em";
+			pairingDate.style.width = "7em";
 
 			var remove = document.createElement('td');
 			remove.innerHTML = "<div class=\"ion-close\"></div>";
@@ -665,7 +691,7 @@ function drawPairingRows() {
 			remove.style.textShadow = "1px 1px 4px grey";
 			remove.style.color = "#800000";
 			tr.appendChild(remove);
-			remove.style.width = "0.3em";
+			remove.style.width = "0.1em";
 
 			if(CANDIDATES[index].archived==1){
 				tr.style.background = "#dad3d1";
@@ -744,6 +770,8 @@ function delegate() {
 			removePairing(APPLICANT.userId,
 					PAIRINGS[index].FUserId);
 	});
+	
+	$(".ion-compose").click(showModal);
 }
 function setupPairings() {
 	var pairingTitle = document.createElement('div');
@@ -761,4 +789,5 @@ function setupPairings() {
 	drawRows();
 	delegate();
 }
+
 requestApplicant();

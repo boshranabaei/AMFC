@@ -8,6 +8,28 @@ body{
 	color: #737373;
 }
 
+div.ion-compose{
+	font-size: 1.7em;
+	display:inline;
+	margin: -0.5em;
+	margin-left: 0.3em;
+	text-shadow: 1px 1px 4px grey;
+}
+
+div.ion-compose:HOVER{
+	text-shadow: 1px 1px 4px orange;
+}
+
+div.ion-compose:ACTIVE{
+	text-shadow: none;
+}
+
+#comments{
+	width:90%;
+	height: 70%;
+	font-size: 1em;	
+}
+
 #backNavigation a {
 	font-size: 1.6em;
 	font-family: "Arial Black", Gadget, sans-serif;
@@ -15,8 +37,7 @@ body{
 	color: #217f1e;
 	text-decoration: none;
 	float: left;
-	margin-left: 23%;
-	margin-top: -2.5em;
+	margin-left: 15%;
 }
 
 #backNavigation a .ion-ios-arrow-back {
