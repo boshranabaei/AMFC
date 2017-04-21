@@ -1,4 +1,21 @@
 var APPLICANTS;
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
 function requestApplicants() {
 	$.ajax({
 		type : "Post",
@@ -20,7 +37,6 @@ function requestApplicants() {
 	});
 };
 
-requestApplicants();
 
 function getApplicantIndex(userId) {
 	var index = 0;
@@ -319,3 +335,7 @@ window.onclick = function(event) {
   }
 }
 
+$( document ).ready(function() {
+	var sessionId=getCookie("sessionId");
+	requestApplicants();
+});

@@ -9,6 +9,7 @@ function onLogIn() {
 		},
 		success : function(data) {
 				if(data.isValid == true){
+					setCookie(data.sessionId, document.forms[0].elements[0].value);
 					window.open("match.html","_self");
 				}
 				else{
@@ -19,7 +20,6 @@ function onLogIn() {
 					message.style.fontSize="1.3em";
 					document.body.appendChild(message);  
 				}
-					
 		},
 		error : function() {
 			alert("Server Error");
@@ -27,3 +27,10 @@ function onLogIn() {
 	});
 	return false;
 };
+
+function setCookie(sessionId, username) {
+    var d = new Date();
+    d.setTime(d.getTime() + (60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = "sessionId =" + sessionId + "; username= "+ username +"; expires="+ d.toUTCString() + ";path=/";
+}
