@@ -1,20 +1,8 @@
 var APPLICANTS;
 
-function getCookie(cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for(var i = 0; i <ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
-}
+// Get the modal
+// http://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal
+var modal = document.getElementById('myModal');
 
 function requestApplicants() {
 	$.ajax({
@@ -25,6 +13,11 @@ function requestApplicants() {
 			"task" : "requestApplicants"
 		},
 		success : function(data) {
+			if(data.session=="time out"){
+				mscAlert("Session time out.");
+				window.open("index.html","_self");
+				return;
+			}
 			APPLICANTS = data.applicants;
 			APPLICANTS.sort(compareName);
 			drawHeaders();
@@ -37,7 +30,6 @@ function requestApplicants() {
 	});
 };
 
-
 function getApplicantIndex(userId) {
 	var index = 0;
 	while (APPLICANTS[index].userId != userId)
@@ -45,15 +37,10 @@ function getApplicantIndex(userId) {
 	return index;
 }
 
-// Get the modal
-// http://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal
-var modal = document.getElementById('myModal');
-
 var span = document.getElementsByClassName("close")[0];
 span.onclick = function() {
 	modal.style.display = "none";
 }
-
 
 $('body').on('click','img',	function() {
 			modal.style.display = "block";
@@ -233,6 +220,15 @@ function drawRows() {
 					"userId": userId
 				},
 				success : function(data) {
+					if(data.session=="time out"){
+						
+						mscAlert({
+							title : "Session time out.",
+							onOk : function(val) {
+								window.open("index.html","_self");
+							}});
+						return;
+					}
 					window.open("matchapplicant.html","_self");
 					return true;
 				},
@@ -336,6 +332,5 @@ window.onclick = function(event) {
 }
 
 $( document ).ready(function() {
-	var sessionId=getCookie("sessionId");
 	requestApplicants();
 });

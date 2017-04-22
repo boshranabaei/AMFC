@@ -9,7 +9,7 @@ function onLogIn() {
 		},
 		success : function(data) {
 				if(data.isValid == true){
-					setCookie(data.sessionId, document.forms[0].elements[0].value);
+					setCookie(document.forms[0].elements[0].value);
 					window.open("match.html","_self");
 				}
 				else{
@@ -31,6 +31,5 @@ function onLogIn() {
 function setCookie(sessionId, username) {
     var d = new Date();
     d.setTime(d.getTime() + (60*60*1000));
-    var expires = "expires="+ d.toUTCString();
-    document.cookie = "sessionId =" + sessionId + "; username= "+ username +"; expires="+ d.toUTCString() + ";path=/";
+    document.cookie = "susername= "+ username +"; expires="+ d.toUTCString()+"; path=/";
 }
