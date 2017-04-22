@@ -69,6 +69,7 @@ function addApplicant(applicantFormData) {
 			"task" : "newApplicant"
 		},
 		success : function(data) {
+			sessionIsValid(data.session);
 			if (data.mission == "accomplished") {
 				toast("The new applicant is added successfully");
 			} else {
@@ -275,6 +276,26 @@ function readerOnload(e){
     var base64 = btoa(e.target.result);
     selectedPhoto.base64 = base64;
     $("#progress").html("successfully attached");
+}
+
+sessionIsValid= function(session){
+	if(session=="time out"){
+		mscAlert({
+			title : "Session time out.",
+			onOk : function(val) {
+				window.open("index.html","_self");
+			}});
+		return false;
+	}
+	else if(session=="denied"){
+		mscAlert({
+			title : "Access Denied. Please log in.",
+			onOk : function(val) {
+				window.open("index.html","_self");
+			}});
+		return false;
+	}
+	return true;
 }
 
 $( document ).ready(function() {

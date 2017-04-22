@@ -13,11 +13,7 @@ function requestApplicants() {
 			"task" : "requestApplicants"
 		},
 		success : function(data) {
-			if(data.session=="time out"){
-				mscAlert("Session time out.");
-				window.open("index.html","_self");
-				return;
-			}
+			sessionIsValid(data.session);
 			APPLICANTS = data.applicants;
 			APPLICANTS.sort(compareName);
 			drawHeaders();
@@ -220,16 +216,9 @@ function drawRows() {
 					"userId": userId
 				},
 				success : function(data) {
-					if(data.session=="time out"){
-						
-						mscAlert({
-							title : "Session time out.",
-							onOk : function(val) {
-								window.open("index.html","_self");
-							}});
-						return;
+					if(sessionIsValid(data.session)==true){
+						window.open("matchapplicant.html","_self");
 					}
-					window.open("matchapplicant.html","_self");
 					return true;
 				},
 				error : function() {
@@ -329,6 +318,26 @@ window.onclick = function(event) {
 	      }
 	    }
   }
+}
+
+sessionIsValid= function(session){
+	if(session=="time out"){
+		mscAlert({
+			title : "Session time out.",
+			onOk : function(val) {
+				window.open("index.html","_self");
+			}});
+		return false;
+	}
+	else if(session=="denied"){
+		mscAlert({
+			title : "Access Denied. Please log in.",
+			onOk : function(val) {
+				window.open("index.html","_self");
+			}});
+		return false;
+	}
+	return true;
 }
 
 $( document ).ready(function() {
