@@ -35,3 +35,23 @@ function logOut() {
 	
 };
 
+sessionIsValid = function(session) {
+	if (session == "time out") {
+		mscAlert({
+			title : "Session time out.",
+			onOk : function(val) {
+				window.open("index.html", "_self");
+			}
+		});
+		return false;
+	} else if (session == "denied") {
+		mscAlert({
+			title : "Access Denied. Please log in.",
+			onOk : function(val) {
+				window.open("index.html", "_self");
+			}
+		});
+		return false;
+	}
+	return true;
+}

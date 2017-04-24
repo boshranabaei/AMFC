@@ -19,6 +19,7 @@ function requestApplicant() {
 			"task" : "getSelectedApplicant"
 		},
 		success : function(data) {
+			sessionIsValid(data.session);
 			APPLICANT = data.applicant;
 			fillInForm();
 			return true;
@@ -40,6 +41,7 @@ function updateApplicant(applicantFormData) {
 			"task" : "updateApplicant"
 		},
 		success : function(data) {
+			sessionIsValid(data.session);
 			if (data.mission == "accomplished") {
 				toast("Applicant info updated successfully");
 			} else {
@@ -63,6 +65,7 @@ function selectApplicant(){
 			"userId": APPLICANT.userId
 		},
 		success : function(data) {
+			sessionIsValid(data.session);
 			window.open("matchapplicant.html","_self");
 			return true;
 		},
@@ -453,6 +456,7 @@ function readerOnload(e){
     selectedPhoto.base64 = base64;
     $("#progress").html("successfully attached");
 }
+
 
 $( document ).ready(function() {
 	$(":file").change(toggleattach);

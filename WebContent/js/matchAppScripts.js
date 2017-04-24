@@ -15,6 +15,7 @@ function requestApplicant() {
 			"task" : "getSelectedApplicant"
 		},
 		success : function(data) {
+			sessionIsValid(data.session);
 			APPLICANT = data.applicant;
 			setupApplicantInfo();
 			return true;
@@ -36,6 +37,7 @@ function requestCandidates() {
 			"task" : "getCandidates"
 		},
 		success : function(data) {
+			sessionIsValid(data.session);
 			CANDIDATES = data.candidates;
 			CANDIDATES.sort(compareName);
 			setupPairings();
@@ -58,6 +60,7 @@ function requestPairings(operation) {
 			"task" : "getPairings"
 		},
 		success : function(data) {
+			sessionIsValid(data.session);
 			PAIRINGS = data.pairings;
 			if (operation == "addOrRemove") {
 				while (pairingTable.rows.length > 1) {
@@ -94,6 +97,7 @@ function editApplicant() {
 			"userId" : APPLICANT.userId
 		},
 		success : function(data) {
+			sessionIsValid(data.session);
 			window.open("matchedit.html", "_self");
 			return true;
 		},
@@ -115,6 +119,7 @@ function updatePairingStatus(MUserId, FUserId, pairingStatus) {
 			"pairingStatus" : pairingStatus
 		},
 		success : function(data) {
+			sessionIsValid(data.session);
 			requestPairings("changeStatus");
 			toast("Pairing status changes successfully");
 			return true;
@@ -138,6 +143,7 @@ function addPairing(MUserId, FUserId, director) {
 			"director" : director
 		},
 		success : function(data) {
+			sessionIsValid(data.session);
 			toast("Pairing added successfully");
 			requestPairings("addOrRemove");
 			return true;
@@ -164,7 +170,8 @@ function removePairing(MUserId, FUserId) {
 					"MUserId" : MUserId,
 					"FUserId" : FUserId
 				},
-				success : function(data) {
+				success : function(data){
+					sessionIsValid(data.session);
 					toast("Matching removed successfully");
 					requestPairings("addOrRemove");
 					return true;
@@ -189,6 +196,7 @@ function sendComments(comment,FUserId,MUserId) {
 				"comment" :comment
 			},
 			success : function(data) {
+				sessionIsValid(data.session);
 				return true;
 			},
 			error : function() {
@@ -214,6 +222,7 @@ function archiveApplicant() {
 					"userId": APPLICANT.userId
 				},
 				success : function(data) {
+					sessionIsValid(data.session);
 					if(data.mission=="accomplished")
 						window.open("match.html", "_self");
 					else

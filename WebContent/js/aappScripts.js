@@ -9,6 +9,24 @@ var fieldLabels = [ "firstName", "lastName", "birthYear", "approximateAge", "gen
 		"prefEthnicity", "prefEducation", "prefCountry", "prefComments",
 		"amfcPointOfContact","amfcPointOfContact","amfcPointOfContact","amfcPointOfContact" ];
 
+function checkSession(){
+	$.ajax({
+		type : "Post",
+		url : "/applicant",
+		dataType : "json",
+		data : {
+			"task" : "checkSession"
+		},
+		success : function(data) {
+			sessionIsValid(data.session);
+			return true;
+		},
+		error : function() {
+			return false;
+		}
+	});
+}
+
 function toggleChildren() {
 	if (document.forms[0].elements[11].disabled == false){
 		document.forms[0].elements[11].disabled = true;
@@ -278,27 +296,9 @@ function readerOnload(e){
     $("#progress").html("successfully attached");
 }
 
-sessionIsValid= function(session){
-	if(session=="time out"){
-		mscAlert({
-			title : "Session time out.",
-			onOk : function(val) {
-				window.open("index.html","_self");
-			}});
-		return false;
-	}
-	else if(session=="denied"){
-		mscAlert({
-			title : "Access Denied. Please log in.",
-			onOk : function(val) {
-				window.open("index.html","_self");
-			}});
-		return false;
-	}
-	return true;
-}
 
 $( document ).ready(function() {
+	checkSession();
 	$(":file").change(toggleattach);
 	$('#attach').click(attachOrRemovePhoto);
 });
