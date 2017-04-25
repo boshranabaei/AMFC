@@ -16,6 +16,10 @@ body {
 	margin-bottom: -1em;
 }
 
+h3{
+	color:#888888;
+}
+
 form {
 	font-size: 12pt;
 	margin-top: 2em;
@@ -87,4 +91,19 @@ td {
 @keyframes fadeout {
     from {bottom: 30px; opacity: 1;}
     to {bottom: 0; opacity: 0;}
+}
+
+#submit
+{
+    
+    color: #999;
+    text-decoration: none;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    text-shadow: 0 -0.5px 0.5px rgba(0,0,0,3);
+    cursor: pointer;
+    font-size:15px;
+    margin:10px;
 }

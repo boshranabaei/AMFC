@@ -4,6 +4,7 @@ function onLogIn() {
 		url : "/login",
 		dataType : "json",
 		data : {
+			task: "authenticate",
 			userIDInput : document.forms[0].elements[0].value,
 			passwordInput : document.forms[0].elements[1].value
 		},
@@ -28,8 +29,8 @@ function onLogIn() {
 	return false;
 };
 
-function setCookie(sessionId, username) {
+function setCookie(username) {
     var d = new Date();
     d.setTime(d.getTime() + (60*60*1000));
-    document.cookie = "susername= "+ username +"; expires="+ d.toUTCString()+"; path=/";
+    document.cookie = "username="+ username +"; expires="+ d.toUTCString()+"; path=/";
 }

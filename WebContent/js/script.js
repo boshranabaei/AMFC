@@ -30,12 +30,24 @@ var aLoops = []; // sound loops
 var aBtns = document.querySelectorAll('#nav li');
 
 function logOut() {
-	
-	window.open("index.html","_self");
+	$.ajax({
+		type : "POST",
+		url : "/login",
+		dataType : "json",
+		data : {
+			task: "logout"
+		},
+		success : function(data) {
+			window.open("index.html","_self");
+		},
+		error : function() {
+			alert("Server Error");
+		}
+	});
 	
 };
 
-sessionIsValid = function(session) {
+function sessionIsValid (session) {
 	if (session == "time out") {
 		mscAlert({
 			title : "Session time out.",

@@ -24,16 +24,40 @@
 		<li><a onclick="logOut()" href="javascript:void(0);">Log out</a></li>
 	</ul>
 
-	<form id="changePassForm" method="POST"
-		onsubmit="return changePassword()">
-		<table align="center">
+	<form id="updateProfile" method="POST"
+		onsubmit="return updateProfile()">
+		<h3>My Profile</h3>
+		<table>
 			<tr>
-				<td>Username :</td>
-				<td><input type="text" name="userIDInput"></td>
+				<td>First Name :</td>
+				<td><input type="text" name="firstName"></td>
 			</tr>
 			<tr>
+				<td>Last Name :</td>
+				<td><input type="text" name="lastName"></td>
+			</tr>
+			<tr>
+				<td>E-mail :</td>
+				<td><input type="text" name="email"></td>
+			</tr>
+			<tr>
+				<td>Phone Number :</td>
+				<td><input type="text" name="phoneNumber"></td>
+			</tr>
+			<tr>
+				<td><input type="submit" value="Update Profile" id="submit" />
+				</td>
+			</tr>
+		</table>
+	</form>
+
+	<form id="changePassForm" method="POST"
+		onsubmit="return changePassword()">
+		<h3>Change Password</h3>
+		<table>
+			<tr>
 				<td>Old password :</td>
-				<td><input type="password" name="oldPasswordInput""></td>
+				<td><input type="password" name="oldPasswordInput"></td>
 			</tr>
 			<tr>
 				<td>New password :</td>
@@ -49,9 +73,10 @@
 			</tr>
 		</table>
 	</form>
-
 	<div id="snackbar">Some text some message..</div>
-
+	
+	<h3 style="margin-top:2em">AMFC Committee Members</h3>
+	
 	<script src="js/script.js"></script>
 	<script src="js/settingsScripts.js"></script>
 </body>
