@@ -34,3 +34,12 @@ function setCookie(username) {
     d.setTime(d.getTime() + (60*60*1000));
     document.cookie = "username="+ username +"; expires="+ d.toUTCString()+"; path=/";
 }
+
+$(document).ready(function() {
+	
+	document.getElementById("passwordId").addEventListener("keyup", function(event){
+	    if(e.which == 13) {
+	    	onLogIn(); 
+	    }
+	});
+});
