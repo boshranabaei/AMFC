@@ -1,3 +1,4 @@
+var alreadyWrong=false;
 function onLogIn() {
 	$.ajax({
 		type : "POST",
@@ -14,12 +15,15 @@ function onLogIn() {
 					window.open("match.html","_self");
 				}
 				else{
-					var message = document.createElement("div");
-					message.textContent = "Invalid username or password. Please try again.";
-					message.style.color="red";
-					message.style.padding="2em";
-					message.style.fontSize="1.3em";
-					document.body.appendChild(message);  
+					if(!alreadyWrong){
+						var message = document.createElement("div");
+						message.textContent = "Invalid username or password. Please try again.";
+						message.style.color="red";
+						message.style.padding="2em";
+						message.style.fontSize="1.3em";
+						document.body.appendChild(message);
+						alreadyWrong=true;
+					}
 				}
 		},
 		error : function() {
