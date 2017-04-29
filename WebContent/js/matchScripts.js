@@ -1,8 +1,7 @@
 var APPLICANTS;
-
 // Get the modal
 // http://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal
-var modal = document.getElementById('myModal');
+var modal ;
 
 function requestApplicants() {
 	$.ajax({
@@ -31,11 +30,6 @@ function getApplicantIndex(userId) {
 	while (APPLICANTS[index].userId != userId)
 		index++;
 	return index;
-}
-
-var span = document.getElementsByClassName("close")[0];
-span.onclick = function() {
-	modal.style.display = "none";
 }
 
 $('body')
@@ -347,5 +341,10 @@ window.onclick = function(event) {
 
 
 $(document).ready(function() {
+	modal = document.getElementById('myModal');
 	requestApplicants();
+	span = document.getElementsByClassName("close")[0];
+	span.onclick = function() {
+		modal.style.display = "none";
+	}
 });

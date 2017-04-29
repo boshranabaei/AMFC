@@ -1,27 +1,45 @@
 <!DOCTYPE html>
-<html lang="en" >
-    <head>
-        <meta charset="utf-8" />
-        <title>AMFC</title>
-        <link href="css/layout.css" rel="stylesheet" type="text/css" />
-        <link href="css/menu.css" rel="stylesheet" type="text/css" />
-    </head>
-    <body>
-        <header>
-            <h2>Az-Zahraa Marriage Facilitation Center</h2>
-        </header>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>AMFC</title>
+<script src="js/script.js"></script>
+<script src="js/msc-script.js"></script>
+<link href="css/layout.css" rel="stylesheet" type="text/css" />
+<link href="css/menu.css" rel="stylesheet" type="text/css" />
+<link href="css/tableStyle.css" rel="stylesheet" type="text/css" />
+<link href="css/naapStyle.css" rel="stylesheet" type="text/css" />
+<script
+	src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+</head>
+<body>
+	<header>
+		<h2>Az-Zahraa Marriage Facilitation Center</h2>
+	</header>
 
-        <ul id="nav">
-            <li><a href="napp.html"><div class="selected">New</div></a></li>
-            <li><a href="match.html">Match</a></li>
-            <li><a href="aapp.html">Add</a></li>
-            <li><a href="settings.html">Settings</a></li>
-            <li><a onclick="logOut()" href="javascript:void(0);">Log out</a></li>
-        </ul>
-        
-        <h2>Under Construction...</h2>
-        To be connected to the <b>public website</b> for verification of new applications. 
-        
-        <script src="js/script.js"></script>
-    </body>
+	<ul id="nav">
+		<li><a href="napp.html"><div class="selected">New</div></a></li>
+		<li><a href="match.html">Match</a></li>
+		<li><a href="aapp.html">Add</a></li>
+		<li><a href="settings.html">Settings</a></li>
+		<li><a onclick="logOut()" href="javascript:void(0);">Log out</a></li>
+	</ul>
+
+	<h2 class="ntitle">New Applications</h2>
+	<input type="button" value="Accept" class="accept"><input type="button" value="Reject" class="reject">
+
+	<!-- The Modal -->
+	<div id="myModal" class="modal">
+
+		<!-- Modal content -->
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<p id="modalTitle"></p>
+			<p id="modalContent"></p>
+		</div>
+
+	</div>
+<script src="js/naapScripts.js"></script>
+
+</body>
 </html>
