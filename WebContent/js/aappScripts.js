@@ -283,7 +283,8 @@ function attachOrRemovePhoto(){
     	$("#progress").html("attaching...");
     	document.getElementById("attach").style.color = "black";
     	$("#attach").attr("value","Delete");
-    	var formData = new FormData($(":file")[0]);
+    	var formData = new FormData();
+    	formData.append('file', $('input[type=file]')[0].files[0]);
    	  	var reader = new FileReader();
    	  	reader.onload = readerOnload;
    	  	x=reader.readAsBinaryString(file)
