@@ -62,10 +62,10 @@ function updateProfile() {
 			data : {
 				task: "updateProfile",
 				username : USERNAME,
-				firstName : document.forms[0].elements[0].value,
-				lastName : document.forms[0].elements[1].value,
-				email: 	document.forms[0].elements[2].value,
-				phoneNumber: document.forms[0].elements[3].value
+				firstName : cleanSpecialChars(document.forms[0].elements[0].value),
+				lastName : cleanSpecialChars(document.forms[0].elements[1].value),
+				email: 	cleanSpecialChars(document.forms[0].elements[2].value),
+				phoneNumber: cleanSpecialChars(document.forms[0].elements[3].value)
 			},
 			success : function(data) {
 				sessionIsValid(data.session);

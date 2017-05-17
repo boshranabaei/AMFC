@@ -97,11 +97,6 @@ function toggleRelocate() {
 		document.forms[0].elements[16].value = "";
 }
 
-function replaceQuotes(str){
-	str= String(str);
-	return str.replace(/['"]+/g, ''); 
-}
-
 function greyBorders(){
 	content[1].style.border = "1px solid #E1E1E1";
 	content[2].style.border = "1px solid #E1E1E1";
@@ -212,7 +207,7 @@ function submitApplicant() {
 						break;
 					// children
 					case 10:
-						json += replaceQuotes(content[i + 1].value);
+						json += cleanSpecialChars(content[i + 1].value);
 						i++;
 						break;
 					// smoke
@@ -236,12 +231,12 @@ function submitApplicant() {
 					case 30:
 					case 31:
 						if (content[i].value != "")
-							json += replaceQuotes(content[i].value);
+							json += cleanSpecialChars(content[i].value);
 						else
 							json += 0;
 						break;
 					default:
-						json += "\'" + replaceQuotes(content[i].value) + "\'";
+						json += "\'" + cleanSpecialChars(content[i].value) + "\'";
 						break;
 					}
 					if (i != fieldLabels.length) {

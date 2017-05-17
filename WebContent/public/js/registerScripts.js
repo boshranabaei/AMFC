@@ -40,9 +40,21 @@ function toggleRelocate() {
 }
 
 
-function replaceQuotes(str){
+function cleanSpecialChars(str){
 	str= String(str);
-	return str.replace(/['"]+/g, ''); 
+	return str.replace(/['"]+/g, '')
+				.replace(/[^\w\s]/gi, '')
+				.replace(/\\n/g, "\\n")
+			    .replace(/\\'/g, "\\'")
+			    .replace(/\\"/g, '\\"')
+			    .replace(/\\&/g, "\\&")
+			    .replace(/\\r/g, "\\r")
+			    .replace(/\\t/g, "\\t")
+			    .replace(/\\b/g, "\\b")
+			    .replace(/[\/]/g, '\\/')
+			    .replace(/\\f/g, "\\f")
+			    .replace(/\x18/g, "")
+			    .replace(/\x0B/g,''); 
 }
 
 function greyBorders(){
@@ -204,7 +216,7 @@ function submitApplicant() {
 					// relocateWhere?
 					case 14:
 						if (content[i].value != "")
-							json += replaceQuotes(content[i].value);
+							json += cleanSpecialChars(content[i].value);
 						else
 							json += "where?";
 						break;
@@ -212,12 +224,12 @@ function submitApplicant() {
 					case 31:
 					case 32:
 						if (content[i].value != "")
-							json += replaceQuotes(content[i].value);
+							json += cleanSpecialChars(content[i].value);
 						else
 							json += 0;
 						break;
 					default:
-						json += "\'" + replaceQuotes(content[i].value) + "\'";
+						json += "\'" + cleanSpecialChars(content[i].value) + "\'";
 						break;
 					}
 					if (i != fieldLabels.length) {

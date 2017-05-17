@@ -140,7 +140,7 @@ function addPairing(MUserId, FUserId, director) {
 			"task" : "addPairing",
 			"MUserId" : MUserId,
 			"FUserId" : FUserId,
-			"director" : director
+			"director" : cleanSpecialChars(director)
 		},
 		success : function(data) {
 			sessionIsValid(data.session);
@@ -193,7 +193,7 @@ function sendComments(comment,FUserId,MUserId) {
 				"task" : "addComment",
 				"MUserId" : MUserId,
 				"FUserId" : FUserId,
-				"comment" :comment
+				"comment" : cleanSpecialChars(comment)
 			},
 			success : function(data) {
 				sessionIsValid(data.session);
