@@ -177,10 +177,14 @@ function submitApplicant() {
 		content[32].style.border = "1px solid red";
 		toast("Wrong value for some of the inputs.");
 		
+	} else if($(":file")[0].files.length!=0 && jQuery.isEmptyObject(selectedPhoto)){
+		content[32].style.border = "2px solid red";
+		toast("Don't forget to attach your selected photo!");
+		
 	} else {
 		mscConfirm({
 			title : 'Confirmation',
-			subtitle : 'Are your want to submit this registraion?',
+			subtitle : 'Are you sure you want to submit this application?',
 			okText : 'Yes', // default: OK
 			cancelText : 'Cancel', // default: Cancel,
 			onOk : function(val) {
@@ -257,9 +261,12 @@ function toggleattach(){
 
 	if($(":file")[0].files.length!=0){
 		$("input#attach").attr("disabled", false);
+		document.forms[0].elements[35].style.border = "2px solid red";
 	}
 	else{
 		$("input#attach").attr("disabled", true);
+		document.forms[0].elements[35].style.border = "1px solid #E1E1E1";
+		$(":file")[0].value="";
 	}
 }
 
@@ -270,6 +277,9 @@ function attachOrRemovePhoto(){
 	if($("#attach").attr("value")=="Delete"){
 		$("#attach").attr("value","attach");
 		$("#progress").html("");
+		document.forms[0].elements[35].style.border = "1px solid #E1E1E1";
+		$("input#attach").attr("disabled", true);
+		$(":file")[0].value="";
 		selectedPhoto={}
 		return;
 	}
@@ -296,6 +306,7 @@ function attachOrRemovePhoto(){
     	$("#progress").html("attaching...");
     	document.getElementById("attach").style.color = "black";
     	$("#attach").attr("value","Delete");
+    	document.forms[0].elements[35].style.border = "1px solid #E1E1E1";
     	var formData = new FormData();
     	formData.append('file', $('input[type=file]')[0].files[0]);
    	  	var reader = new FileReader();

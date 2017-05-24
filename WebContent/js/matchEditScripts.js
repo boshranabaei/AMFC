@@ -181,7 +181,11 @@ function submitApplicant() {
 		greyBorders();
 		content[31].style.border = "1px solid red";
 		toast("Wrong value for some of the inputs.");
-		
+	}
+	else if($(":file")[0].files.length!=0 && jQuery.isEmptyObject(selectedPhoto)){
+		content[37].style.border = "2px solid red";
+		toast("Don't forget to attach your selected photo!");		
+			
 	}else {
 		mscConfirm({
 			title : 'Confirmation',
@@ -399,9 +403,12 @@ function toggleattach(){
 
 	if($(":file")[0].files.length!=0){
 		$("input#attach").attr("disabled", false);
+		document.forms[0].elements[38].style.border = "2px solid red";
 	}
 	else{
 		$("input#attach").attr("disabled", true);
+		document.forms[0].elements[38].style.border = "1px solid #E1E1E1";
+		$(":file")[0].value="";
 	}
 }
 
@@ -411,6 +418,10 @@ function attachOrRemovePhoto(){
 		$("#attach").attr("value","attach");
 		$("#progress").html("");
 		selectedPhoto={}
+		document.forms[0].elements[38].style.border = "1px solid #E1E1E1";
+		$("input#attach").attr("disabled", true);
+		$(":file")[0].value="";
+
 		return;
 	}
 
@@ -443,6 +454,7 @@ function attachOrRemovePhoto(){
     	formData.append('file', $('input[type=file]')[0].files[0]);
    	  	var reader = new FileReader();
    	  	reader.onload = readerOnload;
+   	  	document.forms[0].elements[38].style.border = "1px solid #E1E1E1";
    	  	x=reader.readAsBinaryString(file)
     }
 };
@@ -456,6 +468,8 @@ function readerOnload(e){
 
 $( document ).ready(function() {
 	$(":file").change(toggleattach);
-	$('#attach').click(attachOrRemovePhoto);  
+	$('#attach').click(attachOrRemovePhoto);
+	$("input#attach").attr("disabled", true);
+	document.forms[0].elements[38].style.border = "1px solid #E1E1E1";
 	requestApplicant();
 });
