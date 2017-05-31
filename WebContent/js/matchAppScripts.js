@@ -433,11 +433,11 @@ function drawRows() {
 		tr.appendChild(profile);
 		profile.style.width = "3em";
 		if (CANDIDATES[i].gender == "0")
-			profilelogo.src = "admin/img/maleLogo.png";
+			profilelogo.src = "img/maleLogo.png";
 		else if (CANDIDATES[i].hasORwantsHijab == "no")
-			profilelogo.src = "admin/img/femaleLogo.png";
+			profilelogo.src = "img/femaleLogo.png";
 		else
-			profilelogo.src = "admin/img/femaleHLogo.png";
+			profilelogo.src = "img/femaleHLogo.png";
 		profilelogo.style.height = "2.5em";
 		profilelogo.style.marginTop = "0.2em";
 		profilelogo.style.boxShadow = "2px 2px #999";
@@ -616,11 +616,11 @@ function drawPairingRows() {
 			tr.appendChild(profile);
 			profile.style.width = "3em";
 			if (CANDIDATES[index].gender == "0")
-				profilelogo.src = "admin/img/maleLogo.png";
+				profilelogo.src = "img/maleLogo.png";
 			else if (CANDIDATES[index].hasORwantsHijab == "no")
-				profilelogo.src = "admin/img/femaleLogo.png";
+				profilelogo.src = "img/femaleLogo.png";
 			else
-				profilelogo.src = "admin/img/femaleHLogo.png";
+				profilelogo.src = "img/femaleHLogo.png";
 			profilelogo.style.height = "2.5em";
 			profilelogo.style.marginTop = "0.2em";
 			profilelogo.style.boxShadow = "2px 2px #999";
