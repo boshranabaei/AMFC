@@ -231,6 +231,14 @@ function submitApplicant() {
 						else
 							json += 0;
 						break;
+					// relocateWhere?
+					case 16:
+						if (content[i].value != "")
+							json += "\'" + cleanSpecialChars(content[i].value)
+									+"\'";
+						else
+							json += "\'" + "where?" +"\'";
+						break;
 					// pref Age
 					case 30:
 					case 31:

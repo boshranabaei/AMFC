@@ -70,17 +70,18 @@ function sessionIsValid (session) {
 
 function cleanSpecialChars(str){
 	str= String(str);
-	return str.replace(/['"]+/g, '')
-				.replace(/[^\w\s]/gi, '')
-				.replace(/\\n/g, "\\n")
-			    .replace(/\\'/g, "\\'")
-			    .replace(/\\"/g, '\\"')
-			    .replace(/\\&/g, "\\&")
-			    .replace(/\\r/g, "\\r")
-			    .replace(/\\t/g, "\\t")
-			    .replace(/\\b/g, "\\b")
-			    .replace(/[\/]/g, '\\/')
-			    .replace(/\\f/g, "\\f")
-			    .replace(/\x18/g, "")
-			    .replace(/\x0B/g,''); 
+//	return str.replace(/['"]+/g, '')
+//				.replace(/[^\w\s]/gi, '')
+//				.replace(/\\n/g, "\\n")
+//			    .replace(/\\'/g, "\\'")
+//			    .replace(/\\"/g, '\\"')
+//			    .replace(/\\&/g, "\\&")
+//			    .replace(/\\r/g, "\\r")
+//			    .replace(/\\t/g, "\\t")
+//			    .replace(/\\b/g, "\\b")
+//			    .replace(/[\/]/g, '\\/')
+//			    .replace(/\\f/g, "\\f")
+//			    .replace(/\x18/g, "")
+//			    .replace(/\x0B/g,''); 
+	return str.replace(/['"]+/g, '').replace('/"',"").replace(/\x18/g, "").replace(/\x0B/g, '');
 }
